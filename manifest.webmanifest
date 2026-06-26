@@ -1,0 +1,14 @@
+{
+  "name": "Lodestar — Find your way through",
+  "short_name": "Lodestar",
+  "description": "A coaching and self-reflection companion for work and life. Free, private, and works with or without your own AI.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f6f8",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

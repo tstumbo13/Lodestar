@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lodestar — Find your way through</title>
+<meta name="description" content="A coaching and self-reflection companion for work and life. Free, private, and works with or without your own AI.">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lodestar">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f172a; --navy-2:#1e293b; --slate:#334155;
+  --ink:#1f2937; --muted:#64748b; --line:#e6e9ef;
+  --bg:#f5f6f8; --surface:#ffffff;
+  --gold:#c8923a; --gold-soft:#f3e7d0; --gold-line:#e7d4ad;
+  --good:#2f8f6b; --good-soft:#e4f3ec;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.06);
+  --shadow-lg:0 12px 40px rgba(16,24,40,.12);
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{position:sticky;top:0;z-index:50;background:rgba(15,23,42,.96);backdrop-filter:blur(8px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.hbar{max-width:920px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:18px;letter-spacing:.2px}
+.star{width:30px;height:30px;flex:none}
+.brand small{display:block;font-weight:500;font-size:11px;color:#9fb0c9;letter-spacing:.6px;text-transform:uppercase;margin-top:1px}
+nav.tabs{margin-left:auto;display:flex;gap:4px;background:rgba(255,255,255,.06);padding:4px;border-radius:12px}
+nav.tabs button{color:#c3cee0;font-weight:600;font-size:13.5px;padding:7px 14px;border-radius:9px;transition:.15s}
+nav.tabs button:hover{color:#fff}
+nav.tabs button.active{background:#fff;color:var(--navy)}
+.helplink{flex:none;margin-left:12px;font-size:12.5px;font-weight:700;color:#ffd2c2;background:rgba(212,115,58,.22);border:1px solid rgba(212,115,58,.45);padding:7px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
+.helplink:hover{background:rgba(212,115,58,.38);color:#fff}
+
+/* Hero */
+.hero{padding:40px 0 8px;text-align:center}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,4.4vw,42px);line-height:1.1;letter-spacing:-.5px;color:var(--navy)}
+.hero p{max-width:560px;margin:14px auto 0;color:var(--muted);font-size:16px}
+
+/* Coach card */
+.composer{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px;margin-top:26px}
+.composer textarea{width:100%;border:none;resize:vertical;min-height:104px;font-size:16.5px;font-family:inherit;color:var(--ink);outline:none;line-height:1.55}
+.composer textarea::placeholder{color:#9aa6b6}
+.ctx{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:16px;border-top:1px solid var(--line)}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.field select{appearance:none;-webkit-appearance:none;background:#f7f8fa url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right 9px center;border:1px solid var(--line);border-radius:10px;padding:8px 30px 8px 11px;font-size:13.5px;font-family:inherit;color:var(--ink);font-weight:500;cursor:pointer;min-width:130px}
+.composer .go{margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{background:var(--navy);color:#fff;font-weight:600;font-size:15px;padding:12px 22px;border-radius:11px;display:inline-flex;align-items:center;gap:9px;transition:.15s;box-shadow:var(--shadow)}
+.btn:hover{background:#16233f;transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn.ghost{background:#eef1f5;color:var(--slate);box-shadow:none}
+.btn.ghost:hover{background:#e4e8ee}
+.aiflag{font-size:12.5px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1}
+.dot.on{background:var(--good)}
+
+/* example chips */
+.examples{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.examples span.lbl{font-size:12.5px;color:var(--muted);font-weight:600}
+.chip{font-size:12.5px;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:20px;transition:.15s}
+.chip:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}
+
+/* Results */
+#results{margin-top:30px}
+.thinking{display:flex;align-items:center;gap:12px;justify-content:center;padding:40px;color:var(--muted);font-size:15px}
+.spin{width:20px;height:20px;border:2.5px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.read{font-size:13px;color:var(--muted);margin-bottom:6px}
+.readtags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.tag{font-size:12px;font-weight:600;background:#eef1f5;color:var(--slate);padding:4px 11px;border-radius:7px}
+.tag.theme{background:var(--gold-soft);color:#7a5a1e}
+
+.sec-h{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--navy);margin:6px 0 4px}
+.sec-sub{color:var(--muted);font-size:14px;margin-bottom:16px}
+
+.fwk{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;position:relative;overflow:hidden}
+.fwk:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,#c8923a)}
+.fwk .top{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.fwk h3{font-size:17px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:9px}
+.fwk .school{font-size:12px;color:var(--muted);font-weight:500;margin-top:1px}
+.relwrap{margin-left:auto;text-align:right;min-width:96px}
+.relbar{height:6px;background:#eef1f5;border-radius:4px;overflow:hidden;margin-top:5px}
+.relbar i{display:block;height:100%;background:var(--accent,#c8923a);border-radius:4px}
+.rellbl{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.fwk .lens{margin-top:13px;font-size:14.5px;color:var(--slate)}
+.fwk .lens b{color:var(--ink)}
+.moves{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.moves .m{font-size:14px;display:flex;gap:9px;align-items:flex-start;color:var(--slate)}
+.moves .m svg{flex:none;margin-top:3px}
+.script{margin-top:13px;background:#f8f6f1;border:1px solid var(--gold-line);border-radius:10px;padding:11px 13px;font-size:14px;color:#5c4a2a;font-style:italic;position:relative}
+.script .q{font-style:normal;font-weight:700;color:var(--gold);font-family:var(--serif);font-size:15px;margin-right:4px}
+
+/* recommended */
+.rec{background:linear-gradient(180deg,#0f172a,#1c2a44);color:#eef2f8;border-radius:18px;padding:24px 24px 26px;margin-top:30px;box-shadow:var(--shadow-lg)}
+.rec .badge{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--gold);background:rgba(200,146,58,.14);padding:5px 11px;border-radius:20px}
+.rec h2{font-family:var(--serif);font-weight:600;font-size:23px;margin:13px 0 4px;color:#fff}
+.rec .why{color:#b9c6db;font-size:14.5px;margin-bottom:18px}
+.rec .why b{color:#fff;font-weight:600}
+.step{display:flex;gap:14px;padding:14px 0;border-top:1px solid rgba(255,255,255,.1)}
+.step .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#241803;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.step .body h4{font-size:15px;color:#fff;font-weight:700;margin-bottom:3px}
+.step .body p{font-size:14px;color:#c4d0e2}
+.callouts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.callout{border-radius:14px;padding:16px 18px}
+.callout.warn{background:#fbf3ee;border:1px solid #f0d9c9}
+.callout.refl{background:var(--good-soft);border:1px solid #c4e6d5}
+.callout h5{font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.callout.warn h5{color:#b4642e}
+.callout.refl h5{color:#1f7a57}
+.callout p{font-size:14px;color:var(--slate)}
+.callout ul{margin:0;padding-left:18px;font-size:14px;color:var(--slate)}
+.callout li{margin-bottom:4px}
+.resfoot{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+
+/* Library */
+.libgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+.libcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.libcard:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,#c8923a)}
+.libcard h3{font-size:16px;color:var(--navy);font-weight:700}
+.libcard .school{font-size:12px;color:var(--muted);margin:2px 0 9px}
+.libcard p{font-size:14px;color:var(--slate)}
+.libcard .bestfor{margin-top:11px;font-size:12.5px;color:var(--muted)}
+.libcard .bestfor b{color:var(--slate)}
+
+/* History */
+.hist{margin-top:24px}
+.histitem{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px;margin-bottom:11px;box-shadow:var(--shadow);cursor:pointer;transition:.15s}
+.histitem:hover{border-color:var(--gold-line);transform:translateY(-1px)}
+.histitem .when{font-size:11.5px;color:var(--muted);font-weight:600}
+.histitem .txt{font-size:14.5px;color:var(--ink);margin-top:3px}
+.histitem .mods{font-size:12.5px;color:var(--gold);font-weight:600;margin-top:6px}
+.empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:15px}
+
+/* Settings */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-top:24px}
+.panel h3{font-size:17px;color:var(--navy);margin-bottom:4px}
+.panel p.d{font-size:14px;color:var(--muted);margin-bottom:16px}
+.panel label.fl{display:block;font-size:13px;font-weight:600;color:var(--slate);margin:14px 0 6px}
+.panel input[type=password],.panel input[type=text]{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14px;font-family:inherit;outline:none}
+.panel input:focus{border-color:var(--gold-line)}
+.toggle{display:flex;align-items:center;gap:11px;margin-top:16px;font-size:14px;color:var(--slate)}
+.switch{position:relative;width:44px;height:25px;flex:none}
+.switch input{display:none}
+.switch i{position:absolute;inset:0;background:#cbd5e1;border-radius:20px;transition:.2s}
+.switch i:before{content:"";position:absolute;width:19px;height:19px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked + i{background:var(--good)}
+.switch input:checked + i:before{transform:translateX(19px)}
+.note{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.5}
+.savebar{margin-top:18px;display:flex;align-items:center;gap:12px}
+.saved-msg{font-size:13px;color:var(--good);font-weight:600;opacity:0;transition:.2s}
+.saved-msg.show{opacity:1}
+
+footer{text-align:center;color:var(--muted);font-size:12px;padding:40px 20px 50px}
+footer b{color:var(--slate)}
+.view{display:none}
+.view.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* north star pill */
+.nspill{font-size:12px;font-weight:600;color:#7a5a1e;background:var(--gold-soft);border:1px solid var(--gold-line);padding:5px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.nspill svg{flex:none}
+
+/* onboarding overlay */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.show{display:flex;animation:fade .25s ease}
+.ob-card{background:#fff;border-radius:20px;max-width:430px;padding:32px 30px;text-align:center;box-shadow:var(--shadow-lg)}
+.ob-card h2{font-family:var(--serif);font-weight:600;font-size:24px;color:var(--navy);line-height:1.2;margin-bottom:10px}
+.ob-card p{color:var(--muted);font-size:15px;margin-bottom:22px}
+.ob-actions{display:flex;flex-direction:column;gap:10px}
+.ob-actions .btn{justify-content:center;width:100%}
+
+/* quiz */
+.quizhead{text-align:center;padding:34px 0 4px}
+.quizhead h1{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.6vw,34px);color:var(--navy)}
+.qprog{height:6px;background:#e6e9ef;border-radius:4px;overflow:hidden;max-width:420px;margin:20px auto 6px}
+.qprog i{display:block;height:100%;background:var(--gold);border-radius:4px;transition:.35s}
+.qcount{text-align:center;font-size:12.5px;color:var(--muted);font-weight:600;letter-spacing:.4px}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:30px 26px;margin-top:18px;animation:fade .25s ease}
+.qcard .scene{font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:8px}
+.qcard .qq{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--navy);text-align:center;line-height:1.3;margin-bottom:22px}
+.qopts{display:flex;flex-direction:column;gap:12px}
+.qopt{text-align:left;border:1.5px solid var(--line);background:#fbfcfd;border-radius:14px;padding:16px 18px;font-size:15.5px;color:var(--ink);transition:.15s;line-height:1.45;display:flex;gap:13px;align-items:center}
+.qopt:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+.qopt .pick{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#94a3b8;transition:.15s}
+.qopt:hover .pick{border-color:var(--gold);color:var(--gold)}
+.qback{display:block;margin:18px auto 0;color:var(--muted);font-size:13.5px;font-weight:600}
+.qback:hover{color:var(--slate)}
+
+/* values results / profile */
+.northcard{background:linear-gradient(180deg,#0f172a,#1c2a44);color:#fff;border-radius:20px;padding:26px;text-align:center;box-shadow:var(--shadow-lg);margin-top:8px}
+.northcard .lbl{font-size:11.5px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--gold);display:inline-flex;gap:7px;align-items:center}
+.northcard h2{font-family:var(--serif);font-weight:600;font-size:30px;margin:10px 0 6px}
+.northcard p{color:#c4d0e2;font-size:15px;max-width:460px;margin:0 auto}
+.vlist{margin-top:20px;display:flex;flex-direction:column;gap:11px}
+.vrow{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:15px 17px;display:flex;align-items:center;gap:15px}
+.vrow .rank{flex:none;width:30px;height:30px;border-radius:9px;background:var(--gold-soft);color:#7a5a1e;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.vrow .vmain{flex:1;min-width:0}
+.vrow h4{font-size:15.5px;color:var(--navy);font-weight:700}
+.vrow p{font-size:13.5px;color:var(--muted);margin-top:1px}
+.vrow .star-btn{flex:none;font-size:12px;font-weight:600;color:var(--gold);border:1px solid var(--gold-line);background:var(--gold-soft);padding:6px 11px;border-radius:9px;white-space:nowrap}
+.vrow .star-btn.is{background:var(--gold);color:#fff;border-color:var(--gold)}
+.vrow.dim{opacity:.6}
+.vrow.dim .rank{background:#eef1f5;color:#94a3b8}
+.vactions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+.vintro{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);text-align:center}
+.vintro p{color:var(--slate);font-size:15px;max-width:480px;margin:0 auto 16px}
+
+/* values check band in results */
+.vcheck{background:#fbf8f1;border:1px solid var(--gold-line);border-radius:14px;padding:16px 18px;margin-top:22px}
+.vcheck h5{font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9a7320;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.vcheck .honor{font-size:14px;color:var(--slate);margin-bottom:8px}
+.vcheck .honor b{color:#7a5a1e}
+.vcheck .nudge{font-size:14.5px;color:var(--ink);font-weight:500;border-left:3px solid var(--gold);padding-left:12px}
+.vcheck .setup{font-size:13.5px;color:var(--muted)}
+.vcheck .setup a{color:var(--gold);font-weight:600;cursor:pointer;text-decoration:underline}
+
+/* AI status chip + backup banner */
+.reqpill{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#9a7320;background:var(--gold-soft);border:1px solid var(--gold-line);padding:3px 9px;border-radius:20px;vertical-align:middle}
+.reqpill.on{color:#1f7a57;background:var(--good-soft);border-color:#c4e6d5}
+.aibanner{font-size:13px;color:#5c4a2a;background:var(--gold-soft);border:1px solid var(--gold-line);padding:11px 14px;border-radius:11px;margin-bottom:18px}
+.aibanner a{color:var(--gold);font-weight:700;cursor:pointer;text-decoration:underline}
+.panel select{appearance:none;-webkit-appearance:none;background:#f7f8fa url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right 12px center;border:1px solid var(--line);border-radius:10px;padding:11px 34px 11px 13px;font-size:14px;font-family:inherit;color:var(--ink);font-weight:500;cursor:pointer;width:100%}
+.panel select:focus{border-color:var(--gold-line);outline:none}
+
+/* psychological lens */
+.lenspsy{background:#eef4f3;border:1px solid #d7e6e1;border-radius:13px;padding:14px 16px;margin-bottom:22px}
+.lenspsy h5{font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#347a67;margin-bottom:6px}
+.lenspsy p{font-size:14.5px;color:var(--slate)}
+
+/* course of direction */
+.plan{margin-top:30px}
+.tryblock{background:var(--good-soft);border:1px solid #c4e6d5;border-radius:13px;padding:14px 16px;margin-bottom:14px}
+.tryblock .tl{font-size:12.5px;font-weight:700;color:#1f7a57;display:block;margin-bottom:5px}
+.tryblock p{font-size:14.5px;color:var(--slate)}
+.planstage{display:flex;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.planstage .pn{flex:none;width:28px;height:28px;border-radius:8px;background:var(--navy);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.planstage .pbody h4{font-size:14.5px;color:var(--navy);font-weight:700;margin-bottom:2px}
+.planstage .pbody p{font-size:14px;color:var(--slate)}
+
+/* safety screen */
+.safety{background:#fff;border:1px solid #f0d9c9;border-left:5px solid #d4733a;border-radius:16px;padding:26px;box-shadow:var(--shadow-lg)}
+.safety .sf-icon{font-size:28px;color:#d4733a;line-height:1}
+.safety h2{font-family:var(--serif);font-weight:600;font-size:23px;color:var(--navy);margin:8px 0}
+.safety p{font-size:15px;color:var(--slate);margin-bottom:16px;max-width:620px}
+.sf-list{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.sf-row{background:#fbf6f2;border:1px solid #f0e0d2;border-radius:11px;padding:12px 15px;display:flex;flex-direction:column;gap:1px}
+.sf-row b{color:var(--navy);font-size:14.5px}
+.sf-row span{font-size:14px;color:var(--slate)}
+.sf-foot{font-size:13px;color:var(--muted)}
+.sf-continue{font-size:13.5px;color:var(--muted);font-weight:600;text-decoration:underline;cursor:pointer;margin-top:6px}
+.sf-continue:hover{color:var(--slate)}
+
+/* My Path */
+.pathcard{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 19px;margin-bottom:14px;box-shadow:var(--shadow)}
+.pathcard.isdone{opacity:.72}
+.pc-top{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.pc-when{font-size:12px;color:var(--muted);font-weight:600}
+.pc-prog{margin-left:auto;display:flex;align-items:center;gap:8px}
+.pc-bar{width:90px;height:6px;background:#eef1f5;border-radius:4px;overflow:hidden}
+.pc-bar i{display:block;height:100%;background:var(--good);border-radius:4px;transition:.3s}
+.pc-prog span{font-size:11.5px;font-weight:700;color:var(--muted)}
+.pc-sit{font-size:15px;color:var(--ink);font-weight:500;margin-bottom:6px}
+.pc-tech{font-size:12.5px;color:#1f7a57;font-weight:600;margin-bottom:12px}
+.pc-stages{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.pc-stage{display:flex;gap:11px;align-items:flex-start;background:#fafbfc;border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;transition:.15s}
+.pc-stage.on{background:var(--good-soft);border-color:#c4e6d5}
+.pc-stage input{display:none}
+.pc-check{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #cbd5e1;margin-top:1px;position:relative;transition:.15s}
+.pc-stage.on .pc-check{background:var(--good);border-color:var(--good)}
+.pc-stage.on .pc-check:after{content:"✓";position:absolute;color:#fff;font-size:13px;font-weight:800;top:-3px;left:2px}
+.pc-txt{font-size:13.5px;color:var(--slate);line-height:1.45}
+.pc-txt b{color:var(--navy);font-size:14px}
+.pc-checkins{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.pc-ci{font-size:13px;color:var(--slate);background:#f6f7f9;border-radius:9px;padding:8px 11px}
+.pc-cidate{font-weight:700;color:var(--muted);margin-right:6px}
+.pc-note{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px;resize:vertical;min-height:54px;outline:none}
+.pc-note:focus{border-color:var(--gold-line)}
+.pc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.pc-actions .btn{font-size:13px;padding:8px 14px}
+.pathstats{display:flex;gap:12px;margin-bottom:18px}
+.pstat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);padding:15px 12px;text-align:center}
+.pstat b{display:block;font-family:var(--serif);font-weight:600;font-size:26px;color:var(--navy);line-height:1}
+.pstat span{font-size:12px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
+.pathnote{background:var(--good-soft);border:1px solid #c4e6d5;border-radius:13px;padding:16px 18px;font-size:14.5px;color:var(--slate)}
+.pathnote a{color:#1f7a57;font-weight:700;cursor:pointer;text-decoration:underline}
+
+/* quick-start prompts */
+.quickstart{margin-top:24px}
+.qs-head{font-size:13.5px;font-weight:600;color:var(--muted);margin-bottom:16px;text-align:center}
+.qs-cat{margin-bottom:15px}
+.qs-cat-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.qs-chips{display:flex;flex-wrap:wrap;gap:9px}
+.qchip{font-size:14px;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:10px 15px;border-radius:12px;transition:.15s;box-shadow:var(--shadow);font-weight:500}
+.qchip:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e;transform:translateY(-1px)}
+.composer{position:relative}
+.composer:before{content:"…or describe it in your own words";position:absolute;top:-11px;left:18px;background:var(--surface);padding:0 8px;font-size:11.5px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
+
+/* feelings check-in */
+.feelings{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px;padding:14px 15px;background:linear-gradient(180deg,#eef2fb,#f4f0fb);border:1px solid #dde1f4;border-radius:13px}
+.feel-lbl{font-size:12.5px;font-weight:700;color:#4a55a8;margin-right:4px;letter-spacing:.2px;display:inline-flex;align-items:center;gap:6px}
+.feel-lbl:before{content:"♥";color:#7b6fc7;font-size:13px}
+.feel-lbl em{font-style:normal;font-weight:500;color:#8088c2}
+.feel-chip{font-size:12.5px;color:#46506e;background:#fff;border:1px solid #d7dcf0;padding:6px 13px;border-radius:18px;transition:.15s;font-weight:500}
+.feel-chip:hover{border-color:#8e98d8;background:#f1f3fd;transform:translateY(-1px)}
+.feel-chip.on{background:#4a55a8;color:#fff;border-color:#4a55a8;box-shadow:0 2px 7px rgba(74,85,168,.32)}
+
+/* warm acknowledgment + quick take */
+.ack{background:var(--good-soft);border:1px solid #c4e6d5;border-radius:12px;padding:13px 15px;font-size:14.5px;color:var(--slate);margin-bottom:18px}
+.qcard-take{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px 22px}
+.qt-label{font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.qt-body{font-size:15.5px;color:var(--ink);line-height:1.55;margin-bottom:14px}
+.qt-body b{color:var(--navy)}
+.qt-step{font-size:14.5px;color:#5c4a2a;background:#f8f6f1;border:1px solid var(--gold-line);border-radius:10px;padding:11px 13px;margin-bottom:13px}
+.qt-step b{color:#7a5a1e}
+.q-vn{font-size:14px;color:var(--ink);font-weight:500;border-left:3px solid var(--gold);padding-left:12px;margin:6px 0}
+.qt-foot{font-size:12px;color:var(--muted);margin-top:13px}
+
+/* principle to carry (in results) */
+.principle{background:#f8f6f1;border:1px solid var(--gold-line);border-radius:11px;padding:12px 15px;margin-top:14px;font-size:14.5px;color:#5c4a2a}
+.principle b{color:#7a5a1e}
+/* principles in library */
+.principlegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 16px;box-shadow:var(--shadow);display:flex;gap:13px;align-items:flex-start}
+.pcard .pnum{flex:none;width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:#7a5a1e;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.pcard h4{font-size:14.5px;color:var(--navy);font-weight:700}
+.pcard p{font-size:13.5px;color:var(--slate);font-style:italic;margin-top:2px}
+
+/* practices */
+.prac-feature{background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:16px;padding:16px 18px;margin-top:8px}
+.pf-label{font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9a7320;margin-bottom:10px}
+.prac-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.prac{background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);overflow:hidden}
+.prac-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}
+.prac-head h4{font-size:15px;color:var(--navy);font-weight:700}
+.prac-meta{display:flex;gap:8px;margin-top:5px}
+.prac-time{font-size:11px;font-weight:700;background:var(--navy);color:#fff;padding:2px 8px;border-radius:6px}
+.prac-tag{font-size:11px;font-weight:600;background:#eef1f5;color:var(--slate);padding:2px 8px;border-radius:6px}
+.prac-chev{margin-left:auto;color:var(--muted);transition:.2s;font-size:13px}
+.prac.open .prac-chev{transform:rotate(180deg)}
+.prac-body{display:none;padding:0 16px 16px}
+.prac.open .prac-body{display:block}
+.prac-desc{font-size:14px;color:var(--slate);margin-bottom:10px}
+.prac-steps{margin:0 0 12px;padding-left:20px;font-size:14px;color:var(--ink)}
+.prac-steps li{margin-bottom:5px}
+.prac-foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.prac-foot .btn{font-size:13px;padding:7px 13px}
+.prac-log{font-size:12.5px;color:var(--good);font-weight:600}
+
+/* collapsible "show more" sections (progressive disclosure) */
+details.more{margin-top:18px;border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+details.more>summary{list-style:none;cursor:pointer;padding:14px 18px;font-size:14px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:9px;user-select:none}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary:before{content:"▸";color:var(--gold);font-weight:700;transition:.2s}
+details.more[open]>summary:before{transform:rotate(90deg)}
+details.more>summary:hover{background:#f7f8fa}
+.more-body{padding:4px 18px 16px}
+.more-body .fwk:first-child{margin-top:4px}
+/* helpfulness feedback */
+.fb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;padding:12px 14px;background:#f7f8fa;border:1px solid var(--line);border-radius:11px}
+.fb-q{font-size:13px;font-weight:600;color:var(--muted);margin-right:2px}
+.fb-b{font-size:13px;font-weight:600;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:9px;transition:.15s}
+.fb-b:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}
+
+@media(max-width:680px){
+  .callouts,.libgrid,.principlegrid{grid-template-columns:1fr}
+  nav.tabs button{padding:7px 7px;font-size:11px}
+  .brand small{display:none}
+  .northcard h2{font-size:25px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <div class="brand">
+      <svg class="star" viewBox="0 0 32 32" fill="none"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>
+      <div>Lodestar<small>Find your way through</small></div>
+    </div>
+    <nav class="tabs">
+      <button data-view="coach" class="active">Coach</button>
+      <button data-view="practices">Practices</button>
+      <button data-view="path">My Path</button>
+      <button data-view="values">My Values</button>
+      <button data-view="library">Library</button>
+      <button data-view="history">History</button>
+      <button data-view="settings">Settings</button>
+    </nav>
+    <button class="helplink" id="helpLink" title="Crisis &amp; support resources">♥ Need help?</button>
+  </div>
+</header>
+
+<!-- COACH -->
+<section class="view active" id="coach">
+  <div class="wrap">
+    <div class="hero">
+      <h1>What are you<br>working through?</h1>
+      <p>A decision, a hard conversation, a relationship, a leadership challenge — or something you're wrestling with inside. Lodestar helps you see it clearly and gives you a path rooted in your values.</p>
+    </div>
+
+    <div class="quickstart" id="quickstart"></div>
+
+    <div class="composer">
+      <textarea id="situation" placeholder="Tell me what's going on — at work or in life. e.g. “I've been carrying way too much lately, I'm short with the people I love, and I can't tell if I need to make a change or just push through.” The more honest you are, the more useful I can be."></textarea>
+      <div class="feelings" id="feelings"></div>
+      <div class="ctx">
+        <div class="field"><label>Who's involved</label>
+          <select id="relationship">
+            <option value="direct report">A direct report</option>
+            <option value="team">My whole team</option>
+            <option value="peer">A peer / colleague</option>
+            <option value="manager">My boss</option>
+            <option value="external">A client / external party</option>
+            <option value="partner">A partner / family member</option>
+            <option value="friend">A friend</option>
+            <option value="myself">Mostly myself</option>
+          </select>
+        </div>
+        <div class="field"><label>Stakes</label>
+          <select id="stakes">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="field"><label>Timing</label>
+          <select id="urgency">
+            <option value="urgent">Needs handling now</option>
+            <option value="soon" selected>This week</option>
+            <option value="ongoing">Ongoing / no rush</option>
+          </select>
+        </div>
+        <div class="field"><label>Your aim</label>
+          <select id="aim">
+            <option value="resolve">Resolve the issue</option>
+            <option value="relationship">Protect the relationship</option>
+            <option value="performance">Lift performance</option>
+            <option value="decide">Make the right call</option>
+            <option value="growth">Help them grow</option>
+          </select>
+        </div>
+      </div>
+      <div class="go">
+        <button class="btn" id="analyze">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Get guidance
+        </button>
+        <button class="btn ghost" id="quickbtn" title="A fast, condensed take">⚡ Quick gut-check</button>
+        <span class="aiflag"><span class="dot" id="aidot"></span><span id="ailabel">Built-in coaching engine</span></span>
+        <span class="nspill" id="nspill" style="display:none"></span>
+      </div>
+    </div>
+
+    <div id="results"></div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section class="view" id="library">
+  <div class="wrap">
+    <div class="hero"><h1>The library</h1><p>The lenses Lodestar reasons with — for work and for life. No single one is "right"; the wisdom is in moving fluidly between them.</p></div>
+    <div class="libgrid" id="libgrid"></div>
+    <div class="sec-h" style="margin-top:32px">Principles to live by</div>
+    <div class="sec-sub">Twelve principles for building a life you don't have to settle in.</div>
+    <div class="principlegrid" id="libprinciples"></div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section class="view" id="history">
+  <div class="wrap">
+    <div class="hero"><h1>Your history</h1><p>Situations you've worked through. Click any to revisit the guidance.</p></div>
+    <div class="hist" id="histlist"></div>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="view" id="settings">
+  <div class="wrap">
+    <div class="hero"><h1>Settings</h1><p>Lodestar works fully on its own — no account, no key, no cost. If you'd like deeper, more personalized coaching, you can connect an AI of your choice. Entirely optional.</p></div>
+    <div class="panel">
+      <h3>Connect your AI <span class="reqpill" id="aistatuschip">Optional</span></h3>
+      <p class="d">The built-in engine already gives you full framework-based guidance for free. Connect an AI to make it more powerful — it will read your situation, reason through the frameworks and your values, and tailor your path more deeply. Pick whichever provider you already use.</p>
+      <label class="fl" for="aiprovider">AI provider</label>
+      <select id="aiprovider">
+        <option value="anthropic">Anthropic (Claude)</option>
+        <option value="openai">OpenAI (GPT)</option>
+        <option value="google">Google (Gemini)</option>
+      </select>
+      <label class="fl" for="apikey">API key</label>
+      <input type="password" id="apikey" placeholder="Paste your key">
+      <label class="fl" for="aimodel">Model <span style="color:var(--muted);font-weight:400">(optional — leave blank for a sensible default)</span></label>
+      <input type="text" id="aimodel" placeholder="e.g. claude-sonnet-4-6 · gpt-4o · gemini-1.5-flash">
+      <div class="savebar">
+        <button class="btn" id="savekey">Save</button>
+        <button class="btn ghost" id="clearkey">Disconnect</button>
+        <span class="saved-msg" id="savedmsg">Saved</span>
+      </div>
+      <p class="note">🔒 Your key is stored only in this browser and is sent only to the provider you choose — never to any Lodestar server. Get a key from your provider's console. Disconnect any time to return to the free built-in engine.</p>
+    </div>
+    <div class="panel">
+      <h3>Your privacy — in plain language</h3>
+      <p class="d" style="margin-bottom:10px">Here's exactly what happens to what you write:</p>
+      <ul style="margin:0 0 4px;padding-left:20px;font-size:14px;color:var(--slate);line-height:1.6">
+        <li>Everything you enter — your situations, values, history, plans, and practice check-ins — is stored <b>only in this browser, on this device</b>. It is never sent to a Lodestar server (there isn't one yet).</li>
+        <li><b>Without an AI connected, nothing you type ever leaves your device.</b></li>
+        <li>If you connect an AI, the text of your situation is sent <b>directly to the provider you chose</b> (Anthropic, OpenAI, or Google) to generate guidance, under their privacy terms. Your key is stored only in this browser.</li>
+        <li>Clearing your browser data (or using private/incognito mode) will erase everything. There is no backup.</li>
+        <li>Please don't store anyone's private health records or another person's identifying details here. Lodestar is for your own reflection.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>About this prototype</h3>
+      <p class="d" style="margin:0">Lodestar is an early working prototype and a thinking partner for reflection — <b>not therapy, medical or crisis care, and not a substitute</b> for HR, legal, or professional judgment on serious matters. If you're struggling, the “♥ Need help?” link at the top has real resources, any time.</p>
+      <p class="note" id="fbStats" style="margin-top:12px"></p>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICES -->
+<section class="view" id="practices">
+  <div class="wrap">
+    <div class="hero"><h1>Practices</h1><p>Small things you can do on any ordinary day to steady yourself, know yourself, and grow — not just when something's wrong. Pick one and try it.</p></div>
+    <div id="practicesBody"></div>
+  </div>
+</section>
+
+<!-- MY PATH -->
+<section class="view" id="path">
+  <div class="wrap">
+    <div class="hero"><h1>My Path</h1><p>The plans you've started, and how they're going. Coming back to reflect is where the change actually sticks.</p></div>
+    <div id="pathBody"></div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="view" id="values">
+  <div class="wrap">
+    <div class="hero"><h1>Your leadership values</h1><p>The values you lead by — and the ones Lodestar uses to keep you honest. Great leadership isn't doing what's easy; it's doing what's true to these.</p></div>
+    <div id="valuesBody"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="view" id="quiz">
+  <div class="wrap">
+    <div id="quizBody"></div>
+  </div>
+</section>
+
+<!-- HELP / RESOURCES OVERLAY -->
+<div class="overlay" id="helpOverlay">
+  <div class="ob-card" style="max-width:500px">
+    <h2>You don't have to face this alone.</h2>
+    <p>If you're struggling, in crisis, or unsafe, please reach out — these are free, confidential, and available any time. Lodestar is a coaching tool, not a substitute for real support.</p>
+    <div id="helpResources" style="text-align:left"></div>
+    <div class="ob-actions"><button class="btn ghost" id="helpClose">Close</button></div>
+  </div>
+</div>
+
+<!-- ONBOARDING OVERLAY -->
+<div class="overlay" id="onboard">
+  <div class="ob-card">
+    <svg class="star" style="width:42px;height:42px;margin:0 auto 6px;display:block" viewBox="0 0 32 32" fill="none"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>
+    <h2>Before we start, let's find your North Star.</h2>
+    <p>Lodestar helps you lead in line with your own values — and gently calls it out when you're about to drift from them. It takes about two minutes to discover yours.</p>
+    <div class="ob-actions">
+      <button class="btn" id="obStart">Discover my values</button>
+      <button class="btn ghost" id="obSkip">Skip for now</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>Lodestar</b> · Prototype v3 · A coaching &amp; self-reflection companion — not therapy, medical, or crisis care.<br>If you're in crisis, call or text <b>988</b> (US) anytime. Lead by your values, not by default.
+</footer>
+
+<script>
+/* ============================ KNOWLEDGE BASE ============================ */
+const FRAMEWORKS = [
+  {
+    id:"servant", name:"Servant Leadership", school:"Robert Greenleaf · James Hunter", color:"#2f8f6b",
+    summary:"Leadership as service. You meet legitimate needs, remove obstacles, and lead by example. Authority is earned through care, not granted by title.",
+    bestfor:"Trust, morale, growth, culture",
+    lens:"asks first what this person needs from you — not what you need from them. The situation is a chance to build authority by serving, not asserting.",
+    moves:["Start by understanding their world before stating your position","Ask what's getting in their way — then remove it","Model the behavior you want rather than mandating it"],
+    script:"Help me understand what this looks like from where you sit. What do you need from me to do your best work here?",
+    watchout:"Service isn't softness. Caring about people still means holding them to clear, high standards.",
+    plan:["Lead with curiosity","Surface the real need","Commit to remove one obstacle","Follow through visibly"],
+    themes:{trust:3,motivation:3,growth:3,new_leader:2,conflict:2,difficult_conversation:2,underperformance:2,team:2,change:1}
+  },
+  {
+    id:"empathy", name:"Tactical Empathy", school:"Chris Voss · 'Never Split the Difference'", color:"#3a6ea5",
+    summary:"Influence through deep, demonstrated understanding. Use labels, mirrors, and calibrated questions to lower defensiveness and uncover what really drives the other person.",
+    bestfor:"Hard conversations, negotiation, defensiveness",
+    lens:"would slow the conversation down and make the other person feel heard before any problem-solving. Defensiveness drops when people feel understood.",
+    moves:["Label the emotion in the room: 'It seems like…'","Ask calibrated 'how' and 'what' questions, not 'why'","Aim for 'that's right' — proof they feel understood"],
+    script:"It seems like this has felt unfair to you. What would need to change for this to feel workable?",
+    watchout:"Tactics ring hollow without genuine curiosity. The empathy has to be real, not a technique you run on people.",
+    plan:["Defuse with a label","Get to 'that's right'","Use calibrated questions to co-create the path","Let them voice the solution"],
+    themes:{difficult_conversation:3,negotiation:3,conflict:3,attitude:2,manager:2,external:2,trust:2,decision:1}
+  },
+  {
+    id:"situational", name:"Situational Leadership", school:"Hersey & Blanchard", color:"#c8923a",
+    summary:"There is no best style — only the right style for this person on this task. Flex between directing, coaching, supporting, and delegating based on their competence and commitment.",
+    bestfor:"Performance, developing people, delegation",
+    lens:"first diagnoses where this person actually is — skill and will — then matches your style to that, rather than defaulting to how you'd want to be led.",
+    moves:["Diagnose: do they lack skill, will, or both?","Match style — direct the new, delegate to the proven","Adjust as they grow; don't get stuck in one gear"],
+    script:"Let's get specific about what 'good' looks like here, then I'll give you as much room as this calls for.",
+    watchout:"Misreading someone's level is the trap — over-directing the capable demoralizes; under-supporting the new sets them up to fail.",
+    plan:["Diagnose skill vs. will","Pick the matching style","Set clear expectations","Step support up or down deliberately"],
+    themes:{underperformance:3,growth:3,performance:3,new_leader:2,motivation:2,team:1,decision:1,delegation:3}
+  },
+  {
+    id:"adaptive", name:"Adaptive Leadership", school:"Ronald Heifetz · Harvard", color:"#7a5ea5",
+    summary:"Distinguish technical problems (known fixes) from adaptive challenges (require people to change values, habits, or beliefs). You can't solve adaptive challenges with authority — you mobilize people through the discomfort.",
+    bestfor:"Change, ambiguity, systemic issues",
+    lens:"asks whether this is really a technical fix or an adaptive challenge that asks people to change. The latter can't be solved — it has to be navigated with them.",
+    moves:["Name whether the work is technical or adaptive","'Get on the balcony' — see the whole system, not just the event","Give the work back to the people who must own the change"],
+    script:"This isn't something I can fix for us. What are we each going to have to do differently for this to work?",
+    watchout:"Pacing matters — push change faster than people can absorb and you trigger resistance; too slow and the moment passes.",
+    plan:["Diagnose technical vs. adaptive","Get on the balcony","Regulate the heat","Give the work back"],
+    themes:{change:3,team:2,vision:3,crisis:2,decision:2,trust:1,motivation:1}
+  },
+  {
+    id:"transformational", name:"Transformational Leadership", school:"Burns & Bass", color:"#b8543f",
+    summary:"Lift people beyond self-interest toward a shared purpose. Inspire with vision, challenge people intellectually, and give individualized attention so they grow.",
+    bestfor:"Vision, motivation, culture, change",
+    lens:"connects this moment to a bigger 'why' and to who this person is becoming, raising the sights above the immediate friction.",
+    moves:["Tie the ask to a purpose people believe in","Show genuine individualized interest in each person","Hold a compelling picture of what's possible"],
+    script:"Here's what we're really building, and here's the part only you can play in it.",
+    watchout:"Vision without follow-through becomes hot air. Inspiration has to be matched by consistency and credibility.",
+    plan:["Reconnect to purpose","Make it personal and individualized","Raise the standard","Reinforce momentum"],
+    themes:{vision:3,motivation:3,change:2,team:2,growth:2,new_leader:1}
+  },
+  {
+    id:"eq", name:"Emotional Intelligence", school:"Daniel Goleman", color:"#2f8f8f",
+    summary:"Lead yourself before you lead others. Self-awareness and self-regulation come first, then empathy and relationship management. The leader's mood is contagious.",
+    bestfor:"Self-management, tense moments, climate",
+    lens:"starts with your own state. What are you feeling, and how is it landing on others? Manage that before managing the situation.",
+    moves:["Name your own trigger before you react","Regulate — create a gap between feeling and response","Read the emotional climate and set the tone deliberately"],
+    script:"(to yourself first) What am I feeling right now, and what does this person most need from me in this moment?",
+    watchout:"Suppressing emotion isn't regulation. The goal is awareness and choice, not a flat poker face.",
+    plan:["Check your own state","Create the pause","Attune to them","Choose your tone on purpose"],
+    themes:{conflict:2,crisis:3,attitude:2,myself:3,difficult_conversation:2,trust:2,motivation:1}
+  },
+  {
+    id:"candor", name:"Radical Candor", school:"Kim Scott", color:"#d4733a",
+    summary:"Care personally AND challenge directly — at the same time. Avoid 'ruinous empathy' (nice but useless) and 'obnoxious aggression' (blunt but cold).",
+    bestfor:"Feedback, performance, accountability",
+    lens:"would name the issue clearly and kindly — refusing to let caring about the person become an excuse for withholding the truth they need.",
+    moves:["Say the hard thing — clearly, specifically, soon","Make it obvious you care while you challenge","Ask for feedback on yourself first to build safety"],
+    script:"I'm telling you this because I think highly of you and I'd be letting you down if I stayed quiet: here's what I'm seeing.",
+    watchout:"Candor without the care is just aggression. Earn the right with relationship before you lean on the challenge.",
+    plan:["Ground it in care","Name it specifically","Invite their view","Agree the change"],
+    themes:{difficult_conversation:3,underperformance:3,performance:2,attitude:2,team:1,growth:2}
+  },
+  {
+    id:"daretolead", name:"Dare to Lead", school:"Brené Brown", color:"#a64d79",
+    summary:"Courage over comfort. Lead with vulnerability, clear values, and 'rumbling' honestly with hard things. Clear is kind; unclear is unkind.",
+    bestfor:"Trust, hard conversations, culture",
+    lens:"would choose the brave, clear conversation over the comfortable, vague one — and would go in willing to be open rather than armored.",
+    moves:["Choose clarity over comfort — 'clear is kind'","Lead with appropriate vulnerability, not armor","Rumble: get curious about the story you're telling yourself"],
+    script:"The story I'm telling myself is… — but I want to check that against what's actually going on for you.",
+    watchout:"Vulnerability isn't oversharing or offloading. It's measured openness in service of trust.",
+    plan:["Get clear on values at stake","Drop the armor","Rumble honestly","Recommit together"],
+    themes:{trust:3,difficult_conversation:2,conflict:2,myself:2,attitude:2,change:1,team:2}
+  },
+  {
+    id:"trust", name:"Five Dysfunctions / Team Trust", school:"Patrick Lencioni", color:"#4a7fb5",
+    summary:"Teams fail in a chain: absence of trust → fear of conflict → lack of commitment → avoidance of accountability → inattention to results. Fix it from the bottom up.",
+    bestfor:"Team dynamics, accountability, silos",
+    lens:"looks past the surface event to the team layer beneath it — usually a trust or accountability gap that keeps producing problems like this one.",
+    moves:["Build vulnerability-based trust first","Make healthy conflict safe and expected","Drive peer accountability, not just top-down"],
+    script:"What are we each avoiding saying to one another that's keeping us stuck?",
+    watchout:"You can't shortcut to accountability. Without trust at the base, the rest collapses.",
+    plan:["Diagnose the dysfunction","Rebuild trust at the base","Normalize healthy conflict","Lock in peer accountability"],
+    themes:{team:3,conflict:2,trust:2,underperformance:1,change:1}
+  },
+  {
+    id:"coaching", name:"Coaching Leadership", school:"GROW model · Whitmore", color:"#5b8c5a",
+    summary:"Develop people by asking, not telling. Help them find their own answer through Goal, Reality, Options, Will — building ownership and capability over time.",
+    bestfor:"Growth, ownership, capable people",
+    lens:"resists giving the answer and instead helps the person reason to their own — which builds judgment and ownership for next time.",
+    moves:["Ask what they want to achieve (Goal)","Explore the real situation and options with them","Land on what they will actually do, by when"],
+    script:"What options do you see? … And which of those feels right to you, and what's the first step?",
+    watchout:"Coaching is the wrong tool in a true crisis or with someone who genuinely lacks the skill — then they need direction.",
+    plan:["Clarify their goal","Map current reality","Generate options together","Commit to action"],
+    themes:{growth:3,motivation:2,decision:2,underperformance:1,new_leader:1,performance:2}
+  },
+  {
+    id:"ownership", name:"Extreme Ownership", school:"Jocko Willink", color:"#586573",
+    summary:"The leader owns everything in their world — no excuses, no blame. If the team failed, you failed them somewhere. Total responsibility creates total credibility.",
+    bestfor:"Accountability, crisis, your own role",
+    lens:"first asks what you own in this situation — where your leadership, clarity, or standards contributed — before looking outward.",
+    moves:["Own your part first, out loud","Replace blame with 'what will I do differently'","Give clear intent so people can act without you"],
+    script:"Before anything else — here's where I own part of how we got here, and here's what I'm changing.",
+    watchout:"Ownership isn't self-flagellation or taking on others' work. It's accountability that empowers, not control that smothers.",
+    plan:["Own your contribution","Strip out blame","Clarify intent and standards","Hold the line consistently"],
+    themes:{crisis:3,underperformance:2,team:2,myself:3,performance:2,conflict:1}
+  },
+  {
+    id:"level5", name:"Level 5 Leadership", school:"Jim Collins · 'Good to Great'", color:"#7d6b55",
+    summary:"The best leaders blend deep personal humility with fierce professional will. Credit out, blame in. Ambition for the mission, not the ego.",
+    bestfor:"Long-term culture, decisions, your stance",
+    lens:"would take ego out of the equation — channeling ambition toward the outcome and the team rather than being right or looking good.",
+    moves:["Point ambition at the mission, not yourself","Give credit outward, absorb blame inward","Confront the brutal facts while keeping faith"],
+    script:"Let's be honest about the hard facts here — and just as clear that we'll find a way through.",
+    watchout:"Humility isn't passivity. Level 5 pairs modesty with relentless resolve — quiet, but not soft.",
+    plan:["Take ego off the table","Confront the brutal facts","Decide with resolve","Give the credit away"],
+    themes:{decision:3,vision:2,team:1,crisis:2,myself:2,change:1}
+  },
+  {
+    id:"stoicism", name:"Stoicism", school:"Epictetus · Marcus Aurelius", color:"#5b6b7a",
+    summary:"Peace comes from knowing what is and isn't in your control. You pour your energy into your own choices and responses, and practice releasing everything else.",
+    bestfor:"Stress, acceptance, hard decisions",
+    lens:"asks what here is actually within your control — and steers your energy there, instead of into what you can't change.",
+    moves:["Separate what you control from what you don't","Act fully on your part; release the outcome","Remember your response is always yours to choose"],
+    script:"What part of this is mine to act on — and what do I need to accept?",
+    watchout:"Acceptance isn't resignation. You still act; you just stop fighting reality.",
+    plan:["Name what's in and out of your control","Pour energy into your part","Practice releasing the rest","Judge yourself by effort, not outcome"],
+    themes:{anxiety:3,decision:2,change:2,crisis:2,myself:2,money:2,transition:1,purpose:1,anger:1}
+  },
+  {
+    id:"meaning", name:"Meaning & Purpose", school:"Viktor Frankl · Logotherapy", color:"#6f5aa6",
+    summary:"When you can't change a situation, you can still choose your response and find meaning in it. Purpose is what makes the unbearable bearable.",
+    bestfor:"Grief, purpose, feeling lost",
+    lens:"looks for what this hardship might be asking of you — not to excuse the pain, but because a 'why' makes it possible to carry.",
+    moves:["Ask what this moment is asking of you","Find a 'why' you can carry through it","Choose your attitude when you can't change the facts"],
+    script:"I can't change this — so what is it calling me to become?",
+    watchout:"Don't rush to meaning over a fresh wound. Sometimes presence comes first, and meaning later.",
+    plan:["Let yourself feel it honestly","Look for what it's asking of you","Choose a response you can be proud of","Take one meaningful step"],
+    themes:{grief:3,purpose:3,motivation:2,transition:2,crisis:2,myself:1,loneliness:1}
+  },
+  {
+    id:"nvc", name:"Nonviolent Communication", school:"Marshall Rosenberg", color:"#b5683f",
+    summary:"Connect by separating observation from judgment, and by speaking your real feelings and needs instead of blame — then making a clear, doable request.",
+    bestfor:"Relationships, conflict, hard talks",
+    lens:"strips the blame out and gets to what you actually feel and need — which is what the other person can finally hear.",
+    moves:["State the observable fact, not your interpretation","Name your feeling and the need beneath it","Make a clear, doable request — not a demand"],
+    script:"When ___ happened, I felt ___, because I need ___. Would you be willing to ___?",
+    watchout:"A request becomes a demand the moment 'no' isn't allowed. Stay genuinely open to their answer.",
+    plan:["Separate the fact from your story","Name your feeling and need","Make one clear request","Listen for theirs in return"],
+    themes:{relationship:3,conflict:3,difficult_conversation:3,boundaries:2,anger:2,parenting:1,family:1}
+  },
+  {
+    id:"boundaries", name:"Healthy Boundaries", school:"Cloud & Townsend", color:"#5a86a8",
+    summary:"You're responsible for your own yard — your choices, feelings, and limits — not everyone else's. Clear, kind boundaries are what make relationships sustainable.",
+    bestfor:"Boundaries, resentment, overcommitment",
+    lens:"checks where your responsibility ends and theirs begins — and reads resentment as a sign you said yes where you needed a no.",
+    moves:["Own your yard; let others own theirs","Say a kind, clear no — without a paragraph of excuses","Let resentment point you to the boundary you skipped"],
+    script:"I care about you, and I can't take this on. Here's what I can do instead.",
+    watchout:"Boundaries are about your behavior, not controlling theirs. You set the limit; you don't police them.",
+    plan:["Notice where resentment is building","Decide the limit you need","State it kindly and clearly","Hold it without over-explaining"],
+    themes:{boundaries:3,anger:2,guilt:2,relationship:2,anxiety:1,parenting:1,money:1}
+  },
+  {
+    id:"habits", name:"Behavior Change", school:"Atomic Habits · BJ Fogg", color:"#6b9a4f",
+    summary:"Lasting change runs on design, not willpower. Shrink the behavior until it's too small to fail, attach it to what you already do, and make good choices easy.",
+    bestfor:"Habits, follow-through, procrastination",
+    lens:"looks past motivation to design — making the change small enough and easy enough that it actually happens.",
+    moves:["Shrink it to a two-minute version","Stack it onto a habit you already have","Make the good thing easy and the bad thing harder"],
+    script:"What's the smallest version of this I couldn't fail to do today?",
+    watchout:"Waiting to 'feel motivated' is the trap — motivation comes and goes. Build the system, not the burst.",
+    plan:["Pick the two-minute version","Anchor it to an existing routine","Make it obvious and easy","Track the streak, forgive a miss"],
+    themes:{habits:3,motivation:2,change:2,growth:2,selfworth:1,procrastination:3}
+  },
+  {
+    id:"grief", name:"Grief & Transitions", school:"Kübler-Ross · William Bridges", color:"#6b7a8a",
+    summary:"Every change begins with an ending that has to be grieved. Honor what's over, expect a disorienting in-between, and let the new beginning arrive in its own time.",
+    bestfor:"Grief, loss, life transitions",
+    lens:"treats this as a real ending that deserves grieving before any new beginning — and refuses to rush you through the in-between.",
+    moves:["Let the feeling move through; don't manage it away","Honor what's ending before forcing what's next","Expect a messy 'neutral zone' between old and new"],
+    script:"This is a real loss. I'm allowed to feel it before I figure out what's next.",
+    watchout:"There's no schedule for grief. 'Moving on' isn't the goal — carrying it differently is.",
+    plan:["Name what's ending","Let yourself grieve it","Be patient in the in-between","Notice the first signs of the new"],
+    themes:{grief:3,transition:3,change:2,loneliness:2,purpose:1,myself:1}
+  },
+  {
+    id:"recovery", name:"Recovery Wisdom", school:"12-Step rooms · Serenity Prayer", color:"#9a7320",
+    summary:"Hard-won, universal wisdom: take it one day at a time, accept what you can't change, change what you can, and tend to yourself before you react. You don't have to do it alone.",
+    bestfor:"Overwhelm, resentment, one day at a time",
+    lens:"slows it all down to right now — sorting what to accept from what you can change, and tending yourself before reacting.",
+    moves:["Accept what you can't change; change what you can","Take the next right step, just for today","Before reacting, run HALT: hungry, angry, lonely, tired?"],
+    script:"Grant me the serenity to accept what I can't change, the courage to change what I can, and the wisdom to know the difference.",
+    watchout:"Acceptance first doesn't mean facing it alone — reaching out for support is a strength, not a failure.",
+    plan:["Name what you can't control and accept it","Choose the one thing you can change","Take only the next right step today","Reach out to one person"],
+    themes:{anxiety:2,crisis:3,myself:2,motivation:2,anger:2,change:1,loneliness:2,money:1}
+  },
+  {
+    id:"lodestar", name:"The Lodestar Lens", school:"Dignity-first, servant-hearted leadership", color:"#a9803a",
+    summary:"People don't remember the treatment that saved their life — they remember how they were treated. So the first question is never just 'what's the right move?' but 'how will the person on the other end feel treated?' Lead with dignity, serve first, and be bold, brave, and authentic enough to tell the truth with care.",
+    bestfor:"Dignity, trust, culture, how people are treated",
+    lens:"asks not only what the right move is, but how the other person will feel treated when it's over — because that's what they'll carry. It pairs real warmth with the courage to be honest.",
+    moves:["Lead with how people are treated, not just what gets done","Be bold, brave, and authentic — say the true thing, with care","Serve first: remove the obstacle, protect their dignity, model it yourself","Choose a path that's sustainable — a win that burns people out isn't a win"],
+    script:"However this turns out, I want you to walk away feeling respected. Let's start there — then we'll be honest about the hard part.",
+    watchout:"Warmth without honesty is just niceness. Treating people well includes telling them the truth and holding the standard — that's respect, not harshness.",
+    plan:["Ask how they'll feel treated by this","Choose the bold, authentic move over the comfortable one","Serve a real need underneath the issue","Model it yourself — don't just mandate it"],
+    themes:{trust:3,new_leader:3,difficult_conversation:2,relationship:2,conflict:2,team:2,attitude:2,motivation:2,crisis:1,myself:1,boundaries:1}
+  },
+  {
+    id:"hedgehog", name:"The Four-Circle Hedgehog", school:"Jim Collins, plus a well-being circle", color:"#3f7d6e",
+    summary:"Find the sweet spot where four circles overlap: what you're deeply passionate about, what you can be excellent at, what sustains you economically, and what keeps you well. Anything missing a circle eventually breaks down.",
+    bestfor:"Life & career fit, big decisions, purpose",
+    lens:"checks your situation against four circles — passion, excellence, economics, and well-being — and looks for where they overlap, or which one's missing.",
+    moves:["Name your passion, your excellence, your economics, and your well-being","Look for the overlap — that's your sweet spot","Notice which circle this path is missing"],
+    script:"Passion without excellence is a hobby; excellence without economics is charity; economics without passion is drudgery; all three without well-being is burnout. Which am I living?",
+    watchout:"Don't drop the well-being circle to chase the other three — that's the fast road to burnout.",
+    plan:["Map the four circles honestly","Find where they overlap","Name the missing circle","Adjust toward the overlap"],
+    themes:{decision:3,purpose:3,transition:2,motivation:2,change:2,money:2,myself:1,growth:1}
+  },
+  {
+    id:"firstwho", name:"First Who, Then What", school:"Jim Collins", color:"#7a6cae",
+    summary:"Get the right people in the right seats before you figure out the plan. Who you surround yourself with — and where they sit — matters more than the strategy itself.",
+    bestfor:"Teams, relationships, life structure",
+    lens:"asks whether you have the right people in the right seats before worrying about the plan — because 'who' beats 'what'.",
+    moves:["Decide who belongs on the bus before deciding where it's going","Put people where their real strengths fit","Be honest about who's in the wrong seat — or shouldn't be on the bus"],
+    script:"Before I solve the 'what,' do I have the right people in the right seats — and am I being honest about who isn't?",
+    watchout:"Keeping the wrong person in the wrong seat out of guilt costs everyone — including them.",
+    plan:["Look at who's involved and where they sit","Match people to their real strengths","Address wrong-seat situations honestly","Then build the plan"],
+    themes:{team:3,delegation:3,new_leader:2,relationship:2,decision:2,change:2,underperformance:2}
+  },
+  {
+    id:"continuum", name:"Manage · Coach · Mentor", school:"Todd's developing-people continuum", color:"#b56b8a",
+    summary:"Three ways to grow someone: Manage ('do this' — the task, right now), Coach ('try this' — the skill, near-term), Mentor ('become this' — the character, long-term). Match the mode to what the person actually needs.",
+    bestfor:"Developing people, parenting, relating",
+    lens:"asks which mode this moment calls for — managing the task, coaching the skill, or mentoring the person — and whether you're stuck in the one you're most comfortable with.",
+    moves:["Manage the task: 'do this' — clear and immediate","Coach the skill: 'try this' — questions, near-term growth","Mentor the person: 'become this' — character, long-term"],
+    script:"Does this person need me to manage the task, coach the skill, or mentor the person right now?",
+    watchout:"Most of us default to one mode. Managing someone who needs mentoring — or mentoring someone who just needs a clear instruction — both miss.",
+    plan:["Diagnose what they actually need","Pick the mode that fits","Shift modes as they grow","Lead by example in all three"],
+    themes:{growth:3,parenting:3,underperformance:2,new_leader:2,motivation:2,delegation:2,team:1}
+  }
+];
+
+/* ============================ VALUES LAYER ============================ */
+const VALUES = {
+  integrity:{name:"Integrity",blurb:"Your actions match your words — especially when it costs you.",living:"doing the right thing when no one is watching"},
+  candor:{name:"Candor",blurb:"You tell the truth kindly and early, instead of letting things fester.",living:"saying the hard thing with care"},
+  empathy:{name:"Empathy",blurb:"You lead from the other person's perspective first.",living:"seeking to understand before being understood"},
+  accountability:{name:"Accountability",blurb:"You own your part fully — and expect the same from others.",living:"no blame, no excuses"},
+  service:{name:"Service & Humility",blurb:"You measure leadership by how well you serve, not how much you're served.",living:"removing obstacles for your people"},
+  courage:{name:"Courage",blurb:"You choose the brave path over the comfortable one.",living:"having the conversation you'd rather avoid"},
+  growth:{name:"Growth",blurb:"You're driven to develop the people around you.",living:"helping others become more capable than you"},
+  excellence:{name:"Excellence",blurb:"You hold a high bar and refuse to let it quietly slip.",living:"caring about the standard"},
+  trust:{name:"Trust & Empowerment",blurb:"You give people room and believe the best in them.",living:"letting go of control"},
+  vision:{name:"Vision & Purpose",blurb:"You connect daily work to a bigger why.",living:"keeping the mission in view"},
+  authenticity:{name:"Authenticity",blurb:"You lead as your real self — no armor, no corporate mask.",living:"being genuine over polished"},
+  connection:{name:"Connection",blurb:"You build real relationships, not just working ones.",living:"people over transactions"}
+};
+// which values each framework most embodies
+const FWK_VALUES = {
+  servant:["service","empathy"], empathy:["empathy","connection"], situational:["growth","excellence"],
+  adaptive:["courage","vision"], transformational:["vision","growth"], eq:["authenticity","empathy"],
+  candor:["candor","courage"], daretolead:["courage","authenticity"], trust:["trust","accountability"],
+  coaching:["growth","trust"], ownership:["accountability","integrity"], level5:["integrity","service"],
+  stoicism:["courage","integrity"], meaning:["vision","authenticity"], nvc:["empathy","connection"],
+  boundaries:["authenticity","courage"], habits:["growth","accountability"], grief:["empathy","authenticity"],
+  recovery:["service","accountability"], lodestar:["service","courage"],
+  hedgehog:["vision","excellence"], firstwho:["trust","accountability"], continuum:["growth","service"]
+};
+// personalized gut-check when this is the user's North Star
+const VGUT = {
+  integrity:"You said integrity is your North Star. Is the path you're leaning toward one you'd be proud to explain out loud?",
+  candor:"Candor is your North Star. Be honest: is there something true you're tempted to leave unsaid here to keep the peace?",
+  empathy:"Empathy is your North Star. Before you act — have they actually felt understood by you yet?",
+  accountability:"Accountability is your North Star. What's your part in how this came to be, before you look at theirs?",
+  service:"Service is your North Star. Are you about to do what's easiest for you, or what truly serves them?",
+  courage:"Courage is your North Star. Which option are you avoiding because it scares you — and is that the one that matters?",
+  growth:"Growth is your North Star. Are you solving this for them, or using it to help them grow?",
+  excellence:"Excellence is your North Star. Are you holding the bar here, or quietly letting it slip to avoid friction?",
+  trust:"Trust is your North Star. Are you giving them room to own this, or stepping in to control it?",
+  vision:"Vision is your North Star. Does the path you're choosing connect to the bigger why, or just put out the fire?",
+  authenticity:"Authenticity is your North Star. Are you about to lead from your real self here, or from a role you think you should play?",
+  connection:"Connection is your North Star. Will this choice deepen the relationship, or just settle the transaction?"
+};
+
+/* ============================ PRINCIPLES (Settle For More) ============================ */
+const PRINCIPLES=[
+  {n:1,title:"Cultivate amazing thoughts",mantra:"You become what you think about.",themes:["myself","selfworth","anxiety","motivation"]},
+  {n:2,title:"Get comfortable being uncomfortable",mantra:"Everything you want is on the other side of fear.",themes:["decision","change","anxiety","difficult_conversation","new_leader"]},
+  {n:3,title:"Do what few dare to do",mantra:"Bold action is the price of admission to an extraordinary life.",themes:["decision","change","purpose","crisis"]},
+  {n:4,title:"Master your craft",mantra:"The world doesn't reward potential — it rewards mastery.",themes:["growth","habits","performance","purpose"]},
+  {n:5,title:"Invest in people first",mantra:"Nurture your relationships and everything else follows.",themes:["relationship","team","trust","conflict","parenting"]},
+  {n:6,title:"Embrace the mess",mantra:"If your progress looks clean, you're not pushing hard enough.",themes:["change","transition","crisis","habits"]},
+  {n:7,title:"Stop settling",mantra:"Your life is a mirror — it reflects exactly what you've accepted.",themes:["purpose","motivation","selfworth","decision"]},
+  {n:8,title:"Champion, don't criticize",mantra:"The world has enough critics — be the one who believes.",themes:["relationship","team","parenting","conflict","new_leader"]},
+  {n:9,title:"Practice like it matters",mantra:"What you do when nobody's watching is who you actually are.",themes:["habits","myself","trust","procrastination"]},
+  {n:10,title:"Make your life your art",mantra:"Your work is your craft; your life is the masterpiece.",themes:["purpose","transition","myself"]},
+  {n:11,title:"Focus beats intelligence",mantra:"Depth always wins against breadth.",themes:["decision","habits","procrastination","motivation"]},
+  {n:12,title:"Give it away",mantra:"Generosity isn't what you do with your surplus — it's who you become.",themes:["purpose","loneliness","relationship","myself"]}
+];
+function pickPrinciple(themes){
+  let best=null,bs=-1;
+  PRINCIPLES.forEach(p=>{ let s=0; (themes||[]).forEach((th,i)=>{ if(p.themes.includes(th)) s+=((themes.length-i)); }); if(s>bs){bs=s;best=p;} });
+  return bs>0?best:null;
+}
+
+const QUIZ = [
+  {scene:"Performance",q:"A team member is underperforming during a genuinely hard time in their life. Your instinct:",
+   a:{t:"Keep the bar where it is — clarity and standards help them most.",v:["excellence","candor"]},
+   b:{t:"Lead with grace and meet them where they are right now.",v:["empathy","service"]}},
+  {scene:"Disagreement",q:"Your boss made a call you believe is wrong. You're most likely to:",
+   a:{t:"Tell them directly and respectfully — even if it's awkward.",v:["courage","candor"]},
+   b:{t:"Assume they see something you don't, and ask before weighing in.",v:["trust","empathy"]}},
+  {scene:"After a failure",q:"A project just failed. You open the debrief with:",
+   a:{t:"Where I let the team down as the leader.",v:["accountability","integrity"]},
+   b:{t:"What we can learn so we're better next time.",v:["growth","vision"]}},
+  {scene:"Pride",q:"What makes you proudest as a leader?",
+   a:{t:"Someone I developed grew past what I taught them.",v:["growth","service"]},
+   b:{t:"We achieved something others said was impossible.",v:["excellence","vision"]}},
+  {scene:"Autonomy",q:"A strong performer wants full autonomy. You:",
+   a:{t:"Give them the reins and believe in them.",v:["trust","growth"]},
+   b:{t:"Stay close enough to keep us all on the hook for quality.",v:["accountability","excellence"]}},
+  {scene:"Tension",q:"In a tense room, what matters more to you?",
+   a:{t:"Everyone leaves feeling genuinely heard.",v:["empathy","connection"]},
+   b:{t:"We finally name the real issue out loud.",v:["candor","courage"]}},
+  {scene:"Hard news",q:"You could soften hard news to spare someone's feelings. You believe:",
+   a:{t:"Clear is kind — they deserve the honest truth.",v:["candor","integrity"]},
+   b:{t:"How I deliver it matters as much as what I say.",v:["connection","empathy"]}},
+  {scene:"Reputation",q:"Your team would describe you first as:",
+   a:{t:"Real — no mask, what you see is what you get.",v:["authenticity","connection"]},
+   b:{t:"Reliable — you always do what you said you would.",v:["integrity","accountability"]}},
+  {scene:"Hard calls",q:"When you make a hard call, what guides you most?",
+   a:{t:"Where we're trying to go — the mission.",v:["vision","courage"]},
+   b:{t:"Who it affects and how they'll be treated.",v:["service","empathy"]}},
+  {scene:"Dignity vs. rules",q:"A policy and a person's dignity are in tension. You lean toward:",
+   a:{t:"The person — how people are treated comes first.",v:["service","connection"]},
+   b:{t:"Hold the line — fairness means the standard stays consistent.",v:["integrity","excellence"]}},
+  {scene:"Your growth",q:"You grow most as a leader through:",
+   a:{t:"Honest feedback about my blind spots.",v:["authenticity","growth"]},
+   b:{t:"Doing the things that scare me.",v:["courage","vision"]}},
+  {scene:"The core",q:"At its heart, leadership is mostly about:",
+   a:{t:"Pointing people toward a purpose bigger than the work.",v:["vision","growth"]},
+   b:{t:"Building real trust and relationships with people.",v:["connection","trust"]}}
+];
+
+function getValues(){ try{return JSON.parse(localStorage.getItem('lode_values')||"null");}catch{return null;} }
+function topValueIds(n){ const v=getValues(); return v? v.ranked.slice(0,n||5):[]; }
+
+/* ============================ MODALITIES (ACT/CBT/MI/DBT) ============================ */
+const TECHNIQUES = [
+  {id:"act_values",mod:"ACT",name:"Values compass",do:"Name the one value most at stake here. Then ask: which option actually honors it — even if it's the harder road?",themes:["decision","myself","change","vision"]},
+  {id:"act_defuse",mod:"ACT",name:"Name the thought",do:"Put the worry into words: “I'm having the thought that…” Notice it's a thought passing through, not a fact you must obey.",themes:["myself","decision","crisis"]},
+  {id:"act_accept",mod:"ACT",name:"Make room for it",do:"Instead of fighting the hard feeling, name it and let it be present. You can still act well while it's there.",themes:["motivation","crisis","myself"]},
+  {id:"cbt_split",mod:"CBT",name:"Fact vs. story",do:"Write what objectively happened in one line. Then write the story you're adding to it. Which parts are fact, and which are interpretation?",themes:["conflict","difficult_conversation","myself","trust"]},
+  {id:"cbt_distortion",mod:"CBT",name:"Catch the distortion",do:"Is this all-or-nothing thinking, mind-reading, or catastrophizing? Name the pattern — naming it loosens its grip.",themes:["myself","decision","attitude"]},
+  {id:"cbt_reframe",mod:"CBT",name:"Find the balanced read",do:"If a wise, fair friend saw this exact situation, what more balanced interpretation might they offer?",themes:["conflict","motivation","myself"]},
+  {id:"mi_scale",mod:"Motivational Interviewing",name:"Readiness ruler",do:"On a scale of 1–10, how ready are you to act? Whatever your number — ask why it isn't lower. That answer is your real motivation.",themes:["change","decision","motivation"]},
+  {id:"mi_picture",mod:"Motivational Interviewing",name:"Picture it working",do:"If this went as well as it possibly could, what would be different? Name one small step that points in that direction.",themes:["change","decision","vision"]},
+  {id:"mi_balance",mod:"Motivational Interviewing",name:"Weigh it honestly",do:"List what changing will cost you — and what staying the same is costing you. Sit with which list you can live with.",themes:["decision","change"]},
+  {id:"dbt_stop",mod:"DBT",name:"STOP",do:"Stop. Take a breath. Observe what you feel and what's actually happening. Proceed on purpose — not on impulse.",themes:["crisis","conflict","attitude","myself"]},
+  {id:"dbt_dearman",mod:"DBT",name:"Make the ask (DEAR MAN)",do:"Describe the facts, Express how you feel, Assert what you need, Reinforce the upside — calmly and specifically.",themes:["difficult_conversation","negotiation","conflict"]},
+  {id:"dbt_soothe",mod:"DBT",name:"Steady yourself first",do:"Before you act, do one thing that genuinely calms you. A regulated mind makes far better calls.",themes:["crisis","motivation","myself"]},
+  {id:"stoic_control",mod:"Stoicism",name:"Control dichotomy",do:"Split this into what you can control and what you can't. Pour your energy into the first; practice releasing the second.",themes:["anxiety","decision","change","crisis","money"]},
+  {id:"meaning_ask",mod:"Meaning (Frankl)",name:"What is this asking of me?",do:"Instead of “why is this happening to me,” ask what response this moment is calling you to make.",themes:["grief","purpose","crisis","transition"]},
+  {id:"nvc_script",mod:"Nonviolent Communication",name:"Observation → feeling → need → request",do:"Try: “When ___ happened, I felt ___, because I need ___. Would you be willing to ___?” Facts, not blame.",themes:["relationship","conflict","difficult_conversation","boundaries","anger"]},
+  {id:"boundary_no",mod:"Boundaries",name:"A kind, clear no",do:"State your limit in a sentence or two — no long justification, no apology spiral. “I care about you, and I can't take this on.”",themes:["boundaries","guilt","anger","relationship"]},
+  {id:"habit_tiny",mod:"Behavior Change",name:"Two-minute version",do:"Shrink the change until it's too small to fail, then attach it to something you already do every day.",themes:["habits","motivation","procrastination"]},
+  {id:"recovery_serenity",mod:"Recovery",name:"Serenity check",do:"Name one thing here to accept, one thing you can change, and be honest about which is which. Then act only on the second.",themes:["anxiety","crisis","change","money","anger"]},
+  {id:"recovery_halt",mod:"Recovery",name:"HALT",do:"Before you react, ask: am I Hungry, Angry, Lonely, or Tired? Tend to that first — then decide.",themes:["anger","crisis","myself","anxiety","loneliness"]},
+  {id:"selfcompassion",mod:"Self-Compassion",name:"Talk to yourself like a friend",do:"Write what you'd say to someone you love in this exact spot. Now offer those same words to yourself.",themes:["selfworth","guilt","grief","loneliness","myself"]}
+];
+function pickTechnique(themes, ctx){
+  let best=null, bs=-1;
+  TECHNIQUES.forEach(t=>{
+    let s=0; themes.forEach((th,i)=>{ if(t.themes.includes(th)) s+=(themes.length-i); });
+    if(t.mod==="ACT") s+=0.5; // ACT is the spine
+    if(s>bs){bs=s;best=t;}
+  });
+  return best||TECHNIQUES[0];
+}
+function psychLens(themes){
+  const bank={
+    underperformance:"Underneath this is often a story about what their behavior “means about you.” Separating the facts from that story keeps you clear-headed (CBT).",
+    conflict:"Conflict is rarely about the surface issue — it's two people each protecting something they value. Naming what each of you actually needs lowers the heat.",
+    difficult_conversation:"Avoidance is almost always about managing your own discomfort, not theirs. The discomfort is the doorway, not the wall.",
+    change:"Resistance to change is rarely laziness — it's a sense of loss. People need to grieve the old way before they can adopt the new one.",
+    motivation:"Disengagement is a signal, not a character flaw. Something a person needs — autonomy, meaning, or to feel seen — has gone missing.",
+    decision:"When you're torn, the real conflict is usually between two values you both hold. Clarifying which matters most here is the actual decision (ACT).",
+    trust:"Trust is built and spent in small moments. Repair starts with owning your part — not explaining it away.",
+    myself:"Notice the story you're telling yourself. Much of what we feel comes from our interpretation of an event, not the event itself (CBT).",
+    crisis:"In high heat, the thinking brain goes offline. Steadying yourself first isn't a delay — it's what makes a good response possible (DBT).",
+    new_leader:"Credibility isn't claimed, it's witnessed. People believe what they see you do far more than anything you say.",
+    team:"Team problems usually live one layer below the symptom — most often in trust or in expectations no one has said out loud.",
+    attitude:"What looks like a bad attitude is often unmet need or fear wearing armor. Get curious about what's underneath before you judge it.",
+    negotiation:"The other side is driven by something they haven't named yet. Understanding their real interest beats arguing your position.",
+    grief:"Grief isn't a problem to solve — it's love with nowhere to go. It needs to move through you, not be managed away, and there's no timeline for it.",
+    anxiety:"Anxiety is the mind trying to control an uncertain future. Notice how much of what you're carrying is actually in your hands right now — and how much isn't (Stoicism).",
+    anger:"Anger is usually a messenger, not the message. It points to a boundary that got crossed or a need that went unmet — listen to it before you act on it.",
+    guilt:"Healthy guilt says “I did something wrong”; shame says “I am wrong.” Notice which one you're carrying — they call for completely different responses.",
+    selfworth:"The inner critic isn't telling the truth — it's an old story on repeat. You almost certainly wouldn't speak to someone you love the way it speaks to you.",
+    relationship:"In close relationships the fight is rarely about the thing it's about. Underneath is usually a need to feel respected, safe, or chosen.",
+    boundaries:"Resentment is often the residue of a boundary you needed but didn't set. A clear limit isn't unkind — it's what keeps the relationship sustainable.",
+    loneliness:"Loneliness is a signal, like hunger — not a verdict on your worth. It's pointing you toward connection, and even small reaches outward count.",
+    purpose:"Feeling stuck often means you're between stories — the old “why” has faded and the new one hasn't arrived yet. That in-between is uncomfortable, not wrong (Frankl).",
+    habits:"Lasting change runs on systems, not willpower. If it keeps not happening, the move is usually to make it smaller — not to try harder.",
+    procrastination:"Procrastination is rarely laziness — it's usually a feeling you're avoiding. Get curious about what the task makes you feel, then shrink the first step.",
+    money:"Money stress is rarely only about numbers — it's about safety, control, and worth. Separate the one practical next step from the feeling it stirs up.",
+    parenting:"With the people you're raising or caring for, who you're being lands harder than what you're saying. They absorb the lesson you live.",
+    transition:"Every new beginning starts with an ending. The disorientation you feel isn't failure — it's the neutral zone between who you were and who you're becoming."
+  };
+  for(const t of themes){ if(bank[t]) return bank[t]; }
+  return "Slow down enough to separate what happened from the meaning you're giving it — that gap is where your freedom to choose lives.";
+}
+function buildPlan(primary, themes, ctx, tech){
+  const self = ctx.relationship==="myself";
+  return [
+    {title:"This week — steady yourself & see clearly",
+     action:`Before you act, try ${tech.mod}'s “${tech.name}”: ${tech.do}`},
+    {title:`The move — ${primary.name}`,
+     action:`${primary.moves[1]} A way to open it: “${primary.script}”`},
+    {title:"Afterward — reflect & adjust",
+     action:`Notice what actually happened and how you showed up. ${self?"Name the one behavior you'll keep doing.":"Agree one concrete next step together so it doesn't quietly slide back."} Come back to My Path and log how it went.`}
+  ];
+}
+
+/* ============================ FEELINGS CHECK-IN ============================ */
+const FEELINGS=[
+  {label:"Overwhelmed",t:"anxiety"},{label:"Anxious",t:"anxiety"},{label:"Angry",t:"anger"},
+  {label:"Hurt",t:"anger"},{label:"Resentful",t:"anger"},{label:"Guilty",t:"guilt"},
+  {label:"Sad",t:"grief"},{label:"Lonely",t:"loneliness"},{label:"Stuck",t:"purpose"},
+  {label:"Numb",t:"motivation"},{label:"Scared",t:"anxiety"},{label:"Hopeful",t:""}
+];
+function feelingsAck(ctx){
+  const fs=(ctx.feelings||[]);
+  if(!fs.length) return "";
+  const low=fs.map(x=>x.toLowerCase());
+  const list = low.length===1 ? low[0] : (low.slice(0,-1).join(", ")+" and "+low[low.length-1]);
+  return `First — it makes sense you're feeling ${list}. That's real, and it's worth naming before we figure out what to do next.`;
+}
+
+/* ============================ SAFETY LAYER ============================ */
+let safetyOverride=false;
+// Tier 1: explicit risk — always shows support
+const CRISIS_HIGH=["suicide","suicidal","kill myself","killing myself","end my life","ending my life","want to die","wanna die","don't want to be here","dont want to be here","don't want to live","better off dead","no reason to live","nothing to live for","nothing matters anymore","hurt myself","harm myself","harming myself","hurting myself","self-harm","self harm","cut myself","cutting myself","overdose","take my life","end it all","can't go on","cant go on","can't keep going","cant keep going","no way out","want to disappear","everyone would be better off without me","everyone better off without me","burden to everyone","don't want to wake up","dont want to wake up","no point in living","tired of living","tired of being alive","given up on life","being abused","he hits me","she hits me","they hit me","afraid for my life","afraid for my safety"];
+// Tier 2: softer despair — shows support if paired with a heavy feeling or another signal
+const CRISIS_SOFT=["hopeless","no hope","what's the point","whats the point","pointless","empty inside","worthless","can't do this anymore","cant do this anymore","don't see a future","dont see a future","at my breaking point","can't take it anymore","cant take it anymore","falling apart","drowning"];
+const HEAVY_FEELINGS=["Sad","Numb","Lonely","Overwhelmed","Scared"];
+function detectCrisis(text, ctx){
+  const t=" "+(text||"").toLowerCase().replace(/[^a-z' ]/g," ")+" ";
+  if(CRISIS_HIGH.some(k=>t.includes(k))) return true;
+  const softHits=CRISIS_SOFT.filter(k=>t.includes(k)).length;
+  if(softHits>=2) return true;
+  const heavy=((ctx&&ctx.feelings)||[]).some(f=>HEAVY_FEELINGS.includes(f));
+  if(softHits>=1 && heavy) return true;
+  return false;
+}
+function resourcesListHTML(){
+  return `<div class="sf-list">
+      <div class="sf-row"><b>988 Suicide &amp; Crisis Lifeline</b><span>Call or text <b>988</b> (US) — 24/7</span></div>
+      <div class="sf-row"><b>Crisis Text Line</b><span>Text <b>HOME</b> to <b>741741</b></span></div>
+      <div class="sf-row"><b>SAMHSA National Helpline</b><span><b>1-800-662-4357</b> — free, confidential, 24/7 (mental health &amp; substance use)</span></div>
+      <div class="sf-row"><b>National Domestic Violence Hotline</b><span>Call <b>1-800-799-7233</b> or text <b>START</b> to <b>88788</b></span></div>
+      <div class="sf-row"><b>If you're in immediate danger</b><span>Call <b>911</b> (or your local emergency number)</span></div>
+    </div>`;
+}
+function safetyHTML(){
+  return `<div class="safety">
+    <div class="sf-icon">♥</div>
+    <h2>Let's pause for a moment.</h2>
+    <p>What you wrote sounds really heavy, and it matters more than any coaching tool can hold. You deserve support from a real person right now — not an app. Please reach out; people are ready to help, any time, free and confidential.</p>
+    ${resourcesListHTML()}
+    <p class="sf-foot">Outside the US, please contact your local emergency number or a crisis line in your country. You don't have to carry this alone.</p>
+    <button class="sf-continue" id="sfContinue">I'm safe — this was about something else, continue</button>
+  </div>`;
+}
+
+/* THEME DETECTION */
+const THEMES = {
+  underperformance:{label:"Underperformance",kw:["underperform","not meeting","missed","missing deadline","behind","slack","low output","not delivering","not deliver","quality","mistakes","sloppy","drop the ball","dropped the ball","lazy","not pulling"]},
+  conflict:{label:"Conflict / tension",kw:["conflict","argument","argue","tension","fighting","fight","disagree","clash","not getting along","friction","dispute","taking sides","at odds","butting heads","hostile"]},
+  difficult_conversation:{label:"Hard conversation",kw:["difficult conversation","hard conversation","tell them","bring up","address","confront","feedback","sensitive","awkward","avoid","keep putting off","need to talk","call them out","defensive","shuts down","shut down"]},
+  change:{label:"Change & resistance",kw:["change","reorg","restructur","transition","new system","new process","resistance","resist","buy-in","buy in","pushback","push back","rollout","roll out","transformation","adapt","the old way"]},
+  motivation:{label:"Motivation & morale",kw:["motivat","disengage","checked out","check out","morale","apathy","unmotivated","engagement","disengaged","burnout","burned out","burnt out","exhausted","overwhelmed","tired","quiet quitting","going through the motions"]},
+  trust:{label:"Trust",kw:["trust","betray","honesty","honest","transparen","micromanage","distrust","credibility","lied","integrity","broke trust","can't rely"]},
+  decision:{label:"A tough decision",kw:["decision","decide","choice","torn","unsure","not sure","options","stuck","prioritize","trade-off","tradeoff","which way","right call","what should i do","two paths"]},
+  negotiation:{label:"Negotiation",kw:["negotiat","salary","raise","deal","ask for","push back","vendor","contract","stakeholder","budget","counter","leverage","compromise","win-win"]},
+  team:{label:"Team dynamics",kw:["team","silo","not communicating","accountability","dysfunction","collaboration","cross-functional","cross functional","whole team","group","my people","department"]},
+  crisis:{label:"Crisis / urgent",kw:["crisis","emergency","urgent","on fire","escalat","blew up","blow up","disaster","critical","melt","gone wrong","falling apart","damage control"]},
+  new_leader:{label:"New leadership role",kw:["new role","just promoted","first time","new manager","new team","onboard","stepping into","took over","newly","used to be a peer","peer to manager","establish credibility"]},
+  vision:{label:"Vision & direction",kw:["vision","strategy","direction","purpose","mission","where we're going","where we are going","long-term","long term","inspire","big picture","the why"]},
+  attitude:{label:"Difficult attitude",kw:["attitude","toxic","negative","complain","resistant","defensive","ego","difficult person","bad apple","cynical","undermin","passive aggressive","passive-aggressive","gossip"]},
+  growth:{label:"Developing someone",kw:["grow","develop","potential","coach","mentor","stretch","ready for more","career","high potential","help them","get better","level up"]},
+  performance:{label:"Performance",kw:["performance","results","targets","goals","metrics","standards","expectations","deliver","output","productiv"]},
+  delegation:{label:"Delegation",kw:["delegat","let go of","hand off","handoff","do it myself","can't let go","control","trust them with","take it off my plate"]},
+  myself:{label:"Leading yourself",kw:["i feel","i'm frustrated","im frustrated","my reaction","i lose","i get angry","i avoid","my fault","i struggle","i'm anxious","im anxious","doubt myself","imposter","i keep"]},
+  relationship:{label:"A relationship",kw:["relationship","my partner","my wife","my husband","my spouse","my boyfriend","my girlfriend","my friend","my best friend","my mom","my dad","my mother","my father","my sister","my brother","my family","in-law","spouse","marriage","married","dating","breakup","break up","broke up","divorce"]},
+  boundaries:{label:"Boundaries",kw:["boundary","boundaries","say no","saying no","can't say no","cant say no","overcommit","over-commit","taken advantage","walk all over","people pleaser","people-pleaser","people pleasing","stretched too thin","always saying yes"]},
+  grief:{label:"Grief & loss",kw:["grief","grieving","grieve","loss","lost my","passed away","passed","died","death","mourning","funeral","miss them","miss her","miss him","losing my"]},
+  anxiety:{label:"Anxiety & overwhelm",kw:["anxious","anxiety","worried","worry","stressed","stress","overwhelmed","overwhelm","panic","can't stop thinking","cant stop thinking","on edge","dread","nervous","spiraling","racing thoughts"]},
+  anger:{label:"Anger & resentment",kw:["angry","anger","furious","resent","resentment","resentful","bitter","pissed","rage","fed up","irritated","can't let go of"]},
+  guilt:{label:"Guilt & shame",kw:["guilt","guilty","ashamed","shame","regret","i feel bad","beating myself","kicking myself","my fault that"]},
+  selfworth:{label:"Self-worth",kw:["not good enough","not enough","worthless","inadequate","impostor","imposter syndrome","insecure","self-esteem","self esteem","hate myself","inner critic","compare myself","comparing myself","i'm a failure","im a failure"]},
+  habits:{label:"Habits & follow-through",kw:["habit","can't stick","cant stick","discipline","consistency","follow through","follow-through","keep failing to","build a routine","break the habit","willpower"]},
+  procrastination:{label:"Procrastination",kw:["procrastinat","keep putting off","putting it off","avoid doing","can't get started","cant get started","keep delaying","not getting around to"]},
+  purpose:{label:"Purpose & feeling stuck",kw:["purpose","meaning in","feel stuck","feeling stuck","feel lost","direction in life","what's the point","whats the point","unfulfilled","empty inside","going through the motions","midlife","what do i want","no direction"]},
+  loneliness:{label:"Loneliness",kw:["lonely","loneliness","isolated","no friends","no one to","feel alone","so alone","disconnected","left out","nobody"]},
+  parenting:{label:"Parenting & caregiving",kw:["my kid","my kids","my child","my son","my daughter","my teenager","parenting","as a parent","caregiver","caregiving","aging parent","taking care of my"]},
+  money:{label:"Money stress",kw:["money","financial","finances","debt","bills","afford","can't afford","broke","paycheck","budget","cost of","behind on"]},
+  transition:{label:"A life transition",kw:["transition","new chapter","starting over","start over","relocat","moving to","retire","retirement","empty nest","graduating","graduated","new baby","life change","big change in my life","new city"]}
+};
+
+function detectThemes(text, ctx){
+  const t = (" "+text+" ").toLowerCase();
+  const scores = {};
+  for(const [id,th] of Object.entries(THEMES)){
+    let s=0;
+    for(const k of th.kw){ if(t.includes(k)) s += (k.length>10?2:1.4); }
+    if(s>0) scores[id]=s;
+  }
+  // context nudges
+  if(ctx.relationship==="myself") scores.myself=(scores.myself||0)+2.5;
+  if(ctx.relationship==="partner"||ctx.relationship==="friend") scores.relationship=(scores.relationship||0)+2.5;
+  if(ctx.aim==="relationship") scores.relationship=(scores.relationship||0)+1;
+  if(ctx.relationship==="manager") scores.negotiation=(scores.negotiation||0)+1;
+  if(ctx.relationship==="external") scores.negotiation=(scores.negotiation||0)+1.5;
+  if(ctx.relationship==="team") scores.team=(scores.team||0)+1.5;
+  if(ctx.urgency==="urgent") scores.crisis=(scores.crisis||0)+1.5;
+  if(ctx.aim==="growth") scores.growth=(scores.growth||0)+2;
+  if(ctx.aim==="performance") scores.performance=(scores.performance||0)+1.5;
+  if(ctx.aim==="relationship") scores.trust=(scores.trust||0)+1.2;
+  if(ctx.aim==="decide") scores.decision=(scores.decision||0)+2;
+  (ctx.feelings||[]).forEach(fl=>{ const f=FEELINGS.find(x=>x.label===fl); if(f&&f.t) scores[f.t]=(scores[f.t]||0)+2; });
+  let arr = Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+  if(arr.length===0) arr=["difficult_conversation","trust"]; // sensible default
+  return arr.slice(0,4);
+}
+
+function rankFrameworks(themes, ctx){
+  const fs = FRAMEWORKS.map(f=>{
+    let s=0;
+    themes.forEach((th,i)=>{ const w=f.themes[th]||0; s += w*(themes.length-i); });
+    // context affinity
+    if(f.themes[ctx.relationship]) s += f.themes[ctx.relationship];
+    return {f, score:s};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  if(fs.length<3){ // backfill with broadly useful models
+    const have=new Set(fs.map(x=>x.f.id));
+    ["servant","situational","empathy","eq"].forEach(id=>{
+      if(!have.has(id)){const f=FRAMEWORKS.find(x=>x.id===id);fs.push({f,score:1});}
+    });
+  }
+  const max = fs[0].score||1;
+  fs.forEach(x=>x.rel=Math.round(40+58*(x.score/max))); // 40-98%
+  return fs.slice(0,3);
+}
+
+/* ============================ RENDER ENGINE ============================ */
+const esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const checkIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+function ctxObj(){
+  return {
+    relationship:document.getElementById('relationship').value,
+    stakes:document.getElementById('stakes').value,
+    urgency:document.getElementById('urgency').value,
+    aim:document.getElementById('aim').value,
+    feelings:Array.from(selectedFeelings)
+  };
+}
+
+function buildLocal(text, ctx){
+  const themes = detectThemes(text, ctx);
+  const ranked = rankFrameworks(themes, ctx);
+  const primary = ranked[0].f, secondary = ranked[1] ? ranked[1].f : null;
+  const themeLabels = themes.map(t=>THEMES[t].label);
+
+  const ack0=feelingsAck(ctx);
+  let html = (ack0?`<div class="ack">${esc(ack0)}</div>`:"") + `<p class="read">Here's how I read this</p><div class="readtags">`;
+  html += `<span class="tag">${ctx.relationship}</span><span class="tag">${ctx.stakes} stakes</span>`;
+  themeLabels.slice(0,3).forEach(l=>html+=`<span class="tag theme">${esc(l)}</span>`);
+  html += `</div>`;
+
+  // LEAD with the recommendation (the decision), not the analysis
+  const why = secondary
+    ? `Your situation reads most clearly as <b>${esc(themeLabels[0].toLowerCase())}</b>. I'd lead with <b>${f0(primary)}</b> as your primary approach, borrowing from <b>${f0(secondary)}</b> where it helps.`
+    : `I'd lead with <b>${f0(primary)}</b> as your primary approach here.`;
+
+  html += `<div class="rec">
+    <span class="badge">★ Recommended path</span>
+    <h2>${esc(primary.name)}, with a touch of ${secondary?esc(secondary.name):"servant leadership"}</h2>
+    <div class="why">${why}</div>`;
+  const steps = recommendedSteps(primary, secondary, themes, ctx);
+  steps.forEach((s,i)=>{
+    html += `<div class="step"><div class="n">${i+1}</div><div class="body"><h4>${esc(s.h)}</h4><p>${esc(s.p)}</p></div></div>`;
+  });
+  html += valuesCheckHTML(primary, ctx);
+  html += `<div class="callouts">
+      <div class="callout warn"><h5>⚠ Watch out for</h5><p>${esc(primary.watchout)}</p></div>
+      <div class="callout refl"><h5>◎ A question to sit with</h5><p>${esc(reflective(themes, ctx))}</p></div>
+    </div>`;
+  const _pr=pickPrinciple(themes); if(_pr) html += `<div class="principle">✦ A principle to carry — <b>${esc(_pr.title)}</b>: &ldquo;${esc(_pr.mantra)}&rdquo;</div>`;
+  html += `</div>`;
+
+  // THE ACTION — kept visible
+  const tech = pickTechnique(themes, ctx);
+  const plan = buildPlan(primary, themes, ctx, tech);
+  html += planHTML(plan, tech, true);
+
+  // THE DEEPER ANALYSIS — collapsed by default so the result isn't a wall
+  let deep = `<div class="lenspsy"><h5>◐ What's really going on</h5><p>${esc(psychLens(themes))}</p></div>`;
+  deep += `<div class="sec-sub" style="margin:2px 0 14px">How leading thinkers would each approach this — strongest fit first.</div>`;
+  ranked.forEach(({f,rel})=>{
+    deep += `<div class="fwk" style="--accent:${f.color}">
+      <div class="top">
+        <div><h3>${esc(f.name)}</h3><div class="school">${esc(f.school)}</div></div>
+        <div class="relwrap"><span class="rellbl">Fit</span><div class="relbar"><i style="width:${rel}%"></i></div></div>
+      </div>
+      <div class="lens"><b>This model</b> ${esc(f.lens)}</div>
+      <div class="moves">${f.moves.map(m=>`<div class="m">${checkIcon}<span>${esc(m)}</span></div>`).join("")}</div>
+      <div class="script"><span class="q">&ldquo;</span>${esc(f.script)}</div>
+    </div>`;
+  });
+  html += `<details class="more"><summary>See the full thinking — ${ranked.length} ways to look at it</summary><div class="more-body">${deep}</div></details>`;
+
+  html += `<div class="resfoot" style="margin-top:18px">
+      <button class="btn ghost" id="saveBtn">Save to history</button>
+      <button class="btn ghost" id="copyBtn">Copy guidance</button>
+    </div>`;
+
+  return {html, modelsUsed:ranked.map(r=>r.f.name), themes:themeLabels, plan, tech};
+}
+
+function planHTML(stages, tech, preview){
+  let h=`<div class="plan"><div class="sec-h">Your path forward</div><div class="sec-sub">A few concrete steps, rooted in your values. Start it and track how it goes.</div>`;
+  if(tech){ h+=`<div class="tryblock"><span class="tl">◇ Try this — ${esc(tech.mod)}: ${esc(tech.name)}</span><p>${esc(tech.do)}</p></div>`; }
+  stages.forEach((s,i)=>{ h+=`<div class="planstage"><div class="pn">${i+1}</div><div class="pbody"><h4>${esc(s.title)}</h4><p>${esc(s.action)}</p></div></div>`; });
+  if(preview){ h+=`<button class="btn" id="startPlan" style="margin-top:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Start this plan &amp; track it</button>`; }
+  h+=`</div>`;
+  return h;
+}
+
+function f0(f){return f.name;}
+
+function buildLocalQuick(text, ctx){
+  const themes=detectThemes(text,ctx);
+  const ranked=rankFrameworks(themes,ctx);
+  const primary=ranked[0].f;
+  const tech=pickTechnique(themes,ctx);
+  const ack=feelingsAck(ctx);
+  const take=`${psychLens(themes)} The most useful lens here is <b>${esc(primary.name)}</b> — it ${esc(primary.lens)}`;
+  const step=primary.moves[1]+(primary.script?` You might say: “${primary.script}”`:"");
+  let vnudge="";
+  const v=getValues(); if(v){ const north=v.northStar||v.ranked[0]; if(VGUT[north]) vnudge=`<div class="q-vn">◆ ${esc(VGUT[north])}</div>`; }
+  const _pr=pickPrinciple(themes); const prHTML=_pr?`<div class="principle">✦ <b>${esc(_pr.title)}</b>: &ldquo;${esc(_pr.mantra)}&rdquo;</div>`:"";
+  const hasKey=!!localStorage.getItem('lode_key');
+  let html = (ack?`<div class="ack">${esc(ack)}</div>`:"");
+  html += `<div class="qcard-take">
+    <div class="qt-label">⚡ Quick take</div>
+    <p class="qt-body">${take}</p>
+    <div class="qt-step"><b>Try this first:</b> ${esc(step)}</div>
+    <div class="tryblock"><span class="tl">◇ ${esc(tech.mod)}: ${esc(tech.name)}</span><p>${esc(tech.do)}</p></div>
+    ${vnudge}
+    ${prHTML}
+    <div class="resfoot">
+      <button class="btn" id="seeFull">See the full picture →</button>
+      <button class="btn ghost" id="saveBtn">Save</button>
+      <button class="btn ghost" id="copyBtn">Copy</button>
+    </div>
+    <p class="qt-foot">A fast take from the built-in engine. “See the full picture” gives you the three models, a staged plan${v?", and a values check":""}${hasKey?", generated by your connected AI":""}.</p>
+  </div>`;
+  return {html, modelsUsed:[primary.name], themes:themes.map(t=>THEMES[t]?THEMES[t].label:t)};
+}
+
+function recommendedSteps(primary, secondary, themes, ctx){
+  // Build a 4-step plan: mindset → open → core move → close, drawing on framework plans
+  const urgent = ctx.urgency==="urgent";
+  const rel = ctx.relationship;
+  const steps = [];
+
+  // 1 mindset / prep — usually EQ or ownership flavored
+  steps.push({
+    h:"Set yourself before the conversation",
+    p:`Before you act, get clear on your own state and your real aim (${aimText(ctx.aim)}). ${primary.plan[0]}. Walk in curious about their world, not just armed with your version of events.`
+  });
+
+  // 2 open
+  steps.push({
+    h:"Open by understanding, not telling",
+    p:`Start where they are. ${secondary?secondary.moves[0]:primary.moves[0]}. Lowering defensiveness early earns you the right to the harder part of the conversation.`
+  });
+
+  // 3 the core move (primary)
+  steps.push({
+    h:`Apply the core of ${primary.name}`,
+    p:`${primary.plan[1]} and ${primary.plan[2].toLowerCase()}. In practice: ${primary.moves[1]} — try language like "${primary.script}"`
+  });
+
+  // 4 close / follow-up
+  steps.push({
+    h: urgent ? "Decide, then circle back" : "Agree the path and follow through",
+    p: `${primary.plan[3]}. ${urgent?"Given the timing, make the call clearly and explain the why — then revisit once the heat is down.":"Land on one concrete next step and a check-in, so this doesn't quietly slide back."} ${rel==="myself"?"Since this is mostly about you, name the one behavior you'll change and how you'll hold yourself to it.":"Make the commitment mutual and specific."}`
+  });
+  return steps;
+}
+
+function aimText(a){return {resolve:"resolving the issue cleanly",relationship:"protecting the relationship",performance:"lifting performance",decide:"making the right call",growth:"helping them grow"}[a]||"a good outcome";}
+
+function reflective(themes, ctx){
+  const bank = {
+    underperformance:"Have I been crystal clear about what 'good' looks like — or am I assuming they should already know?",
+    conflict:"What does each person actually need that they're not getting — underneath the friction?",
+    difficult_conversation:"What's the kind, clear thing I've been avoiding saying because it's uncomfortable for me?",
+    change:"Am I asking people to do something new, or to become someone different? Those need different pacing.",
+    motivation:"When did this person last feel genuinely seen and valued by me?",
+    trust:"What have I done — or failed to do — that may have spent some trust here?",
+    decision:"Six months from now, which choice will I be glad I had the courage to make?",
+    new_leader:"What's the first thing this team needs to see from me to believe I'm here to serve, not to prove myself?",
+    team:"What are we collectively avoiding saying to each other?",
+    myself:"What story am I telling myself here, and is it actually true?",
+    crisis:"What do I own in how we got here — and what will I do differently?",
+    grief:"What would it look like to let myself feel this, instead of rushing to be okay?",
+    anxiety:"How much of what I'm carrying is actually mine to control right now?",
+    anger:"What boundary or unmet need is my anger trying to tell me about?",
+    guilt:"Is this guilt about something I did — or a story about who I am?",
+    selfworth:"Would I speak to someone I love the way I'm speaking to myself right now?",
+    relationship:"What does this person need to feel from me — and what do I actually need from them?",
+    boundaries:"Where have I been saying yes when I needed to say no?",
+    loneliness:"What's one small, safe way I could reach toward connection this week?",
+    purpose:"If nothing were at stake and no one would judge me, what would I actually want?",
+    money:"What's the one practical next step here, separate from the fear around it?",
+    transition:"What am I being asked to let go of — and what might be waiting on the other side?",
+    parenting:"Who do I want them to learn how to be, from watching how I handle this?"
+  };
+  for(const t of themes){ if(bank[t]) return bank[t]; }
+  return "How would the leader I most admire handle this — and what's stopping me from doing the same?";
+}
+
+function valuesCheckHTML(primary, ctx){
+  const v=getValues();
+  if(!v){
+    return `<div class="vcheck"><h5>◆ Values check</h5><p class="setup">Lodestar can hold this guidance against your own leadership values. <a onclick="startQuiz()">Take the 2-minute values quiz</a> to switch that on.</p></div>`;
+  }
+  const top=v.ranked.slice(0,5);
+  const north=v.northStar||top[0];
+  const honored=(FWK_VALUES[primary.id]||[]).filter(id=>top.includes(id));
+  let honor = honored.length
+    ? `This path leans on <b>${honored.map(id=>VALUES[id].name).join("</b> and <b>")}</b> — ${honored.length>1?"values":"a value"} you put near the top. It fits who you said you want to be.`
+    : `Heads up: this approach isn't the natural home of your top values. It may still be right — just lead it in a way that stays true to them.`;
+  // tension-aware nudge
+  let nudge;
+  if(ctx.aim==="relationship" && (top.includes("candor")||top.includes("courage"))){
+    nudge="You're aiming to protect the relationship — but you rank candor and courage highly. Often the most respectful thing you can do is tell the honest truth.";
+  } else if((ctx.aim==="resolve"||ctx.aim==="performance") && (top.includes("empathy")||top.includes("service"))){
+    nudge="You're focused on resolving the issue — yet empathy and service sit at the top of your values. Make sure they feel understood before you move to fixing it.";
+  } else if(ctx.urgency==="urgent" && top.includes("connection")){
+    nudge="Urgency pulls everyone toward transactions. You value connection — protect the relationship even while you move fast.";
+  } else if(ctx.relationship==="myself" && top.includes("accountability")){
+    nudge="Since this is mostly about you, and accountability is core to your leadership: what's the one thing here that's genuinely yours to own?";
+  } else {
+    nudge=VGUT[north]||VGUT[top[0]];
+  }
+  return `<div class="vcheck"><h5>◆ Values check</h5><div class="honor">${honor}</div><div class="nudge">${esc(nudge)}</div></div>`;
+}
+
+/* ============================ LIVE AI MODE ============================ */
+async function callAI(provider, key, model, sys, user){
+  if(!key) throw new Error("no key");
+  if(provider==="openai"){
+    const res=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",
+      headers:{"content-type":"application/json","authorization":"Bearer "+key},
+      body:JSON.stringify({model:model||"gpt-4o",max_tokens:1600,messages:[{role:"system",content:sys},{role:"user",content:user}]})});
+    if(!res.ok) throw new Error("OpenAI "+res.status);
+    const d=await res.json(); return (d.choices&&d.choices[0]&&d.choices[0].message.content)||"";
+  }
+  if(provider==="google"){
+    const m=model||"gemini-1.5-flash";
+    const res=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+m+":generateContent?key="+encodeURIComponent(key),{method:"POST",
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({systemInstruction:{parts:[{text:sys}]},contents:[{role:"user",parts:[{text:user}]}],generationConfig:{maxOutputTokens:1600}})});
+    if(!res.ok) throw new Error("Gemini "+res.status);
+    const d=await res.json(); return (d.candidates&&d.candidates[0]&&d.candidates[0].content.parts.map(p=>p.text||"").join(""))||"";
+  }
+  // default: Anthropic
+  const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",
+    headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+    body:JSON.stringify({model:model||"claude-sonnet-4-6",max_tokens:1600,system:sys,messages:[{role:"user",content:user}]})});
+  if(!res.ok) throw new Error("Anthropic "+res.status);
+  const d=await res.json(); return d.content.map(c=>c.text||"").join("");
+}
+
+async function buildLive(text, ctx){
+  const provider=localStorage.getItem('lode_provider')||"anthropic";
+  const key=localStorage.getItem('lode_key');
+  const model=(localStorage.getItem('lode_model')||"").trim();
+  const v=getValues();
+  const valuesLine = v
+    ? `The leader has defined their core values, ranked: ${v.ranked.slice(0,5).map(id=>VALUES[id].name).join(", ")}. Their North Star value is ${VALUES[v.northStar||v.ranked[0]].name}.`
+    : `The leader has not yet defined their values.`;
+  const sys = `You are Lodestar, a warm, world-class coach for leadership AND everyday life decisions — helping anyone, not only managers. You reason using leadership frameworks (${FRAMEWORKS.map(f=>f.name).join(", ")}) and evidence-based psychological approaches (ACT, CBT, Motivational Interviewing, DBT) adapted as self-reflection — NOT therapy, diagnosis, or treatment.
+Respond ONLY with strict JSON (no markdown) of this shape:
+{"read":[short situation tags],
+ "lens":"1-2 sentences on what's psychologically really going on, informed by ACT/CBT/MI/DBT",
+ "frameworks":[{"name","school","fit":0-100,"lens":"how this model sees it","moves":[3 short moves],"script":"one sample line"}],
+ "recommended":{"title","why","steps":[{"h","p"} x4],"watchout","reflective"},
+ "valuesCheck":{"honors":"how the path honors or tensions with their stated values","nudge":"a caring accountability nudge tied to their North Star value"},
+ "technique":{"mod":"ACT|CBT|Motivational Interviewing|DBT","name":"short name","do":"one concrete practice they can do now"},
+ "plan":[3 stages of {"title","action"}: (1) prepare & see clearly, (2) the core move, (3) reflect & follow up]}
+Pick the 3 most relevant frameworks, strongest fit first. Be specific, warm, practical; no clichés. ${v?"In valuesCheck, hold them accountable to their stated values — name it gently but honestly when the comfortable path drifts from what matters most to them.":"If no values are defined, set valuesCheck to null."}
+Throughout, carry the Lodestar ethos in your tone: people remember how they were treated more than what was done for them; be bold, brave, and authentic; serve first and protect dignity while still telling the truth with care. Warmth and honesty together, never one without the other. Weigh well-being as a real factor — never recommend a path that wins the outcome but isn't sustainable for the person.
+Where it genuinely fits, you may end the "reflective" field with one of these principles in quotes (only if relevant): "You become what you think about." / "Everything you want is on the other side of fear." / "Bold action is the price of admission to an extraordinary life." / "The world doesn't reward potential — it rewards mastery." / "Nurture your relationships and everything else follows." / "If your progress looks clean, you're not pushing hard enough." / "Your life is a mirror — it reflects exactly what you've accepted." / "The world has enough critics — be the one who believes." / "What you do when nobody's watching is who you actually are." / "Your work is your craft; your life is the masterpiece." / "Depth always wins against breadth." / "Generosity isn't what you do with your surplus — it's who you become."
+If the person mentions self-harm, suicide, abuse, or being in danger, do NOT coach — use every field to gently urge them to reach real human support (e.g. 988 in the US) instead.`;
+  const feelLine = (ctx.feelings&&ctx.feelings.length)?`They said they're feeling: ${ctx.feelings.join(", ")}. Open warmly by briefly acknowledging that.`:"";
+  const user = `Situation: ${text}\nWho's involved: ${ctx.relationship}. Stakes: ${ctx.stakes}. Timing: ${ctx.urgency}. Their aim: ${ctx.aim}.\n${valuesLine}\n${feelLine}`;
+  let txt = await callAI(provider, key, model, sys, user);
+  txt = txt.replace(/```json|```/g,"").trim();
+  const s=txt.indexOf("{"), e=txt.lastIndexOf("}");
+  if(s>=0&&e>s) txt=txt.slice(s,e+1);
+  const j = JSON.parse(txt);
+  return renderLive(j);
+}
+function renderLive(j){
+  let html=`<p class="read">Here's how I read this</p><div class="readtags">${(j.read||[]).map(r=>`<span class="tag theme">${esc(r)}</span>`).join("")}</div>`;
+
+  // LEAD with the recommendation
+  const r=j.recommended||{};
+  html+=`<div class="rec"><span class="badge">★ Recommended path</span><h2>${esc(r.title||"Recommended path")}</h2><div class="why">${esc(r.why||"")}</div>`;
+  (r.steps||[]).forEach((s,i)=>{html+=`<div class="step"><div class="n">${i+1}</div><div class="body"><h4>${esc(s.h)}</h4><p>${esc(s.p)}</p></div></div>`;});
+  const vc=j.valuesCheck;
+  if(vc && (vc.honors||vc.nudge)){
+    html+=`<div class="vcheck"><h5>◆ Values check</h5>${vc.honors?`<div class="honor">${esc(vc.honors)}</div>`:""}${vc.nudge?`<div class="nudge">${esc(vc.nudge)}</div>`:""}</div>`;
+  } else if(!getValues()){
+    html+=`<div class="vcheck"><h5>◆ Values check</h5><p class="setup">Define your values to get accountability checks. <a onclick="startQuiz()">Take the 2-minute quiz</a>.</p></div>`;
+  }
+  html+=`<div class="callouts"><div class="callout warn"><h5>⚠ Watch out for</h5><p>${esc(r.watchout||"")}</p></div>
+    <div class="callout refl"><h5>◎ A question to sit with</h5><p>${esc(r.reflective||"")}</p></div></div></div>`;
+
+  // THE ACTION — kept visible
+  let plan = (Array.isArray(j.plan)&&j.plan.length) ? j.plan.map(s=>({title:s.title||"Step",action:s.action||""})) : (((j.recommended&&j.recommended.steps)||[]).slice(0,3).map(s=>({title:s.h||"Step",action:s.p||""})));
+  const tech = (j.technique&&j.technique.name) ? {mod:j.technique.mod||"",name:j.technique.name,do:j.technique.do||""} : null;
+  if(plan.length){ html+=planHTML(plan, tech, true); }
+
+  // THE DEEPER ANALYSIS — collapsed by default
+  let deep="";
+  if(j.lens){ deep+=`<div class="lenspsy"><h5>◐ What's really going on</h5><p>${esc(j.lens)}</p></div>`; }
+  deep+=`<div class="sec-sub" style="margin:2px 0 14px">Generated live by your connected AI (${esc(PROVIDER_NAMES[localStorage.getItem('lode_provider')||'anthropic']||'AI')}). How each model sees it — strongest fit first.</div>`;
+  (j.frameworks||[]).forEach(f=>{
+    deep+=`<div class="fwk" style="--accent:#3a6ea5">
+      <div class="top"><div><h3>${esc(f.name)}</h3><div class="school">${esc(f.school||"")}</div></div>
+      <div class="relwrap"><span class="rellbl">Fit</span><div class="relbar"><i style="width:${Math.max(40,Math.min(98,f.fit||70))}%"></i></div></div></div>
+      <div class="lens"><b>This model</b> ${esc(f.lens)}</div>
+      <div class="moves">${(f.moves||[]).map(m=>`<div class="m">${checkIcon}<span>${esc(m)}</span></div>`).join("")}</div>
+      <div class="script"><span class="q">&ldquo;</span>${esc(f.script)}</div></div>`;
+  });
+  if((j.frameworks||[]).length || j.lens){ html+=`<details class="more"><summary>See the full thinking</summary><div class="more-body">${deep}</div></details>`; }
+
+  html+=`<div class="resfoot" style="margin-top:18px"><button class="btn ghost" id="saveBtn">Save to history</button><button class="btn ghost" id="copyBtn">Copy guidance</button></div>`;
+  return {html, modelsUsed:(j.frameworks||[]).map(f=>f.name), themes:(j.read||[]), plan, tech};
+}
+
+/* ============================ APP WIRING ============================ */
+const $=s=>document.querySelector(s);
+let lastResult=null, lastInput=null;
+
+function switchView(v){
+  document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  if(v==="history") renderHistory();
+  if(v==="values") renderValues();
+  if(v==="path") renderPath();
+  if(v==="practices") renderPractices();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{$('#situation').value=c.dataset.ex;$('#situation').focus();});
+
+async function runAnalyze(mode){
+  mode=mode||'full';
+  const text=$('#situation').value.trim();
+  if(text.length<12){ $('#situation').focus(); $('#situation').style.borderBottom="2px solid #d4733a"; setTimeout(()=>$('#situation').style.borderBottom="none",1200); return; }
+  const ctx=ctxObj();
+  lastInput={text,ctx};
+  if(detectCrisis(text, ctx) && !safetyOverride){
+    $('#results').innerHTML=safetyHTML();
+    const c=$('#sfContinue'); if(c) c.onclick=()=>{ safetyOverride=true; runAnalyze(mode); };
+    $('#results').scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  safetyOverride=false;
+  const qb=$('#quickbtn');
+  if(mode==='quick'){
+    $('#results').innerHTML=`<div class="thinking"><div class="spin"></div>Quick take…</div>`;
+    $('#analyze').disabled=true; if(qb) qb.disabled=true;
+    try{
+      await new Promise(r=>setTimeout(r,350));
+      const result=buildLocalQuick(text,ctx);
+      lastResult=result;
+      $('#results').innerHTML=result.html+feedbackHTML(); wireResultButtons();
+      $('#results').scrollIntoView({behavior:'smooth',block:'start'});
+    } finally { $('#analyze').disabled=false; if(qb) qb.disabled=false; }
+    return;
+  }
+  const key = localStorage.getItem('lode_key');
+  const useAI = !!key;
+  $('#results').innerHTML=`<div class="thinking"><div class="spin"></div>${useAI?"Thinking through your situation…":"Consulting the leadership library…"}</div>`;
+  $('#analyze').disabled=true; if(qb) qb.disabled=true;
+  try{
+    let result;
+    if(useAI){
+      try{ result=await buildLive(text,ctx); }
+      catch(e){ result=buildLocal(text,ctx); result.html=`<div style="font-size:13px;color:#b4642e;background:#fbf3ee;border:1px solid #f0d9c9;padding:10px 13px;border-radius:10px;margin-bottom:18px">Your connected AI couldn't be reached (${esc(e.message)}) — here's the built-in engine so you still get guidance. Check your provider/key in Settings.</div>`+result.html; }
+    } else {
+      await new Promise(r=>setTimeout(r,650));
+      result=buildLocal(text,ctx);
+      result.html=`<div class="aibanner">This is Lodestar's built-in coaching — free and fully yours. Want it to go deeper? <a onclick="switchView('settings')">Connect an AI of your choice</a> (optional).</div>`+result.html;
+    }
+    lastResult=result;
+    $('#results').innerHTML=result.html+feedbackHTML();
+    wireResultButtons();
+    $('#results').scrollIntoView({behavior:'smooth',block:'start'});
+  } finally { $('#analyze').disabled=false; if(qb) qb.disabled=false; }
+}
+$('#analyze').onclick=()=>runAnalyze('full');
+$('#quickbtn').onclick=()=>runAnalyze('quick');
+$('#situation').addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==="Enter")runAnalyze('full');});
+
+function getFeedback(){ try{return JSON.parse(localStorage.getItem('lode_feedback')||"[]");}catch{return [];} }
+function feedbackHTML(){
+  return `<div class="fb" id="fbWidget"><span class="fb-q">Was this helpful?</span><button class="fb-b" data-r="yes">👍 Yes</button><button class="fb-b" data-r="kind">😐 Kind of</button><button class="fb-b" data-r="no">👎 Not really</button></div>`;
+}
+function recordFeedback(r){
+  const arr=getFeedback();
+  arr.unshift({when:Date.now(), rating:r, text:((lastInput&&lastInput.text)||"").slice(0,140), models:(lastResult&&lastResult.modelsUsed)||[]});
+  localStorage.setItem('lode_feedback',JSON.stringify(arr.slice(0,500)));
+}
+function wireResultButtons(){
+  const sb=$('#saveBtn'); if(sb) sb.onclick=()=>{ saveHistory(); sb.textContent="Saved ✓"; sb.disabled=true; };
+  const cb=$('#copyBtn'); if(cb) cb.onclick=()=>{ copyGuidance(); cb.textContent="Copied ✓"; setTimeout(()=>cb.textContent="Copy guidance",1500); };
+  const pb=$('#startPlan'); if(pb) pb.onclick=()=>{ startPlan(pb); };
+  const fbtn=$('#seeFull'); if(fbtn) fbtn.onclick=()=>runAnalyze('full');
+  document.querySelectorAll('#fbWidget .fb-b').forEach(b=>b.onclick=()=>{
+    recordFeedback(b.dataset.r);
+    const w=$('#fbWidget'); if(w) w.innerHTML='<span class="fb-q">Thank you — that helps Lodestar get better.</span>';
+  });
+}
+
+/* History */
+function getHistory(){ try{return JSON.parse(localStorage.getItem('lode_hist')||"[]");}catch{return[];} }
+function saveHistory(){
+  if(!lastInput||!lastResult) return;
+  const h=getHistory();
+  h.unshift({when:Date.now(), text:lastInput.text, ctx:lastInput.ctx, models:lastResult.modelsUsed, html:lastResult.html});
+  localStorage.setItem('lode_hist',JSON.stringify(h.slice(0,40)));
+}
+function renderHistory(){
+  const h=getHistory(), el=$('#histlist');
+  if(!h.length){ el.innerHTML=`<div class="empty">No saved situations yet.<br>Work through a challenge on the Coach tab and tap "Save to history".</div>`; return; }
+  el.innerHTML=h.map((it,i)=>`<div class="histitem" data-i="${i}">
+    <div class="when">${new Date(it.when).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div>
+    <div class="txt">${esc(it.text.slice(0,150))}${it.text.length>150?'…':''}</div>
+    <div class="mods">${(it.models||[]).join(" · ")}</div></div>`).join("");
+  el.querySelectorAll('.histitem').forEach(node=>node.onclick=()=>{
+    const it=h[node.dataset.i];
+    switchView('coach');
+    $('#situation').value=it.text;
+    if(it.ctx){$('#relationship').value=it.ctx.relationship;$('#stakes').value=it.ctx.stakes;$('#urgency').value=it.ctx.urgency;$('#aim').value=it.ctx.aim;}
+    $('#results').innerHTML=it.html; wireResultButtons();
+    setTimeout(()=>$('#results').scrollIntoView({behavior:'smooth'}),120);
+  });
+}
+function copyGuidance(){
+  if(!lastResult||!lastInput) return;
+  let t=`LODESTAR — Leadership Guidance\n\nSITUATION: ${lastInput.text}\n\nModels considered: ${lastResult.modelsUsed.join(", ")}\n\n`;
+  const tmp=document.createElement('div'); tmp.innerHTML=lastResult.html;
+  tmp.querySelectorAll('.resfoot').forEach(x=>x.remove());
+  t+=tmp.innerText.replace(/\n{3,}/g,"\n\n");
+  navigator.clipboard.writeText(t);
+}
+
+/* Library */
+function renderLibrary(){
+  $('#libgrid').innerHTML=FRAMEWORKS.map(f=>`<div class="libcard" style="--accent:${f.color}">
+    <h3>${esc(f.name)}</h3><div class="school">${esc(f.school)}</div>
+    <p>${esc(f.summary)}</p>
+    <div class="bestfor"><b>Best for:</b> ${esc(f.bestfor)}</div></div>`).join("");
+  const lp=$('#libprinciples'); if(lp) lp.innerHTML=PRINCIPLES.map(p=>`<div class="pcard"><div class="pnum">${p.n}</div><div><h4>${esc(p.title)}</h4><p>&ldquo;${esc(p.mantra)}&rdquo;</p></div></div>`).join("");
+}
+renderLibrary();
+
+/* ============================ QUICK-START PROMPTS ============================ */
+const STARTERS=[
+  {cat:"Work & leadership", items:[
+    {label:"A hard conversation", ex:"There's a conversation at work I've been avoiding because it's going to be uncomfortable, and putting it off is only making it worse."},
+    {label:"Someone underperforming", ex:"Someone on my team isn't meeting expectations and I can't tell if it's skill, motivation, or something going on with them personally."},
+    {label:"Conflict on my team", ex:"Two people I work with are in constant conflict and it's creating tension for everyone around them."},
+    {label:"Leading change", ex:"I'm trying to lead a change and I'm getting resistance and quiet pushback from people who liked the old way."},
+    {label:"New in my role", ex:"I just stepped into a new leadership role and I'm trying to build trust and credibility without coming on too strong."},
+    {label:"Letting go / delegating", ex:"I struggle to let go and delegate — I end up doing too much myself because it's hard to trust it'll get done right."}
+  ]},
+  {cat:"Relationships", items:[
+    {label:"Someone let me down", ex:"Someone close to me let me down and I'm hurt and angry. I don't know whether to bring it up or let it go."},
+    {label:"The same recurring fight", ex:"My partner and I keep having the same fight over and over and never actually seem to resolve it."},
+    {label:"Feeling distant", ex:"I feel distant from someone I love and I'm not sure how we drifted or how to get back to each other."},
+    {label:"Setting a boundary", ex:"I keep saying yes to everyone and ending up overwhelmed and resentful. I need to set a boundary but I feel guilty every time I try."},
+    {label:"Family tension", ex:"There's tension in my family that keeps flaring up, and I never feel like I handle it the way I want to."}
+  ]},
+  {cat:"Decisions", items:[
+    {label:"A big crossroads", ex:"I'm at a crossroads with a big decision and I'm afraid of choosing wrong."},
+    {label:"Stay or go", ex:"I can't tell if I should stay where I am or make a change, and I keep going back and forth."},
+    {label:"Torn between options", ex:"I'm torn between two options and both have real costs. I just can't seem to decide."},
+    {label:"A decision I'm avoiding", ex:"There's a decision I keep avoiding, and I can't tell if I'm being patient or just scared."}
+  ]},
+  {cat:"Stress & emotions", items:[
+    {label:"Burned out", ex:"I'm completely burned out — exhausted, resentful, and just going through the motions."},
+    {label:"Anxious & overwhelmed", ex:"I feel anxious and overwhelmed and like I can't slow down the racing thoughts in my head."},
+    {label:"Angry & resentful", ex:"I'm carrying a lot of anger and resentment lately and it's starting to affect how I treat people."},
+    {label:"Guilt or regret", ex:"I keep replaying something I did and I can't seem to shake the guilt and regret."},
+    {label:"Hard on myself", ex:"I'm really hard on myself. My inner critic is relentless and I never feel good enough."}
+  ]},
+  {cat:"Meaning, change & hard seasons", items:[
+    {label:"Feeling stuck or lost", ex:"I feel stuck and a little lost, like I've lost my sense of direction or purpose."},
+    {label:"A big life transition", ex:"I'm going through a major life transition and I feel disoriented and unsure who I'm becoming."},
+    {label:"Grieving a loss", ex:"I'm grieving a loss and I'm struggling with how to carry it."},
+    {label:"Building a habit", ex:"I keep failing to build a habit I care about — I start strong and then fall off every time."},
+    {label:"Feeling lonely", ex:"I've been feeling lonely and disconnected lately, even when I'm around other people."}
+  ]}
+];
+function renderStarters(){
+  const el=$('#quickstart'); if(!el) return;
+  const catHTML=g=>`<div class="qs-cat"><div class="qs-cat-label">${esc(g.cat)}</div><div class="qs-chips">${g.items.map(it=>`<button class="qchip" data-ex="${esc(it.ex)}">${esc(it.label)}</button>`).join("")}</div></div>`;
+  const firstN=2;
+  let h=`<div class="qs-head">Pick whatever's closest — it'll fill in below, then you can make it yours.</div>`;
+  h+=STARTERS.slice(0,firstN).map(catHTML).join("");
+  if(STARTERS.length>firstN){
+    h+=`<details class="more" style="margin-top:8px"><summary>More everyday situations</summary><div class="more-body">${STARTERS.slice(firstN).map(catHTML).join("")}</div></details>`;
+  }
+  el.innerHTML=h;
+  el.querySelectorAll('.qchip').forEach(c=>c.onclick=()=>{
+    $('#situation').value=c.dataset.ex;
+    const comp=document.querySelector('.composer');
+    if(comp) comp.scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(()=>$('#situation').focus(),300);
+  });
+}
+renderStarters();
+
+/* ============================ FEELINGS CHECK-IN UI ============================ */
+const selectedFeelings=new Set();
+function renderFeelings(){
+  const el=$('#feelings'); if(!el) return;
+  el.innerHTML=`<span class="feel-lbl">How are you feeling? <em>(optional)</em></span>`+
+    FEELINGS.map(f=>`<button class="feel-chip" data-f="${esc(f.label)}">${esc(f.label)}</button>`).join("");
+  el.querySelectorAll('.feel-chip').forEach(b=>b.onclick=()=>{
+    const f=b.dataset.f;
+    if(selectedFeelings.has(f)){ selectedFeelings.delete(f); b.classList.remove('on'); }
+    else { selectedFeelings.add(f); b.classList.add('on'); }
+  });
+}
+renderFeelings();
+
+/* ============================ VALUES QUIZ & PROFILE ============================ */
+let quizAnswers=[], quizIdx=0;
+
+function startQuiz(){
+  quizAnswers=[]; quizIdx=0;
+  document.getElementById('onboard').classList.remove('show');
+  switchView('quiz');
+  renderQuiz();
+}
+window.startQuiz=startQuiz;
+
+function renderQuiz(){
+  const el=$('#quizBody');
+  if(quizIdx>=QUIZ.length){ return renderQuizResults(); }
+  const q=QUIZ[quizIdx];
+  const pct=Math.round((quizIdx/QUIZ.length)*100);
+  el.innerHTML=`
+    <div class="quizhead"><h1>Discover your values</h1></div>
+    <div class="qprog"><i style="width:${pct}%"></i></div>
+    <div class="qcount">Question ${quizIdx+1} of ${QUIZ.length}</div>
+    <div class="qcard">
+      <div class="scene">${esc(q.scene)}</div>
+      <div class="qq">${esc(q.q)}</div>
+      <div class="qopts">
+        <button class="qopt" data-opt="a"><span class="pick">A</span><span>${esc(q.a.t)}</span></button>
+        <button class="qopt" data-opt="b"><span class="pick">B</span><span>${esc(q.b.t)}</span></button>
+      </div>
+      ${quizIdx>0?'<button class="qback" id="qback">← Back</button>':''}
+    </div>`;
+  el.querySelectorAll('.qopt').forEach(b=>b.onclick=()=>{
+    quizAnswers[quizIdx]=b.dataset.opt; quizIdx++; renderQuiz();
+  });
+  const bk=$('#qback'); if(bk) bk.onclick=()=>{ quizIdx--; renderQuiz(); };
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function scoreQuiz(){
+  const scores={}; Object.keys(VALUES).forEach(k=>scores[k]=0);
+  quizAnswers.forEach((ans,i)=>{
+    const opt=QUIZ[i][ans]; if(!opt) return;
+    opt.v.forEach((id,j)=>{ scores[id]+=(j===0?2:1); });
+  });
+  const ranked=Object.keys(VALUES).sort((a,b)=>scores[b]-scores[a]||Object.keys(VALUES).indexOf(a)-Object.keys(VALUES).indexOf(b));
+  return {ranked, scores};
+}
+
+function renderQuizResults(){
+  const {ranked,scores}=scoreQuiz();
+  const existing=getValues();
+  const north=(existing&&ranked.includes(existing.northStar))?existing.northStar:ranked[0];
+  const profile={ranked, scores, northStar:north, takenAt:Date.now()};
+  localStorage.setItem('lode_values',JSON.stringify(profile));
+  updateNorthPill();
+  $('#quizBody').innerHTML=valuesResultHTML(profile,true);
+  wireValuesActions(profile);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function valuesResultHTML(profile, fresh){
+  const top=profile.ranked.slice(0,5);
+  const north=profile.northStar||top[0];
+  let h=`<div class="quizhead"><h1>${fresh?"Here's what drives you":"Your values"}</h1></div>`;
+  h+=`<div class="northcard">
+      <span class="lbl">★ Your North Star</span>
+      <h2>${esc(VALUES[north].name)}</h2>
+      <p>${esc(VALUES[north].blurb)} Lodestar will hold your toughest calls against this.</p>
+    </div>`;
+  h+=`<div class="sec-sub" style="text-align:center;margin:18px 0 0">Your top five, in order. Tap a value to make it your North Star.</div>`;
+  h+=`<div class="vlist">`;
+  top.forEach((id,i)=>{
+    h+=`<div class="vrow" data-v="${id}">
+      <div class="rank">${i+1}</div>
+      <div class="vmain"><h4>${esc(VALUES[id].name)}</h4><p>${esc(VALUES[id].blurb)}</p></div>
+      <button class="star-btn ${id===north?'is':''}" data-star="${id}">${id===north?'★ North Star':'Set as North Star'}</button>
+    </div>`;
+  });
+  h+=`</div>`;
+  h+=`<div class="vactions">
+      <button class="btn" id="vDone">Save & start coaching</button>
+      <button class="btn ghost" id="vRetake">Retake quiz</button>
+    </div>`;
+  return h;
+}
+
+function wireValuesActions(profile){
+  $('#quizBody').querySelectorAll('[data-star]').forEach(b=>b.onclick=()=>{
+    profile.northStar=b.dataset.star;
+    localStorage.setItem('lode_values',JSON.stringify(profile));
+    updateNorthPill();
+    $('#quizBody').innerHTML=valuesResultHTML(profile,false);
+    wireValuesActions(profile);
+  });
+  const d=$('#vDone'); if(d) d.onclick=()=>switchView('coach');
+  const r=$('#vRetake'); if(r) r.onclick=()=>startQuiz();
+}
+
+function renderValues(){
+  const v=getValues(), el=$('#valuesBody');
+  if(!v){
+    el.innerHTML=`<div class="vintro">
+      <p>You haven't defined your leadership values yet. It takes about two minutes — a few honest trade-offs reveal what you actually lead by.</p>
+      <button class="btn" id="vStart" style="margin:0 auto">Take the values quiz</button>
+    </div>`;
+    $('#vStart').onclick=startQuiz;
+    return;
+  }
+  el.innerHTML=valuesResultHTML(v,false);
+  // in profile view, swap the primary action label
+  const done=$('#vDone'); if(done){ done.textContent="Back to coaching"; }
+  wireValuesActions(v);
+}
+
+function updateNorthPill(){
+  const v=getValues(), pill=$('#nspill');
+  if(v){
+    pill.style.display="inline-flex";
+    pill.innerHTML=`<svg width="13" height="13" viewBox="0 0 32 32" fill="none"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>North Star: ${esc(VALUES[v.northStar||v.ranked[0]].name)}`;
+  } else { pill.style.display="none"; }
+}
+
+/* Onboarding gate */
+function maybeOnboard(){
+  if(!getValues() && !sessionStorage.getItem('lode_ob_seen')){
+    document.getElementById('onboard').classList.add('show');
+  }
+}
+$('#obStart').onclick=startQuiz;
+$('#obSkip').onclick=()=>{ sessionStorage.setItem('lode_ob_seen','1'); document.getElementById('onboard').classList.remove('show'); };
+
+/* Always-available help / crisis resources */
+$('#helpResources').innerHTML=resourcesListHTML();
+$('#helpLink').onclick=()=>document.getElementById('helpOverlay').classList.add('show');
+$('#helpClose').onclick=()=>document.getElementById('helpOverlay').classList.remove('show');
+document.getElementById('helpOverlay').addEventListener('click',e=>{ if(e.target.id==='helpOverlay') e.currentTarget.classList.remove('show'); });
+
+updateNorthPill();
+maybeOnboard();
+
+/* ============================ MY PATH (plans + follow-ups) ============================ */
+function getPaths(){ try{return JSON.parse(localStorage.getItem('lode_paths')||"[]");}catch{return [];} }
+function setPaths(p){ localStorage.setItem('lode_paths',JSON.stringify(p.slice(0,60))); }
+function startPlan(btn){
+  if(!lastInput||!lastResult||!lastResult.plan){ return; }
+  const paths=getPaths();
+  paths.unshift({
+    id:"p"+Date.now(), createdAt:Date.now(), status:"active",
+    situation:lastInput.text, models:lastResult.modelsUsed||[],
+    tech:lastResult.tech||null,
+    stages:lastResult.plan.map(s=>({title:s.title,action:s.action,done:false})),
+    checkins:[]
+  });
+  setPaths(paths);
+  if(btn){ btn.textContent="Added to My Path ✓"; btn.disabled=true; }
+  setTimeout(()=>switchView('path'),250);
+}
+function renderPath(){
+  const paths=getPaths(), el=$('#pathBody');
+  const active=paths.filter(p=>p.status==="active"), done=paths.filter(p=>p.status!=="active");
+  const checkins=paths.reduce((n,p)=>n+((p.checkins&&p.checkins.length)||0),0);
+  let h=`<div class="pathstats">
+    <div class="pstat"><b>${active.length}</b><span>In progress</span></div>
+    <div class="pstat"><b>${done.length}</b><span>Completed</span></div>
+    <div class="pstat"><b>${checkins}</b><span>Check-ins</span></div>
+  </div>`;
+  if(!paths.length){
+    h+=`<div class="empty">No plans yet.<br>Work through a situation on the Coach tab, then tap “Start this plan &amp; track it.”<br><br><button class="btn" style="margin:0 auto" onclick="switchView('coach')">Go to Coach</button></div>`;
+    el.innerHTML=h; return;
+  }
+  if(active.length){
+    h+=`<div class="sec-h" style="margin-top:6px">In progress</div>`+active.map(pathCardHTML).join("");
+  } else {
+    h+=`<div class="pathnote">🎉 Nothing in progress right now — nice work. <a onclick="switchView('coach')">Bring a new situation</a> to start your next path.</div>`;
+  }
+  if(done.length){
+    h+=`<div class="sec-h" style="margin-top:24px">Completed</div>`+done.map(pathCardHTML).join("");
+  }
+  el.innerHTML=h;
+  paths.forEach(p=>wirePathCard(p.id));
+}
+function pathCardHTML(p){
+  const total=p.stages.length, doneN=p.stages.filter(s=>s.done).length;
+  const pct=total?Math.round(doneN/total*100):0;
+  return `<div class="pathcard ${p.status!=='active'?'isdone':''}" data-p="${p.id}">
+    <div class="pc-top">
+      <div class="pc-when">${new Date(p.createdAt).toLocaleDateString([], {month:'short',day:'numeric'})} · ${esc((p.models||[]).slice(0,2).join(" · "))}</div>
+      <div class="pc-prog"><div class="pc-bar"><i style="width:${pct}%"></i></div><span>${doneN}/${total}</span></div>
+    </div>
+    <div class="pc-sit">${esc(p.situation.slice(0,160))}${p.situation.length>160?'…':''}</div>
+    ${p.tech?`<div class="pc-tech">◇ ${esc(p.tech.mod)}: ${esc(p.tech.name)}</div>`:""}
+    <div class="pc-stages">
+      ${p.stages.map((s,i)=>`<label class="pc-stage ${s.done?'on':''}"><input type="checkbox" data-stage="${i}" ${s.done?'checked':''}><span class="pc-check"></span><span class="pc-txt"><b>${esc(s.title)}</b><br>${esc(s.action)}</span></label>`).join("")}
+    </div>
+    ${(p.checkins&&p.checkins.length)?`<div class="pc-checkins">${p.checkins.map(c=>`<div class="pc-ci"><span class="pc-cidate">${new Date(c.when).toLocaleDateString([], {month:'short',day:'numeric'})}</span>${esc(c.note)}</div>`).join("")}</div>`:""}
+    ${p.status==="active"
+      ? `<div class="pc-add"><textarea class="pc-note" placeholder="How's it going? Log a quick update…"></textarea>
+         <div class="pc-actions"><button class="btn ghost pc-log">Log update</button><button class="btn ghost pc-done">Mark complete</button><button class="btn ghost pc-del">Delete</button></div></div>`
+      : `<div class="pc-actions"><button class="btn ghost pc-reopen">Reopen</button><button class="btn ghost pc-del">Delete</button></div>`}
+  </div>`;
+}
+function wirePathCard(id){
+  const card=document.querySelector('.pathcard[data-p="'+id+'"]'); if(!card) return;
+  const upd=fn=>{ const paths=getPaths(); const p=paths.find(x=>x.id===id); if(!p)return; fn(p); setPaths(paths); renderPath(); };
+  card.querySelectorAll('[data-stage]').forEach(cb=>cb.onchange=()=>upd(p=>{ p.stages[+cb.dataset.stage].done=cb.checked; }));
+  const log=card.querySelector('.pc-log'); if(log) log.onclick=()=>{ const ta=card.querySelector('.pc-note'); const val=ta.value.trim(); if(!val)return; upd(p=>{ (p.checkins=p.checkins||[]).push({when:Date.now(),note:val}); }); };
+  const dn=card.querySelector('.pc-done'); if(dn) dn.onclick=()=>upd(p=>{ p.status="done"; });
+  const ro=card.querySelector('.pc-reopen'); if(ro) ro.onclick=()=>upd(p=>{ p.status="active"; });
+  const del=card.querySelector('.pc-del'); if(del) del.onclick=()=>{ if(confirm("Delete this plan?")){ setPaths(getPaths().filter(x=>x.id!==id)); renderPath(); } };
+}
+
+/* ============================ PRACTICES LIBRARY ============================ */
+const PRACTICES=[
+  {id:"box_breath",cat:"Steady yourself",title:"Box breathing",time:"2 min",tag:"Regulation",desc:"A simple breath pattern that calms your nervous system fast.",steps:["Breathe in for 4 counts","Hold for 4","Breathe out for 4","Hold for 4","Repeat 4–6 rounds"]},
+  {id:"breath478",cat:"Steady yourself",title:"4-7-8 breath",time:"2 min",tag:"Regulation",desc:"A longer exhale to downshift anxiety in the moment.",steps:["Inhale through your nose for 4","Hold for 7","Exhale slowly through your mouth for 8","Repeat 4 rounds"]},
+  {id:"body_scan",cat:"Steady yourself",title:"Body scan",time:"3 min",tag:"Grounding",desc:"Drop out of your head and back into your body before something hard.",steps:["Sit, feet on the floor, eyes closed","Notice your breath without changing it","Scan slowly from head to toe","Find one place you're holding tension — and soften it"]},
+  {id:"halt",cat:"Steady yourself",title:"HALT check",time:"1 min",tag:"Recovery",desc:"Catch the real culprit before you react.",steps:["Pause before responding","Ask: am I Hungry, Angry, Lonely, or Tired?","Tend to whichever is true first","Then decide"]},
+  {id:"serenity",cat:"Steady yourself",title:"Serenity check",time:"2 min",tag:"Recovery",desc:"Sort what you can change from what you can't.",steps:["Name one thing here you cannot change — and accept it","Name one thing you can change","Be honest about which is which","Take one action on the second"]},
+  {id:"reset10",cat:"Steady yourself",title:"10-second reset",time:"10 sec",tag:"Regulation",desc:"A micro-pause for the middle of a heated moment.",steps:["Stop","Take one slow breath","Drop your shoulders","Choose your next word on purpose"]},
+
+  {id:"thought_audit",cat:"Know yourself",title:"7-day thought audit",time:"5 min/day",tag:"CBT",desc:"Notice the stories your mind repeats.",steps:["Each evening, write the 3 thoughts that ran most often","Mark each: helpful or unhelpful?","Rewrite one unhelpful thought in a more balanced way","After a week, look for the pattern"]},
+  {id:"energy_audit",cat:"Know yourself",title:"Energy audit",time:"5 min",tag:"Well-being",desc:"See where your energy actually goes.",steps:["Rate today 1–10: physical, emotional, mental, spiritual energy","Which is lowest right now?","What's one small thing that would refill it?","Do that one thing"]},
+  {id:"values_gap",cat:"Know yourself",title:"Values gap",time:"8 min",tag:"Values",desc:"Close the gap between what you value and how you live.",steps:["List your top 3 values","Rate 1–10 how much your last week reflected each","Pick the biggest gap","Name one change that would narrow it"]},
+  {id:"stinky_fish",cat:"Know yourself",title:"Name the stinky fish",time:"5 min",tag:"Courage",desc:"The fears we carry but don't talk about only grow in the dark.",steps:["Name a worry you've been carrying but not saying out loud","Write it down plainly","Ask: what's the worst case — and could I handle it?","Tell one trusted person, or write your next step"]},
+  {id:"mars_group",cat:"Know yourself",title:"Mars group",time:"10 min",tag:"Values",desc:"Find your core by choosing your people.",steps:["Imagine rebuilding your best self on another planet","Who are the 3–5 people you'd bring?","What is it about each of them you admire?","Those qualities are your real values — name them"]},
+  {id:"rel_audit",cat:"Know yourself",title:"Relationship audit",time:"10 min",tag:"Connection",desc:"The people-first check.",steps:["List your 10 most important relationships","Rate each 1–10 on how genuinely you've invested lately","Circle the 2 most important that scored low","Reach out to one of them today"]},
+
+  {id:"bold_letter",cat:"Be bold",title:"Bold action letter",time:"15 min",tag:"Settle For More",desc:"Write from the future you're trying to become.",steps:["Picture yourself one year from now, having done the brave thing","Write a letter from that you, back to today's you","Describe what you did and how it felt","Read it each morning for 30 days"]},
+  {id:"discomfort",cat:"Be bold",title:"The discomfort challenge",time:"ongoing",tag:"Courage",desc:"Everything you want is on the other side of fear.",steps:["List 3 things you've been avoiding because they're uncomfortable","Rank them easiest to hardest","Do the easiest one this week","Next week, the next one"]},
+  {id:"mastery",cat:"Be bold",title:"30-day mastery sprint",time:"30 min/day",tag:"Mastery",desc:"The world rewards mastery, not potential.",steps:["Pick one skill that matters to you","Commit to 30 focused minutes a day for 30 days","Track each day with a simple check","On day 30, notice how far you moved"]},
+  {id:"mirror",cat:"Be bold",title:"The mirror",time:"5 min",tag:"Stop settling",desc:"Your life reflects what you've accepted.",steps:["Name one area where you've quietly settled","Ask: did I choose this, or just accept it?","Name what 'more' would look like there","Take one small step toward it today"]},
+
+  {id:"champion",cat:"Lift others",title:"Champion someone",time:"2 min",tag:"Settle For More",desc:"The world has enough critics.",steps:["Think of someone working hard or struggling","Tell them, specifically, what you believe about them","Be concrete — name the strength you see","Notice what it does for both of you"]},
+  {id:"give_away",cat:"Lift others",title:"Give it away",time:"varies",tag:"Generosity",desc:"Generosity isn't your surplus — it's who you become.",steps:["Pick one thing you can give today — time, help, money, attention","Give it without expecting anything back","Notice you don't have to wait for 'extra' to be generous"]},
+  {id:"grow_fb",cat:"Lift others",title:"Build-up feedback",time:"5 min",tag:"Coaching",desc:"Feedback that builds instead of bruises — Gratitude, Recognition, Opportunities, Wondering.",steps:["Gratitude: thank them for something real","Recognition: name what they did well","Opportunities: offer one growth area, kindly","Wondering: ask a curious question, not a verdict"]},
+  {id:"mode_check",cat:"Lift others",title:"Manage / Coach / Mentor check",time:"3 min",tag:"Leadership",desc:"Match how you show up to what they need.",steps:["Think of someone you're trying to help","Do they need you to manage the task, coach the skill, or mentor the person?","Notice your default mode","Try the mode they actually need"]},
+  {id:"four_circle",cat:"Lift others",title:"Four-circle check",time:"8 min",tag:"Decision",desc:"Find your sweet spot before a big choice.",steps:["Rate this path on 4 circles: passion, excellence, economics, well-being","Which circle is missing or weak?","Is the gap fixable, or a sign to rethink?","Name your next move"]}
+];
+function getPracticeLog(){ try{return JSON.parse(localStorage.getItem('lode_practices')||"{}");}catch{return {};} }
+function setPracticeLog(o){ localStorage.setItem('lode_practices',JSON.stringify(o)); }
+function practiceCard(p, open){
+  const log=getPracticeLog()[p.id];
+  const meta=log?`Done ${log.count}× · last ${esc(log.last)}`:"";
+  return `<div class="prac ${open?'open':''}" data-id="${p.id}">
+    <div class="prac-head">
+      <div><h4>${esc(p.title)}</h4><div class="prac-meta"><span class="prac-time">${esc(p.time)}</span><span class="prac-tag">${esc(p.tag)}</span></div></div>
+      <span class="prac-chev">▾</span>
+    </div>
+    <div class="prac-body">
+      <p class="prac-desc">${esc(p.desc)}</p>
+      <ol class="prac-steps">${p.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+      <div class="prac-foot"><button class="btn ghost prac-done">✓ I did this</button>${meta?`<span class="prac-log">${meta}</span>`:""}</div>
+    </div>
+  </div>`;
+}
+function renderPractices(){
+  const el=$('#practicesBody'); if(!el) return;
+  const featured=PRACTICES[Math.floor(Date.now()/86400000)%PRACTICES.length];
+  let h=`<div class="prac-feature"><div class="pf-label">✦ Practice of the day</div>${practiceCard(featured,true)}</div>`;
+  const cats=[]; PRACTICES.forEach(p=>{ if(!cats.includes(p.cat)) cats.push(p.cat); });
+  cats.forEach(c=>{
+    h+=`<div class="sec-h" style="margin-top:26px">${esc(c)}</div><div class="prac-list">`+
+       PRACTICES.filter(p=>p.cat===c).map(p=>practiceCard(p,false)).join("")+`</div>`;
+  });
+  el.innerHTML=h;
+  wirePractices();
+}
+function wirePractices(){
+  document.querySelectorAll('#practices .prac').forEach(card=>{
+    const head=card.querySelector('.prac-head'); if(head) head.onclick=()=>card.classList.toggle('open');
+    const done=card.querySelector('.prac-done'); if(done) done.onclick=e=>{
+      e.stopPropagation();
+      const id=card.dataset.id, log=getPracticeLog();
+      const today=new Date().toLocaleDateString([], {month:'short',day:'numeric'});
+      log[id]={count:((log[id]&&log[id].count)||0)+1, last:today};
+      setPracticeLog(log); renderPractices();
+    };
+  });
+}
+
+/* Settings */
+const PROVIDER_NAMES={anthropic:"Claude",openai:"GPT",google:"Gemini"};
+function loadSettings(){
+  $('#apikey').value=localStorage.getItem('lode_key')||"";
+  const p=$('#aiprovider'); if(p) p.value=localStorage.getItem('lode_provider')||"anthropic";
+  const m=$('#aimodel'); if(m) m.value=localStorage.getItem('lode_model')||"";
+  const fb=getFeedback(), fbEl=$('#fbStats');
+  if(fbEl){
+    if(fb.length){ const pos=fb.filter(x=>x.rating==='yes').length, kind=fb.filter(x=>x.rating==='kind').length;
+      fbEl.textContent=`Helpfulness so far: ${fb.length} rating${fb.length>1?'s':''} — ${pos} helpful, ${kind} kind of, ${fb.length-pos-kind} not yet.`; }
+    else { fbEl.textContent="No helpfulness ratings yet — they'll appear here as people use it."; }
+  }
+  updateAIflag();
+}
+function updateAIflag(){
+  const on=!!localStorage.getItem('lode_key');
+  const prov=localStorage.getItem('lode_provider')||"anthropic";
+  const nm=PROVIDER_NAMES[prov]||prov;
+  $('#aidot').classList.toggle('on',on);
+  $('#ailabel').textContent=on?("AI connected · "+nm):"Built-in engine · AI optional";
+  const chip=$('#aistatuschip'); if(chip){ chip.textContent=on?("Connected · "+nm):"Optional"; chip.classList.toggle('on',on); }
+}
+$('#savekey').onclick=()=>{
+  const k=$('#apikey').value.trim();
+  if(k) localStorage.setItem('lode_key',k); else localStorage.removeItem('lode_key');
+  localStorage.setItem('lode_provider',$('#aiprovider').value);
+  const md=$('#aimodel').value.trim(); if(md) localStorage.setItem('lode_model',md); else localStorage.removeItem('lode_model');
+  updateAIflag();
+  const m=$('#savedmsg'); m.textContent=k?"Saved ✓":"Disconnected"; m.classList.add('show'); setTimeout(()=>m.classList.remove('show'),1800);
+};
+const _clr=$('#clearkey'); if(_clr) _clr.onclick=()=>{
+  localStorage.removeItem('lode_key'); $('#apikey').value=""; updateAIflag();
+  const m=$('#savedmsg'); m.textContent="Disconnected"; m.classList.add('show'); setTimeout(()=>m.classList.remove('show'),1800);
+};
+loadSettings();
+</script>
+<script>
+/* Register service worker for offline use + installability (only works when hosted over https) */
+if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+</script>
+</body>
+</html>
