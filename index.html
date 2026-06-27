@@ -1573,6 +1573,56 @@ function getFeedback(){ try{return JSON.parse(localStorage.getItem('lode_feedbac
 function feedbackHTML(){
   return `<div class="fb" id="fbWidget"><span class="fb-q">Was this helpful?</span><button class="fb-b" data-r="yes">👍 Yes</button><button class="fb-b" data-r="kind">😐 Kind of</button><button class="fb-b" data-r="no">👎 Not really</button></div>`;
 }
+/* ===== Feedback delivery — so ratings actually reach the builder =====
+   DEFAULT: opens the tester's email app, pre-addressed, on "Send".
+   PRIVATE/SILENT (recommended): create a free form at https://formspree.io,
+   paste its endpoint URL into FEEDBACK_ENDPOINT below, and feedback is sent
+   quietly in the background (no email address exposed in this public page). */
+const FEEDBACK_ENDPOINT = "https://formspree.io/f/mbdvyoyz"; // private feedback collection
+const FEEDBACK_EMAIL    = "tstumbo13@gmail.com"; // only used when no endpoint is set
+function fbDeviceId(){
+  let d=localStorage.getItem('lode_device');
+  if(!d){ d=Math.random().toString(36).slice(2,9); localStorage.setItem('lode_device',d); }
+  return d;
+}
+async function sendFeedback(rating, note){
+  const payload={
+    rating,
+    note:(note||"").slice(0,1000),
+    situation:((lastInput&&lastInput.text)||"").slice(0,300),
+    models:((lastResult&&lastResult.modelsUsed)||[]).join(", "),
+    when:new Date().toLocaleString(),
+    device:fbDeviceId()
+  };
+  if(FEEDBACK_ENDPOINT){
+    try{
+      await fetch(FEEDBACK_ENDPOINT,{method:"POST",headers:{"content-type":"application/json","accept":"application/json"},body:JSON.stringify(payload)});
+      return "sent";
+    }catch(e){ /* network failed — fall through to email so it isn't lost */ }
+  }
+  const subject=`Lodestar feedback: ${rating}`;
+  const body=`Rating: ${rating}\nNote: ${payload.note||"(none)"}\n\nSituation: ${payload.situation}\nModels considered: ${payload.models}\nWhen: ${payload.when}\nDevice: ${payload.device}`;
+  window.location.href=`mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return "mail";
+}
+function fbNoteStep(rating){
+  const w=$('#fbWidget'); if(!w) return;
+  recordFeedback(rating); // keep the local tally too
+  const label={yes:"👍 Yes",kind:"😐 Kind of",no:"👎 Not really"}[rating]||rating;
+  w.innerHTML=`<span class="fb-q">Thanks — you said <b>${label}</b>. Want to tell us why? (optional)</span>
+    <textarea id="fbNote" class="pc-note" placeholder="What worked, what didn't, anything confusing…" style="width:100%;margin-top:8px"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <button class="btn" id="fbSend">Send feedback</button>
+      <button class="btn ghost" id="fbCancel">Not now</button>
+    </div>`;
+  const send=$('#fbSend'); if(send) send.onclick=async()=>{
+    send.disabled=true; send.textContent="Sending…";
+    const note=$('#fbNote')?$('#fbNote').value.trim():"";
+    const res=await sendFeedback(rating,note);
+    w.innerHTML=`<span class="fb-q">${res==="sent"?"Sent — thank you. This genuinely helps make it better.":"Thank you — your email app is opening so you can hit send."}</span>`;
+  };
+  const cancel=$('#fbCancel'); if(cancel) cancel.onclick=()=>{ w.innerHTML='<span class="fb-q">Thanks — that helps make it better.</span>'; };
+}
 function recordFeedback(r){
   const arr=getFeedback();
   arr.unshift({when:Date.now(), rating:r, text:((lastInput&&lastInput.text)||"").slice(0,140), models:(lastResult&&lastResult.modelsUsed)||[]});
@@ -1583,10 +1633,7 @@ function wireResultButtons(){
   const cb=$('#copyBtn'); if(cb) cb.onclick=()=>{ copyGuidance(); cb.textContent="Copied ✓"; setTimeout(()=>cb.textContent="Copy guidance",1500); };
   const pb=$('#startPlan'); if(pb) pb.onclick=()=>{ startPlan(pb); };
   const fbtn=$('#seeFull'); if(fbtn) fbtn.onclick=()=>runAnalyze('full');
-  document.querySelectorAll('#fbWidget .fb-b').forEach(b=>b.onclick=()=>{
-    recordFeedback(b.dataset.r);
-    const w=$('#fbWidget'); if(w) w.innerHTML='<span class="fb-q">Thank you — that helps Lodestar get better.</span>';
-  });
+  document.querySelectorAll('#fbWidget .fb-b').forEach(b=>b.onclick=()=>fbNoteStep(b.dataset.r));
 }
 
 /* History */
