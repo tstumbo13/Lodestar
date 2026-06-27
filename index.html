@@ -44,10 +44,10 @@ header{position:sticky;top:0;z-index:50;background:rgba(15,23,42,.96);backdrop-f
 .brand small{display:block;font-weight:500;font-size:11px;color:#9fb0c9;letter-spacing:.6px;text-transform:uppercase;margin-top:1px}
 nav.tabs{margin-left:auto;display:flex;gap:4px;background:rgba(255,255,255,.06);padding:4px;border-radius:12px}
 nav.tabs button{color:#c3cee0;font-weight:600;font-size:13.5px;padding:7px 14px;border-radius:9px;transition:.15s}
-nav.tabs button:hover{color:#fff}
+@media (hover:hover){nav.tabs button:hover{color:#fff}}
 nav.tabs button.active{background:#fff;color:var(--navy)}
 .helplink{flex:none;margin-left:12px;font-size:12.5px;font-weight:700;color:#ffd2c2;background:rgba(212,115,58,.22);border:1px solid rgba(212,115,58,.45);padding:7px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
-.helplink:hover{background:rgba(212,115,58,.38);color:#fff}
+@media (hover:hover){.helplink:hover{background:rgba(212,115,58,.38);color:#fff}}
 
 /* Hero */
 .hero{padding:40px 0 8px;text-align:center}
@@ -64,10 +64,10 @@ nav.tabs button.active{background:#fff;color:var(--navy)}
 .field select{appearance:none;-webkit-appearance:none;background:#f7f8fa url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right 9px center;border:1px solid var(--line);border-radius:10px;padding:8px 30px 8px 11px;font-size:13.5px;font-family:inherit;color:var(--ink);font-weight:500;cursor:pointer;min-width:130px}
 .composer .go{margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .btn{background:var(--navy);color:#fff;font-weight:600;font-size:15px;padding:12px 22px;border-radius:11px;display:inline-flex;align-items:center;gap:9px;transition:.15s;box-shadow:var(--shadow)}
-.btn:hover{background:#16233f;transform:translateY(-1px)}
+@media (hover:hover){.btn:hover{background:#16233f;transform:translateY(-1px)}}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn.ghost{background:#eef1f5;color:var(--slate);box-shadow:none}
-.btn.ghost:hover{background:#e4e8ee}
+@media (hover:hover){.btn.ghost:hover{background:#e4e8ee}}
 .aiflag{font-size:12.5px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
 .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1}
 .dot.on{background:var(--good)}
@@ -76,7 +76,7 @@ nav.tabs button.active{background:#fff;color:var(--navy)}
 .examples{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .examples span.lbl{font-size:12.5px;color:var(--muted);font-weight:600}
 .chip{font-size:12.5px;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:20px;transition:.15s}
-.chip:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}
+@media (hover:hover){.chip:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}}
 
 /* Results */
 #results{margin-top:30px}
@@ -144,7 +144,7 @@ nav.tabs button.active{background:#fff;color:var(--navy)}
 /* History */
 .hist{margin-top:24px}
 .histitem{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px;margin-bottom:11px;box-shadow:var(--shadow);cursor:pointer;transition:.15s}
-.histitem:hover{border-color:var(--gold-line);transform:translateY(-1px)}
+@media (hover:hover){.histitem:hover{border-color:var(--gold-line);transform:translateY(-1px)}}
 .histitem .when{font-size:11.5px;color:var(--muted);font-weight:600}
 .histitem .txt{font-size:14.5px;color:var(--ink);margin-top:3px}
 .histitem .mods{font-size:12.5px;color:var(--gold);font-weight:600;margin-top:6px}
@@ -203,7 +203,7 @@ footer b{color:var(--slate)}
 .qopt .pick{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#94a3b8;transition:.15s}
 @media (hover:hover){.qopt:hover .pick{border-color:var(--gold);color:var(--gold)}}
 .qback{display:block;margin:18px auto 0;color:var(--muted);font-size:13.5px;font-weight:600}
-.qback:hover{color:var(--slate)}
+@media (hover:hover){.qback:hover{color:var(--slate)}}
 
 /* values results / profile */
 .northcard{background:linear-gradient(180deg,#0f172a,#1c2a44);color:#fff;border-radius:20px;padding:26px;text-align:center;box-shadow:var(--shadow-lg);margin-top:8px}
@@ -267,7 +267,7 @@ footer b{color:var(--slate)}
 .sf-row span{font-size:14px;color:var(--slate)}
 .sf-foot{font-size:13px;color:var(--muted)}
 .sf-continue{font-size:13.5px;color:var(--muted);font-weight:600;text-decoration:underline;cursor:pointer;margin-top:6px}
-.sf-continue:hover{color:var(--slate)}
+@media (hover:hover){.sf-continue:hover{color:var(--slate)}}
 
 /* My Path */
 .pathcard{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 19px;margin-bottom:14px;box-shadow:var(--shadow)}
@@ -310,7 +310,7 @@ footer b{color:var(--slate)}
 .qs-cat-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
 .qs-chips{display:flex;flex-wrap:wrap;gap:9px}
 .qchip{font-size:14px;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:10px 15px;border-radius:12px;transition:.15s;box-shadow:var(--shadow);font-weight:500}
-.qchip:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e;transform:translateY(-1px)}
+@media (hover:hover){.qchip:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e;transform:translateY(-1px)}}
 .composer{position:relative}
 .composer:before{content:"…or describe it in your own words";position:absolute;top:-11px;left:18px;background:var(--surface);padding:0 8px;font-size:11.5px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--muted)}
 
@@ -320,7 +320,7 @@ footer b{color:var(--slate)}
 .feel-lbl:before{content:"♥";color:#7b6fc7;font-size:13px}
 .feel-lbl em{font-style:normal;font-weight:500;color:#8088c2}
 .feel-chip{font-size:12.5px;color:#46506e;background:#fff;border:1px solid #d7dcf0;padding:6px 13px;border-radius:18px;transition:.15s;font-weight:500}
-.feel-chip:hover{border-color:#8e98d8;background:#f1f3fd;transform:translateY(-1px)}
+@media (hover:hover){.feel-chip:hover{border-color:#8e98d8;background:#f1f3fd;transform:translateY(-1px)}}
 .feel-chip.on{background:#4a55a8;color:#fff;border-color:#4a55a8;box-shadow:0 2px 7px rgba(74,85,168,.32)}
 
 /* warm acknowledgment + quick take */
@@ -371,14 +371,14 @@ details.more>summary{list-style:none;cursor:pointer;padding:14px 18px;font-size:
 details.more>summary::-webkit-details-marker{display:none}
 details.more>summary:before{content:"▸";color:var(--gold);font-weight:700;transition:.2s}
 details.more[open]>summary:before{transform:rotate(90deg)}
-details.more>summary:hover{background:#f7f8fa}
+@media (hover:hover){details.more>summary:hover{background:#f7f8fa}}
 .more-body{padding:4px 18px 16px}
 .more-body .fwk:first-child{margin-top:4px}
 /* helpfulness feedback */
 .fb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;padding:12px 14px;background:#f7f8fa;border:1px solid var(--line);border-radius:11px}
 .fb-q{font-size:13px;font-weight:600;color:var(--muted);margin-right:2px}
 .fb-b{font-size:13px;font-weight:600;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:9px;transition:.15s}
-.fb-b:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}
+@media (hover:hover){.fb-b:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}}
 
 /* ===== accessibility & polish pass ===== */
 /* Visible keyboard focus for everything interactive */
@@ -408,7 +408,7 @@ input:focus-visible, summary:focus-visible, label.switch:focus-within{
 .hero:before{content:"";position:absolute;left:50%;top:-24px;width:560px;max-width:92vw;height:240px;transform:translateX(-50%);background:radial-gradient(ellipse at center, rgba(200,146,58,.14), rgba(200,146,58,0) 68%);pointer-events:none}
 .hero h1, .hero p{position:relative}
 .fwk{transition:box-shadow .18s, transform .18s}
-.fwk:hover, .libcard:hover{box-shadow:0 12px 34px rgba(16,24,40,.11)}
+@media (hover:hover){.fwk:hover, .libcard:hover{box-shadow:0 12px 34px rgba(16,24,40,.11)}}
 .composer{transition:box-shadow .2s, border-color .2s}
 .composer:focus-within{border-color:var(--gold-line);box-shadow:0 2px 4px rgba(16,24,40,.05),0 14px 36px rgba(200,146,58,.10)}
 
