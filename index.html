@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="Lodestar">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -198,9 +199,9 @@ footer b{color:var(--slate)}
 .qcard .qq{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--navy);text-align:center;line-height:1.3;margin-bottom:22px}
 .qopts{display:flex;flex-direction:column;gap:12px}
 .qopt{text-align:left;border:1.5px solid var(--line);background:#fbfcfd;border-radius:14px;padding:16px 18px;font-size:15.5px;color:var(--ink);transition:.15s;line-height:1.45;display:flex;gap:13px;align-items:center}
-.qopt:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}
+@media (hover:hover){.qopt:hover{border-color:var(--gold);background:var(--gold-soft);transform:translateY(-1px)}}
 .qopt .pick{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#94a3b8;transition:.15s}
-.qopt:hover .pick{border-color:var(--gold);color:var(--gold)}
+@media (hover:hover){.qopt:hover .pick{border-color:var(--gold);color:var(--gold)}}
 .qback{display:block;margin:18px auto 0;color:var(--muted);font-size:13.5px;font-weight:600}
 .qback:hover{color:var(--slate)}
 
@@ -379,6 +380,38 @@ details.more>summary:hover{background:#f7f8fa}
 .fb-b{font-size:13px;font-weight:600;color:var(--slate);background:var(--surface);border:1px solid var(--line);padding:6px 12px;border-radius:9px;transition:.15s}
 .fb-b:hover{border-color:var(--gold-line);background:var(--gold-soft);color:#7a5a1e}
 
+/* ===== accessibility & polish pass ===== */
+/* Visible keyboard focus for everything interactive */
+a:focus-visible, button:focus-visible, select:focus-visible, textarea:focus-visible,
+input:focus-visible, summary:focus-visible, label.switch:focus-within{
+  outline:3px solid #7aa7e0; outline-offset:2px; border-radius:8px;
+}
+/* Darker gold for small text on light backgrounds (contrast) */
+.qs-cat-label, .qt-label, .pf-label, .rellbl{ color:#8a6212; }
+.nspill{ color:#6f5214; }
+/* Larger, comfortable tap targets on touch devices */
+@media (pointer: coarse){
+  .btn, nav.tabs button, .helplink, .qchip, .chip, .feel-chip, .fb-b,
+  .pc-actions .btn, .star-btn, .sf-continue, select, summary{ min-height:44px; }
+  nav.tabs button, .qchip, .chip, .feel-chip, .fb-b{ display:inline-flex; align-items:center; }
+}
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+}
+
+/* ===== visual polish ===== */
+.hero{position:relative}
+.hero:before{content:"";position:absolute;left:50%;top:-24px;width:560px;max-width:92vw;height:240px;transform:translateX(-50%);background:radial-gradient(ellipse at center, rgba(200,146,58,.14), rgba(200,146,58,0) 68%);pointer-events:none}
+.hero h1, .hero p{position:relative}
+.fwk{transition:box-shadow .18s, transform .18s}
+.fwk:hover, .libcard:hover{box-shadow:0 12px 34px rgba(16,24,40,.11)}
+.composer{transition:box-shadow .2s, border-color .2s}
+.composer:focus-within{border-color:var(--gold-line);box-shadow:0 2px 4px rgba(16,24,40,.05),0 14px 36px rgba(200,146,58,.10)}
+
 @media(max-width:680px){
   .callouts,.libgrid,.principlegrid{grid-template-columns:1fr}
   .brand small{display:none}
@@ -395,7 +428,7 @@ details.more>summary:hover{background:#f7f8fa}
 <header>
   <div class="hbar">
     <div class="brand">
-      <svg class="star" viewBox="0 0 32 32" fill="none"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>
+      <svg class="star" aria-hidden="true" viewBox="0 0 32 32" fill="none"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>
       <div>Lodestar<small>Find your way through</small></div>
     </div>
     <nav class="tabs">
@@ -422,11 +455,11 @@ details.more>summary:hover{background:#f7f8fa}
     <div class="quickstart" id="quickstart"></div>
 
     <div class="composer">
-      <textarea id="situation" placeholder="Tell me what's going on — at work or in life. e.g. “I've been carrying way too much lately, I'm short with the people I love, and I can't tell if I need to make a change or just push through.” The more honest you are, the more useful I can be."></textarea>
+      <textarea id="situation" aria-label="Describe your situation, at work or in life" placeholder="Tell me what's going on — at work or in life. e.g. “I've been carrying way too much lately, I'm short with the people I love, and I can't tell if I need to make a change or just push through.” The more honest you are, the more useful I can be."></textarea>
       <div class="feelings" id="feelings"></div>
       <div class="ctx">
         <div class="field"><label>Who's involved</label>
-          <select id="relationship">
+          <select id="relationship" aria-label="Who's involved">
             <option value="direct report">A direct report</option>
             <option value="team">My whole team</option>
             <option value="peer">A peer / colleague</option>
@@ -438,21 +471,21 @@ details.more>summary:hover{background:#f7f8fa}
           </select>
         </div>
         <div class="field"><label>Stakes</label>
-          <select id="stakes">
+          <select id="stakes" aria-label="Stakes">
             <option value="high">High</option>
             <option value="medium" selected>Medium</option>
             <option value="low">Low</option>
           </select>
         </div>
         <div class="field"><label>Timing</label>
-          <select id="urgency">
+          <select id="urgency" aria-label="Timing">
             <option value="urgent">Needs handling now</option>
             <option value="soon" selected>This week</option>
             <option value="ongoing">Ongoing / no rush</option>
           </select>
         </div>
         <div class="field"><label>Your aim</label>
-          <select id="aim">
+          <select id="aim" aria-label="Your aim">
             <option value="resolve">Resolve the issue</option>
             <option value="relationship">Protect the relationship</option>
             <option value="performance">Lift performance</option>
@@ -463,7 +496,7 @@ details.more>summary:hover{background:#f7f8fa}
       </div>
       <div class="go">
         <button class="btn" id="analyze">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           Get guidance
         </button>
         <button class="btn ghost" id="quickbtn" title="A fast, condensed take">⚡ Quick gut-check</button>
@@ -472,7 +505,7 @@ details.more>summary:hover{background:#f7f8fa}
       </div>
     </div>
 
-    <div id="results"></div>
+    <div id="results" role="region" aria-live="polite" aria-label="Your guidance"></div>
   </div>
 </section>
 
@@ -557,7 +590,7 @@ details.more>summary:hover{background:#f7f8fa}
 <!-- VALUES -->
 <section class="view" id="values">
   <div class="wrap">
-    <div class="hero"><h1>Your leadership values</h1><p>The values you lead by — and the ones Lodestar uses to keep you honest. Great leadership isn't doing what's easy; it's doing what's true to these.</p></div>
+    <div class="hero"><h1>Your core values</h1><p>The values you live and lead by — and the ones Lodestar uses to keep you honest. The hard part isn't doing what's easy; it's doing what's true to these.</p></div>
     <div id="valuesBody"></div>
   </div>
 </section>
@@ -798,7 +831,7 @@ const FRAMEWORKS = [
     themes:{grief:3,transition:3,change:2,loneliness:2,purpose:1,myself:1}
   },
   {
-    id:"recovery", name:"Recovery Wisdom", school:"12-Step rooms · Serenity Prayer", color:"#9a7320",
+    id:"recovery", name:"Acceptance & Steadiness", school:"Serenity Prayer · HALT self-check", color:"#9a7320",
     summary:"Hard-won, universal wisdom: take it one day at a time, accept what you can't change, change what you can, and tend to yourself before you react. You don't have to do it alone.",
     bestfor:"Overwhelm, resentment, one day at a time",
     lens:"slows it all down to right now — sorting what to accept from what you can change, and tending yourself before reacting.",
@@ -918,42 +951,42 @@ function pickPrinciple(themes){
 }
 
 const QUIZ = [
-  {scene:"Performance",q:"A team member is underperforming during a genuinely hard time in their life. Your instinct:",
-   a:{t:"Keep the bar where it is — clarity and standards help them most.",v:["excellence","candor"]},
+  {scene:"When someone's struggling",q:"Someone you care about keeps falling short of what they promised — during a genuinely hard stretch in their life. Your instinct:",
+   a:{t:"Hold them to what they committed to — clear expectations help them most.",v:["excellence","candor"]},
    b:{t:"Lead with grace and meet them where they are right now.",v:["empathy","service"]}},
-  {scene:"Disagreement",q:"Your boss made a call you believe is wrong. You're most likely to:",
+  {scene:"Disagreement",q:"Someone you respect made a choice you believe is wrong. You're most likely to:",
    a:{t:"Tell them directly and respectfully — even if it's awkward.",v:["courage","candor"]},
    b:{t:"Assume they see something you don't, and ask before weighing in.",v:["trust","empathy"]}},
-  {scene:"After a failure",q:"A project just failed. You open the debrief with:",
-   a:{t:"Where I let the team down as the leader.",v:["accountability","integrity"]},
-   b:{t:"What we can learn so we're better next time.",v:["growth","vision"]}},
-  {scene:"Pride",q:"What makes you proudest as a leader?",
-   a:{t:"Someone I developed grew past what I taught them.",v:["growth","service"]},
-   b:{t:"We achieved something others said was impossible.",v:["excellence","vision"]}},
-  {scene:"Autonomy",q:"A strong performer wants full autonomy. You:",
-   a:{t:"Give them the reins and believe in them.",v:["trust","growth"]},
-   b:{t:"Stay close enough to keep us all on the hook for quality.",v:["accountability","excellence"]}},
-  {scene:"Tension",q:"In a tense room, what matters more to you?",
+  {scene:"After things go wrong",q:"Something you were part of just fell apart. The first thing you look at is:",
+   a:{t:"Where I personally let people down.",v:["accountability","integrity"]},
+   b:{t:"What we can learn so it's better next time.",v:["growth","vision"]}},
+  {scene:"Pride",q:"What makes you proudest?",
+   a:{t:"Someone I helped grew past what I could teach them.",v:["growth","service"]},
+   b:{t:"I pulled off something others said was impossible.",v:["excellence","vision"]}},
+  {scene:"Letting go",q:"Someone close to you wants to handle something fully on their own. You:",
+   a:{t:"Give them room and trust them with it.",v:["trust","growth"]},
+   b:{t:"Stay close enough to make sure it's done well.",v:["accountability","excellence"]}},
+  {scene:"Tension",q:"In a tense moment with people, what matters more to you?",
    a:{t:"Everyone leaves feeling genuinely heard.",v:["empathy","connection"]},
    b:{t:"We finally name the real issue out loud.",v:["candor","courage"]}},
   {scene:"Hard news",q:"You could soften hard news to spare someone's feelings. You believe:",
    a:{t:"Clear is kind — they deserve the honest truth.",v:["candor","integrity"]},
    b:{t:"How I deliver it matters as much as what I say.",v:["connection","empathy"]}},
-  {scene:"Reputation",q:"Your team would describe you first as:",
+  {scene:"How you're known",q:"People who know you well would describe you first as:",
    a:{t:"Real — no mask, what you see is what you get.",v:["authenticity","connection"]},
    b:{t:"Reliable — you always do what you said you would.",v:["integrity","accountability"]}},
-  {scene:"Hard calls",q:"When you make a hard call, what guides you most?",
-   a:{t:"Where we're trying to go — the mission.",v:["vision","courage"]},
+  {scene:"Hard calls",q:"When you face a hard decision, what guides you most?",
+   a:{t:"Where I'm trying to go — the bigger goal.",v:["vision","courage"]},
    b:{t:"Who it affects and how they'll be treated.",v:["service","empathy"]}},
-  {scene:"Dignity vs. rules",q:"A policy and a person's dignity are in tension. You lean toward:",
+  {scene:"Rules vs. people",q:"A rule and a person's dignity pull in different directions. You lean toward:",
    a:{t:"The person — how people are treated comes first.",v:["service","connection"]},
    b:{t:"Hold the line — fairness means the standard stays consistent.",v:["integrity","excellence"]}},
-  {scene:"Your growth",q:"You grow most as a leader through:",
+  {scene:"Your growth",q:"You grow the most through:",
    a:{t:"Honest feedback about my blind spots.",v:["authenticity","growth"]},
    b:{t:"Doing the things that scare me.",v:["courage","vision"]}},
-  {scene:"The core",q:"At its heart, leadership is mostly about:",
-   a:{t:"Pointing people toward a purpose bigger than the work.",v:["vision","growth"]},
-   b:{t:"Building real trust and relationships with people.",v:["connection","trust"]}}
+  {scene:"What matters most",q:"At its heart, what matters most to you is:",
+   a:{t:"Moving toward a purpose bigger than myself.",v:["vision","growth"]},
+   b:{t:"Building real trust and closeness with people.",v:["connection","trust"]}}
 ];
 
 function getValues(){ try{return JSON.parse(localStorage.getItem('lode_values')||"null");}catch{return null;} }
@@ -978,8 +1011,8 @@ const TECHNIQUES = [
   {id:"nvc_script",mod:"Nonviolent Communication",name:"Observation → feeling → need → request",do:"Try: “When ___ happened, I felt ___, because I need ___. Would you be willing to ___?” Facts, not blame.",themes:["relationship","conflict","difficult_conversation","boundaries","anger"]},
   {id:"boundary_no",mod:"Boundaries",name:"A kind, clear no",do:"State your limit in a sentence or two — no long justification, no apology spiral. “I care about you, and I can't take this on.”",themes:["boundaries","guilt","anger","relationship"]},
   {id:"habit_tiny",mod:"Behavior Change",name:"Two-minute version",do:"Shrink the change until it's too small to fail, then attach it to something you already do every day.",themes:["habits","motivation","procrastination"]},
-  {id:"recovery_serenity",mod:"Recovery",name:"Serenity check",do:"Name one thing here to accept, one thing you can change, and be honest about which is which. Then act only on the second.",themes:["anxiety","crisis","change","money","anger"]},
-  {id:"recovery_halt",mod:"Recovery",name:"HALT",do:"Before you react, ask: am I Hungry, Angry, Lonely, or Tired? Tend to that first — then decide.",themes:["anger","crisis","myself","anxiety","loneliness"]},
+  {id:"recovery_serenity",mod:"Acceptance",name:"Serenity check",do:"Name one thing here to accept, one thing you can change, and be honest about which is which. Then act only on the second.",themes:["anxiety","crisis","change","money","anger"]},
+  {id:"recovery_halt",mod:"Acceptance",name:"HALT",do:"Before you react, ask: am I Hungry, Angry, Lonely, or Tired? Tend to that first — then decide.",themes:["anger","crisis","myself","anxiety","loneliness"]},
   {id:"selfcompassion",mod:"Self-Compassion",name:"Talk to yourself like a friend",do:"Write what you'd say to someone you love in this exact spot. Now offer those same words to yourself.",themes:["selfworth","guilt","grief","loneliness","myself"]}
 ];
 function pickTechnique(themes, ctx){
@@ -1169,7 +1202,7 @@ function rankFrameworks(themes, ctx){
 
 /* ============================ RENDER ENGINE ============================ */
 const esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const checkIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+const checkIcon='<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
 function ctxObj(){
   return {
@@ -1345,13 +1378,13 @@ function reflective(themes, ctx){
     parenting:"Who do I want them to learn how to be, from watching how I handle this?"
   };
   for(const t of themes){ if(bank[t]) return bank[t]; }
-  return "How would the leader I most admire handle this — and what's stopping me from doing the same?";
+  return "How would the person I most admire handle this — and what's stopping me from doing the same?";
 }
 
 function valuesCheckHTML(primary, ctx){
   const v=getValues();
   if(!v){
-    return `<div class="vcheck"><h5>◆ Values check</h5><p class="setup">Lodestar can hold this guidance against your own leadership values. <a onclick="startQuiz()">Take the 2-minute values quiz</a> to switch that on.</p></div>`;
+    return `<div class="vcheck"><h5>◆ Values check</h5><p class="setup">Lodestar can hold this guidance against your own values. <a onclick="startQuiz()">Take the 2-minute values quiz</a> to switch that on.</p></div>`;
   }
   const top=v.ranked.slice(0,5);
   const north=v.northStar||top[0];
@@ -1407,8 +1440,8 @@ async function buildLive(text, ctx){
   const model=(localStorage.getItem('lode_model')||"").trim();
   const v=getValues();
   const valuesLine = v
-    ? `The leader has defined their core values, ranked: ${v.ranked.slice(0,5).map(id=>VALUES[id].name).join(", ")}. Their North Star value is ${VALUES[v.northStar||v.ranked[0]].name}.`
-    : `The leader has not yet defined their values.`;
+    ? `The person has defined their core values, ranked: ${v.ranked.slice(0,5).map(id=>VALUES[id].name).join(", ")}. Their North Star value is ${VALUES[v.northStar||v.ranked[0]].name}.`
+    : `The person has not yet defined their values.`;
   const sys = `You are Lodestar, a warm, world-class coach for leadership AND everyday life decisions — helping anyone, not only managers. You reason using leadership frameworks (${FRAMEWORKS.map(f=>f.name).join(", ")}) and evidence-based psychological approaches (ACT, CBT, Motivational Interviewing, DBT) adapted as self-reflection — NOT therapy, diagnosis, or treatment.
 Respond ONLY with strict JSON (no markdown) of this shape:
 {"read":[short situation tags],
@@ -1514,7 +1547,7 @@ async function runAnalyze(mode){
   }
   const key = localStorage.getItem('lode_key');
   const useAI = !!key;
-  $('#results').innerHTML=`<div class="thinking"><div class="spin"></div>${useAI?"Thinking through your situation…":"Consulting the leadership library…"}</div>`;
+  $('#results').innerHTML=`<div class="thinking"><div class="spin"></div>${useAI?"Thinking through your situation…":"Consulting the library…"}</div>`;
   $('#analyze').disabled=true; if(qb) qb.disabled=true;
   try{
     let result;
@@ -1770,7 +1803,7 @@ function renderValues(){
   const v=getValues(), el=$('#valuesBody');
   if(!v){
     el.innerHTML=`<div class="vintro">
-      <p>You haven't defined your leadership values yet. It takes about two minutes — a few honest trade-offs reveal what you actually lead by.</p>
+      <p>You haven't defined your values yet. It takes about two minutes — a few honest trade-offs reveal what you actually live by.</p>
       <button class="btn" id="vStart" style="margin:0 auto">Take the values quiz</button>
     </div>`;
     $('#vStart').onclick=startQuiz;
@@ -1884,8 +1917,8 @@ const PRACTICES=[
   {id:"box_breath",cat:"Steady yourself",title:"Box breathing",time:"2 min",tag:"Regulation",desc:"A simple breath pattern that calms your nervous system fast.",steps:["Breathe in for 4 counts","Hold for 4","Breathe out for 4","Hold for 4","Repeat 4–6 rounds"]},
   {id:"breath478",cat:"Steady yourself",title:"4-7-8 breath",time:"2 min",tag:"Regulation",desc:"A longer exhale to downshift anxiety in the moment.",steps:["Inhale through your nose for 4","Hold for 7","Exhale slowly through your mouth for 8","Repeat 4 rounds"]},
   {id:"body_scan",cat:"Steady yourself",title:"Body scan",time:"3 min",tag:"Grounding",desc:"Drop out of your head and back into your body before something hard.",steps:["Sit, feet on the floor, eyes closed","Notice your breath without changing it","Scan slowly from head to toe","Find one place you're holding tension — and soften it"]},
-  {id:"halt",cat:"Steady yourself",title:"HALT check",time:"1 min",tag:"Recovery",desc:"Catch the real culprit before you react.",steps:["Pause before responding","Ask: am I Hungry, Angry, Lonely, or Tired?","Tend to whichever is true first","Then decide"]},
-  {id:"serenity",cat:"Steady yourself",title:"Serenity check",time:"2 min",tag:"Recovery",desc:"Sort what you can change from what you can't.",steps:["Name one thing here you cannot change — and accept it","Name one thing you can change","Be honest about which is which","Take one action on the second"]},
+  {id:"halt",cat:"Steady yourself",title:"HALT check",time:"1 min",tag:"Acceptance",desc:"Catch the real culprit before you react.",steps:["Pause before responding","Ask: am I Hungry, Angry, Lonely, or Tired?","Tend to whichever is true first","Then decide"]},
+  {id:"serenity",cat:"Steady yourself",title:"Serenity check",time:"2 min",tag:"Acceptance",desc:"Sort what you can change from what you can't.",steps:["Name one thing here you cannot change — and accept it","Name one thing you can change","Be honest about which is which","Take one action on the second"]},
   {id:"reset10",cat:"Steady yourself",title:"10-second reset",time:"10 sec",tag:"Regulation",desc:"A micro-pause for the middle of a heated moment.",steps:["Stop","Take one slow breath","Drop your shoulders","Choose your next word on purpose"]},
 
   {id:"thought_audit",cat:"Know yourself",title:"7-day thought audit",time:"5 min/day",tag:"CBT",desc:"Notice the stories your mind repeats.",steps:["Each evening, write the 3 thoughts that ran most often","Mark each: helpful or unhelpful?","Rewrite one unhelpful thought in a more balanced way","After a week, look for the pattern"]},
