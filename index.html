@@ -1790,7 +1790,7 @@ function renderQuizResults(){
   localStorage.setItem('lode_values',JSON.stringify(profile));
   updateNorthPill();
   $('#quizBody').innerHTML=valuesResultHTML(profile,true);
-  wireValuesActions(profile);
+  wireValuesActions(profile, $('#quizBody'));
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1820,16 +1820,22 @@ function valuesResultHTML(profile, fresh){
   return h;
 }
 
-function wireValuesActions(profile){
-  $('#quizBody').querySelectorAll('[data-star]').forEach(b=>b.onclick=()=>{
+function wireValuesActions(profile, container){
+  // container is the element the result was rendered into (#quizBody or #valuesBody).
+  // Scope all lookups to it — the same result HTML (with id="vDone" etc.) can exist in
+  // both places at once, so a document-wide $('#vDone') would grab the wrong one.
+  const root=container||$('#quizBody');
+  const isProfile = root.id==='valuesBody';
+  root.querySelectorAll('[data-star]').forEach(b=>b.onclick=()=>{
     profile.northStar=b.dataset.star;
     localStorage.setItem('lode_values',JSON.stringify(profile));
     updateNorthPill();
-    $('#quizBody').innerHTML=valuesResultHTML(profile,false);
-    wireValuesActions(profile);
+    root.innerHTML=valuesResultHTML(profile,false);
+    if(isProfile){ const dn=root.querySelector('#vDone'); if(dn) dn.textContent="Back to coaching"; }
+    wireValuesActions(profile, root);
   });
-  const d=$('#vDone'); if(d) d.onclick=()=>switchView('coach');
-  const r=$('#vRetake'); if(r) r.onclick=()=>startQuiz();
+  const d=root.querySelector('#vDone'); if(d) d.onclick=()=>switchView('coach');
+  const r=root.querySelector('#vRetake'); if(r) r.onclick=()=>startQuiz();
 }
 
 function renderValues(){
@@ -1843,9 +1849,9 @@ function renderValues(){
     return;
   }
   el.innerHTML=valuesResultHTML(v,false);
-  // in profile view, swap the primary action label
-  const done=$('#vDone'); if(done){ done.textContent="Back to coaching"; }
-  wireValuesActions(v);
+  // in profile view, swap the primary action label (scoped to #valuesBody)
+  const done=el.querySelector('#vDone'); if(done){ done.textContent="Back to coaching"; }
+  wireValuesActions(v, el);
 }
 
 function updateNorthPill(){
