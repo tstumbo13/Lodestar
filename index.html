@@ -1239,10 +1239,6 @@ function buildLocal(text, ctx){
     <span class="badge">★ Recommended path</span>
     <h2>${esc(primary.name)}, with a touch of ${secondary?esc(secondary.name):"servant leadership"}</h2>
     <div class="why">${why}</div>`;
-  const steps = recommendedSteps(primary, secondary, themes, ctx);
-  steps.forEach((s,i)=>{
-    html += `<div class="step"><div class="n">${i+1}</div><div class="body"><h4>${esc(s.h)}</h4><p>${esc(s.p)}</p></div></div>`;
-  });
   html += valuesCheckHTML(primary, ctx);
   html += `<div class="callouts">
       <div class="callout warn"><h5>⚠ Watch out for</h5><p>${esc(primary.watchout)}</p></div>
