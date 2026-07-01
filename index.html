@@ -343,6 +343,10 @@ footer b{color:var(--slate)}
 .pcard .pnum{flex:none;width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:#7a5a1e;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
 .pcard h4{font-size:14.5px;color:var(--navy);font-weight:700}
 .pcard p{font-size:13.5px;color:var(--slate);font-style:italic;margin-top:2px}
+.pcard.star{border-color:var(--gold-line);background:linear-gradient(180deg,#fffdf8,#fff);box-shadow:0 4px 16px rgba(200,146,58,.16)}
+.pcard.star .pnum{background:linear-gradient(180deg,#e7b85f,#c8923a);color:#fff}
+.pbadge{display:inline-flex;align-items:center;gap:5px;margin-top:7px;font-size:11px;font-weight:700;letter-spacing:.02em;color:#7a5a1e;background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:999px;padding:3px 9px}
+.pbadge svg{flex:none}
 
 /* practices */
 .prac-feature{background:var(--gold-soft);border:1px solid var(--gold-line);border-radius:16px;padding:16px 18px;margin-top:8px}
@@ -514,8 +518,8 @@ input:focus-visible, summary:focus-visible, label.switch:focus-within{
   <div class="wrap">
     <div class="hero"><h1>The library</h1><p>The lenses Lodestar reasons with — for work and for life. No single one is "right"; the wisdom is in moving fluidly between them.</p></div>
     <div class="libgrid" id="libgrid"></div>
-    <div class="sec-h" style="margin-top:32px">Principles to live by</div>
-    <div class="sec-sub">Twelve principles for building a life you don't have to settle in.</div>
+    <div class="sec-h" style="margin-top:32px" id="prinHead">Principles to live by</div>
+    <div class="sec-sub" id="prinSub">Twelve principles for building a life you don't have to settle in.</div>
     <div class="principlegrid" id="libprinciples"></div>
   </div>
 </section>
@@ -931,18 +935,18 @@ const VGUT = {
 
 /* ============================ PRINCIPLES (Settle For More) ============================ */
 const PRINCIPLES=[
-  {n:1,title:"Cultivate amazing thoughts",mantra:"You become what you think about.",themes:["myself","selfworth","anxiety","motivation"]},
-  {n:2,title:"Get comfortable being uncomfortable",mantra:"Everything you want is on the other side of fear.",themes:["decision","change","anxiety","difficult_conversation","new_leader"]},
-  {n:3,title:"Do what few dare to do",mantra:"Bold action is the price of admission to an extraordinary life.",themes:["decision","change","purpose","crisis"]},
-  {n:4,title:"Master your craft",mantra:"The world doesn't reward potential — it rewards mastery.",themes:["growth","habits","performance","purpose"]},
-  {n:5,title:"Invest in people first",mantra:"Nurture your relationships and everything else follows.",themes:["relationship","team","trust","conflict","parenting"]},
-  {n:6,title:"Embrace the mess",mantra:"If your progress looks clean, you're not pushing hard enough.",themes:["change","transition","crisis","habits"]},
-  {n:7,title:"Stop settling",mantra:"Your life is a mirror — it reflects exactly what you've accepted.",themes:["purpose","motivation","selfworth","decision"]},
-  {n:8,title:"Champion, don't criticize",mantra:"The world has enough critics — be the one who believes.",themes:["relationship","team","parenting","conflict","new_leader"]},
-  {n:9,title:"Practice like it matters",mantra:"What you do when nobody's watching is who you actually are.",themes:["habits","myself","trust","procrastination"]},
-  {n:10,title:"Make your life your art",mantra:"Your work is your craft; your life is the masterpiece.",themes:["purpose","transition","myself"]},
-  {n:11,title:"Focus beats intelligence",mantra:"Depth always wins against breadth.",themes:["decision","habits","procrastination","motivation"]},
-  {n:12,title:"Give it away",mantra:"Generosity isn't what you do with your surplus — it's who you become.",themes:["purpose","loneliness","relationship","myself"]}
+  {n:1,title:"Cultivate amazing thoughts",mantra:"You become what you think about.",themes:["myself","selfworth","anxiety","motivation"],values:["growth","authenticity","vision"]},
+  {n:2,title:"Get comfortable being uncomfortable",mantra:"Everything you want is on the other side of fear.",themes:["decision","change","anxiety","difficult_conversation","new_leader"],values:["courage","growth","candor"]},
+  {n:3,title:"Do what few dare to do",mantra:"Bold action is the price of admission to an extraordinary life.",themes:["decision","change","purpose","crisis"],values:["courage","vision"]},
+  {n:4,title:"Master your craft",mantra:"The world doesn't reward potential — it rewards mastery.",themes:["growth","habits","performance","purpose"],values:["excellence","growth"]},
+  {n:5,title:"Invest in people first",mantra:"Nurture your relationships and everything else follows.",themes:["relationship","team","trust","conflict","parenting"],values:["connection","service","trust","empathy"]},
+  {n:6,title:"Embrace the mess",mantra:"If your progress looks clean, you're not pushing hard enough.",themes:["change","transition","crisis","habits"],values:["courage","accountability","authenticity","candor"]},
+  {n:7,title:"Stop settling",mantra:"Your life is a mirror — it reflects exactly what you've accepted.",themes:["purpose","motivation","selfworth","decision"],values:["integrity","vision","accountability"]},
+  {n:8,title:"Champion, don't criticize",mantra:"The world has enough critics — be the one who believes.",themes:["relationship","team","parenting","conflict","new_leader"],values:["growth","trust","connection","service"]},
+  {n:9,title:"Practice like it matters",mantra:"What you do when nobody's watching is who you actually are.",themes:["habits","myself","trust","procrastination"],values:["integrity","excellence"]},
+  {n:10,title:"Make your life your art",mantra:"Your work is your craft; your life is the masterpiece.",themes:["purpose","transition","myself"],values:["authenticity","vision","excellence"]},
+  {n:11,title:"Focus beats intelligence",mantra:"Depth always wins against breadth.",themes:["decision","habits","procrastination","motivation"],values:["excellence","accountability"]},
+  {n:12,title:"Give it away",mantra:"Generosity isn't what you do with your surplus — it's who you become.",themes:["purpose","loneliness","relationship","myself"],values:["service","connection","empathy"]}
 ];
 function pickPrinciple(themes){
   let best=null,bs=-1;
@@ -1514,6 +1518,7 @@ function switchView(v){
   if(v==="values") renderValues();
   if(v==="path") renderPath();
   if(v==="practices") renderPractices();
+  if(v==="library") renderPrinciples();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
@@ -1573,56 +1578,6 @@ function getFeedback(){ try{return JSON.parse(localStorage.getItem('lode_feedbac
 function feedbackHTML(){
   return `<div class="fb" id="fbWidget"><span class="fb-q">Was this helpful?</span><button class="fb-b" data-r="yes">👍 Yes</button><button class="fb-b" data-r="kind">😐 Kind of</button><button class="fb-b" data-r="no">👎 Not really</button></div>`;
 }
-/* ===== Feedback delivery — so ratings actually reach the builder =====
-   DEFAULT: opens the tester's email app, pre-addressed, on "Send".
-   PRIVATE/SILENT (recommended): create a free form at https://formspree.io,
-   paste its endpoint URL into FEEDBACK_ENDPOINT below, and feedback is sent
-   quietly in the background (no email address exposed in this public page). */
-const FEEDBACK_ENDPOINT = "https://formspree.io/f/mbdvyoyz"; // private feedback collection
-const FEEDBACK_EMAIL    = "tstumbo13@gmail.com"; // only used when no endpoint is set
-function fbDeviceId(){
-  let d=localStorage.getItem('lode_device');
-  if(!d){ d=Math.random().toString(36).slice(2,9); localStorage.setItem('lode_device',d); }
-  return d;
-}
-async function sendFeedback(rating, note){
-  const payload={
-    rating,
-    note:(note||"").slice(0,1000),
-    situation:((lastInput&&lastInput.text)||"").slice(0,300),
-    models:((lastResult&&lastResult.modelsUsed)||[]).join(", "),
-    when:new Date().toLocaleString(),
-    device:fbDeviceId()
-  };
-  if(FEEDBACK_ENDPOINT){
-    try{
-      await fetch(FEEDBACK_ENDPOINT,{method:"POST",headers:{"content-type":"application/json","accept":"application/json"},body:JSON.stringify(payload)});
-      return "sent";
-    }catch(e){ /* network failed — fall through to email so it isn't lost */ }
-  }
-  const subject=`Lodestar feedback: ${rating}`;
-  const body=`Rating: ${rating}\nNote: ${payload.note||"(none)"}\n\nSituation: ${payload.situation}\nModels considered: ${payload.models}\nWhen: ${payload.when}\nDevice: ${payload.device}`;
-  window.location.href=`mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  return "mail";
-}
-function fbNoteStep(rating){
-  const w=$('#fbWidget'); if(!w) return;
-  recordFeedback(rating); // keep the local tally too
-  const label={yes:"👍 Yes",kind:"😐 Kind of",no:"👎 Not really"}[rating]||rating;
-  w.innerHTML=`<span class="fb-q">Thanks — you said <b>${label}</b>. Want to tell us why? (optional)</span>
-    <textarea id="fbNote" class="pc-note" placeholder="What worked, what didn't, anything confusing…" style="width:100%;margin-top:8px"></textarea>
-    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-      <button class="btn" id="fbSend">Send feedback</button>
-      <button class="btn ghost" id="fbCancel">Not now</button>
-    </div>`;
-  const send=$('#fbSend'); if(send) send.onclick=async()=>{
-    send.disabled=true; send.textContent="Sending…";
-    const note=$('#fbNote')?$('#fbNote').value.trim():"";
-    const res=await sendFeedback(rating,note);
-    w.innerHTML=`<span class="fb-q">${res==="sent"?"Sent — thank you. This genuinely helps make it better.":"Thank you — your email app is opening so you can hit send."}</span>`;
-  };
-  const cancel=$('#fbCancel'); if(cancel) cancel.onclick=()=>{ w.innerHTML='<span class="fb-q">Thanks — that helps make it better.</span>'; };
-}
 function recordFeedback(r){
   const arr=getFeedback();
   arr.unshift({when:Date.now(), rating:r, text:((lastInput&&lastInput.text)||"").slice(0,140), models:(lastResult&&lastResult.modelsUsed)||[]});
@@ -1633,7 +1588,10 @@ function wireResultButtons(){
   const cb=$('#copyBtn'); if(cb) cb.onclick=()=>{ copyGuidance(); cb.textContent="Copied ✓"; setTimeout(()=>cb.textContent="Copy guidance",1500); };
   const pb=$('#startPlan'); if(pb) pb.onclick=()=>{ startPlan(pb); };
   const fbtn=$('#seeFull'); if(fbtn) fbtn.onclick=()=>runAnalyze('full');
-  document.querySelectorAll('#fbWidget .fb-b').forEach(b=>b.onclick=()=>fbNoteStep(b.dataset.r));
+  document.querySelectorAll('#fbWidget .fb-b').forEach(b=>b.onclick=()=>{
+    recordFeedback(b.dataset.r);
+    const w=$('#fbWidget'); if(w) w.innerHTML='<span class="fb-q">Thank you — that helps Lodestar get better.</span>';
+  });
 }
 
 /* History */
@@ -1675,7 +1633,35 @@ function renderLibrary(){
     <h3>${esc(f.name)}</h3><div class="school">${esc(f.school)}</div>
     <p>${esc(f.summary)}</p>
     <div class="bestfor"><b>Best for:</b> ${esc(f.bestfor)}</div></div>`).join("");
-  const lp=$('#libprinciples'); if(lp) lp.innerHTML=PRINCIPLES.map(p=>`<div class="pcard"><div class="pnum">${p.n}</div><div><h4>${esc(p.title)}</h4><p>&ldquo;${esc(p.mantra)}&rdquo;</p></div></div>`).join("");
+  renderPrinciples();
+}
+// Star SVG used in the "for your North Star" badge
+const STAR_SVG='<svg width="11" height="11" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>';
+// Personalize the "Principles to live by" section around the person's North Star
+function renderPrinciples(){
+  const lp=$('#libprinciples'); if(!lp) return;
+  const head=$('#prinHead'), sub=$('#prinSub');
+  const v=getValues();
+  const north=v?(v.northStar||v.ranked[0]):null;
+  if(!north){
+    if(head) head.textContent="Principles to live by";
+    if(sub) sub.textContent="Twelve principles for building a life you don't have to settle in. Take the values quiz to see the ones that speak most to your North Star.";
+    lp.innerHTML=PRINCIPLES.map(p=>pcardHTML(p,false)).join("");
+    return;
+  }
+  const nName=VALUES[north].name;
+  // principles that embody the North Star lead; the rest keep their order
+  const matches=PRINCIPLES.filter(p=>(p.values||[]).includes(north));
+  const rest=PRINCIPLES.filter(p=>!(p.values||[]).includes(north));
+  if(head) head.innerHTML=`Principles for your North Star: <span style="color:var(--gold)">${esc(nName)}</span>`;
+  if(sub) sub.textContent=matches.length
+    ? `Of the twelve, these live closest to ${nName} — the value you said matters most. Let them lead. The rest are here whenever you need them.`
+    : `Twelve principles for building a life you don't have to settle in.`;
+  lp.innerHTML=matches.map(p=>pcardHTML(p,nName)).join("")+rest.map(p=>pcardHTML(p,false)).join("");
+}
+function pcardHTML(p,starLabel){
+  const badge=starLabel?`<div class="pbadge">${STAR_SVG} For your North Star: ${esc(starLabel)}</div>`:"";
+  return `<div class="pcard${starLabel?' star':''}"><div class="pnum">${p.n}</div><div><h4>${esc(p.title)}</h4><p>&ldquo;${esc(p.mantra)}&rdquo;</p>${badge}</div></div>`;
 }
 renderLibrary();
 
@@ -1868,6 +1854,7 @@ function updateNorthPill(){
     pill.style.display="inline-flex";
     pill.innerHTML=`<svg width="13" height="13" viewBox="0 0 32 32" fill="none"><path d="M16 2l2.9 9.3L28 14l-9.1 2.7L16 30l-2.9-13.3L4 14l9.1-2.7L16 2z" fill="#c8923a"/></svg>North Star: ${esc(VALUES[v.northStar||v.ranked[0]].name)}`;
   } else { pill.style.display="none"; }
+  renderPrinciples();
 }
 
 /* Onboarding gate */
