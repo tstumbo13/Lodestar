@@ -821,7 +821,7 @@ const FRAMEWORKS = [
     script:"What's the smallest version of this I couldn't fail to do today?",
     watchout:"Waiting to 'feel motivated' is the trap — motivation comes and goes. Build the system, not the burst.",
     plan:["Pick the two-minute version","Anchor it to an existing routine","Make it obvious and easy","Track the streak, forgive a miss"],
-    themes:{habits:3,motivation:2,change:2,growth:2,selfworth:1,procrastination:3}
+    themes:{habits:3,motivation:2,change:2,growth:2,selfworth:1,procrastination:3,craving:2,lowmood:1}
   },
   {
     id:"grief", name:"Grief & Transitions", school:"Kübler-Ross · William Bridges", color:"#6b7a8a",
@@ -832,7 +832,7 @@ const FRAMEWORKS = [
     script:"This is a real loss. I'm allowed to feel it before I figure out what's next.",
     watchout:"There's no schedule for grief. 'Moving on' isn't the goal — carrying it differently is.",
     plan:["Name what's ending","Let yourself grieve it","Be patient in the in-between","Notice the first signs of the new"],
-    themes:{grief:3,transition:3,change:2,loneliness:2,purpose:1,myself:1}
+    themes:{grief:3,transition:3,change:2,loneliness:2,purpose:1,myself:1,lowmood:1}
   },
   {
     id:"recovery", name:"Acceptance & Steadiness", school:"Serenity Prayer · HALT self-check", color:"#9a7320",
@@ -843,7 +843,7 @@ const FRAMEWORKS = [
     script:"Grant me the serenity to accept what I can't change, the courage to change what I can, and the wisdom to know the difference.",
     watchout:"Acceptance first doesn't mean facing it alone — reaching out for support is a strength, not a failure.",
     plan:["Name what you can't control and accept it","Choose the one thing you can change","Take only the next right step today","Reach out to one person"],
-    themes:{anxiety:2,crisis:3,myself:2,motivation:2,anger:2,change:1,loneliness:2,money:1}
+    themes:{anxiety:2,crisis:3,myself:2,motivation:2,anger:2,change:1,loneliness:2,money:1,craving:3,lowmood:2}
   },
   {
     id:"lodestar", name:"The Lodestar Lens", school:"Dignity-first, servant-hearted leadership", color:"#a9803a",
@@ -888,6 +888,50 @@ const FRAMEWORKS = [
     watchout:"Most of us default to one mode. Managing someone who needs mentoring — or mentoring someone who just needs a clear instruction — both miss.",
     plan:["Diagnose what they actually need","Pick the mode that fits","Shift modes as they grow","Lead by example in all three"],
     themes:{growth:3,parenting:3,underperformance:2,new_leader:2,motivation:2,delegation:2,team:1}
+  },
+  {
+    id:"strengths", name:"Strengths-Based Living", school:"Peterson & Seligman · VIA · Alex Linley", color:"#3f8f5f",
+    summary:"You grow further by building on what's strong than by fixating on what's wrong. Name your signature strengths, then aim them at the problem in a fresh way.",
+    bestfor:"Confidence, feeling stuck, burnout, transitions",
+    lens:"looks for the strengths already in you — including in the story you just told — and asks how the situation changes when you lead with them instead of your deficits.",
+    moves:["Recall a moment you were at your best — name the strengths in it","Pick one signature strength and aim it at this situation in a new way","Check for overuse: a strength turned up too loud often looks like a flaw"],
+    script:"When have I handled something like this well before — and what strength made that possible?",
+    watchout:"Strengths talk isn't denial. Name what's genuinely hard first; then bring your strengths to it.",
+    plan:["Spot the strength in your own story","Choose one strength to lead with","Use it here in one concrete new way","Notice the shift and log it"],
+    themes:{selfworth:3,growth:2,motivation:2,purpose:2,transition:2,lowmood:2,new_leader:1,performance:1,myself:1}
+  },
+  {
+    id:"savoring", name:"Savoring & Gratitude", school:"Fred Bryant · Barbara Fredrickson · Martin Seligman", color:"#c07b3a",
+    summary:"Good moments don't count until they're noticed. Deliberately noticing, prolonging, and appreciating the good is one of the most proven ways to lift a life.",
+    bestfor:"Low mood, autopilot, taking things for granted",
+    lens:"suspects the problem isn't a lack of good things but a lack of receiving them — attention has drifted to what's wrong and gone numb to what's right.",
+    moves:["Slow one good moment a day down and actually feel it","Each night, name three things that went well — and your part in them","Imagine life without something you love; then look at it again"],
+    script:"What's one good thing today that deserved more of my attention than it got?",
+    watchout:"This isn't toxic positivity. You're not denying the hard — you're refusing to let it be the only thing you see.",
+    plan:["Pick one daily savoring cue","Name three good things nightly","Tell one person what you appreciate about them","Review the week: what changed?"],
+    themes:{lowmood:3,motivation:2,purpose:2,loneliness:1,relationship:1,grief:1,anxiety:1,myself:1}
+  },
+  {
+    id:"growthmind", name:"Growth Mindset & Optimism", school:"Carol Dweck · Martin Seligman", color:"#5f7fbf",
+    summary:"Failure and criticism are information, not verdicts. How you explain a setback — temporary or permanent, specific or everywhere, effort or identity — decides what happens next.",
+    bestfor:"Setbacks, criticism, fear of failure",
+    lens:"hears the fixed-mindset voice in the situation — 'this proves what I am' — and answers it: this is a snapshot of where you are, not a verdict on what you can become.",
+    moves:["Add 'yet' to the sentence: I can't do this — yet","Explain the setback as temporary and specific, not permanent and everywhere","Mine the criticism: what's the one usable piece inside it?"],
+    script:"What would I try next if this setback were information instead of a verdict?",
+    watchout:"Growth mindset isn't pretending everything is learnable overnight — it's refusing to let one result write the ending.",
+    plan:["Catch the fixed-mindset voice","Re-explain the setback accurately","Extract one usable lesson","Take one effort-based step"],
+    themes:{selfworth:2,growth:2,performance:2,change:2,myself:2,procrastination:1,new_leader:1,attitude:1,decision:1,lowmood:1}
+  },
+  {
+    id:"hope", name:"Practical Hope", school:"Rick Snyder · Gabriele Oettingen (WOOP)", color:"#8a6db0",
+    summary:"Hope isn't a feeling — it's a skill with two parts: pathways (real routes to the goal) and agency (belief you can walk them). Dreams work when you pair them with obstacles and a plan.",
+    bestfor:"Stuck goals, discouragement, wavering motivation",
+    lens:"treats the stuckness as a missing map, not a missing character. It asks: what's the goal, what routes exist, which obstacle is most likely — and what's the if-then plan for it?",
+    moves:["Name the wish and picture the best outcome vividly","Name the inner obstacle most likely to stop you","Write the plan: if [obstacle], then I will [action]"],
+    script:"If the obstacle shows up on schedule — what exactly will I do?",
+    watchout:"Positive fantasy alone drains motivation. The power is in pairing the dream with the obstacle.",
+    plan:["Define the wish","Feel the outcome","Face the obstacle honestly","Set the if-then plan and start"],
+    themes:{habits:2,procrastination:2,motivation:2,purpose:2,change:2,transition:2,decision:1,craving:1,performance:1}
   }
 ];
 
@@ -915,7 +959,8 @@ const FWK_VALUES = {
   stoicism:["courage","integrity"], meaning:["vision","authenticity"], nvc:["empathy","connection"],
   boundaries:["authenticity","courage"], habits:["growth","accountability"], grief:["empathy","authenticity"],
   recovery:["service","accountability"], lodestar:["service","courage"],
-  hedgehog:["vision","excellence"], firstwho:["trust","accountability"], continuum:["growth","service"]
+  hedgehog:["vision","excellence"], firstwho:["trust","accountability"], continuum:["growth","service"],
+  strengths:["growth","authenticity"], savoring:["connection","authenticity"], growthmind:["growth","courage"], hope:["vision","accountability"]
 };
 // personalized gut-check when this is the user's North Star
 const VGUT = {
@@ -1017,7 +1062,19 @@ const TECHNIQUES = [
   {id:"habit_tiny",mod:"Behavior Change",name:"Two-minute version",do:"Shrink the change until it's too small to fail, then attach it to something you already do every day.",themes:["habits","motivation","procrastination"]},
   {id:"recovery_serenity",mod:"Acceptance",name:"Serenity check",do:"Name one thing here to accept, one thing you can change, and be honest about which is which. Then act only on the second.",themes:["anxiety","crisis","change","money","anger"]},
   {id:"recovery_halt",mod:"Acceptance",name:"HALT",do:"Before you react, ask: am I Hungry, Angry, Lonely, or Tired? Tend to that first — then decide.",themes:["anger","crisis","myself","anxiety","loneliness"]},
-  {id:"selfcompassion",mod:"Self-Compassion",name:"Talk to yourself like a friend",do:"Write what you'd say to someone you love in this exact spot. Now offer those same words to yourself.",themes:["selfworth","guilt","grief","loneliness","myself"]}
+  {id:"selfcompassion",mod:"Self-Compassion",name:"Talk to yourself like a friend",do:"Write what you'd say to someone you love in this exact spot. Now offer those same words to yourself.",themes:["selfworth","guilt","grief","loneliness","myself"]},
+  {id:"pp_54321",mod:"Grounding",name:"5-4-3-2-1",do:"Name 5 things you can see, 4 you can feel, 3 you can hear, 2 you can smell, 1 you can taste. Slowly. Your body can only be here.",themes:["anxiety","crisis","craving"]},
+  {id:"pp_anchor",mod:"ACT",name:"Drop anchor",do:"Acknowledge the storm inside, press your feet into the floor, and widen out: name what you can see and hear around you. You're here — and your next move is still yours.",themes:["crisis","anxiety","anger","craving"]},
+  {id:"pp_urge",mod:"Mindfulness",name:"Ride the wave",do:"An urge is a wave — it rises, peaks, and passes whether or not you feed it. Find it in your body, breathe into it, and time it. Waves end.",themes:["craving","habits","anger","anxiety","myself"]},
+  {id:"pp_opposite",mod:"DBT",name:"Opposite action",do:"Name the emotion and what it's urging you to do. If acting on it moves you away from your values, do the opposite — fully, body language included.",themes:["anger","procrastination","motivation","craving","lowmood"]},
+  {id:"pp_distance",mod:"CBT",name:"Step outside yourself",do:"Replay the situation in third person, using your own name: “Why did ___ feel that way? What would I tell them to do?” Distance shrinks the storm.",themes:["selfworth","guilt","anger","myself","conflict"]},
+  {id:"pp_silver",mod:"Optimism",name:"Find the silver lining",do:"Write one line about what went wrong. Then list up to three real things it could teach you, open up, or spare you. Both lists are true.",themes:["change","transition","performance","lowmood","myself"]},
+  {id:"pp_woop",mod:"WOOP",name:"Wish · Outcome · Obstacle · Plan",do:"Name the wish, picture the best outcome — then name the inner obstacle most likely to stop you, and write: “If [obstacle], then I will [action].”",themes:["habits","procrastination","motivation","change","decision"]},
+  {id:"pp_bps",mod:"Optimism",name:"Best possible self",do:"Write for ten minutes about your life a few years out, gone as well as it realistically could. Not fantasy — a direction. Then notice what today's first step would be.",themes:["purpose","transition","motivation","vision","lowmood"]},
+  {id:"pp_3good",mod:"Gratitude",name:"Three good things",do:"Tonight, write three things that went well today — and your part in making them happen. Small counts. Do it for a week before you judge it.",themes:["lowmood","motivation","loneliness","purpose"]},
+  {id:"pp_iceberg",mod:"Emotional Intelligence",name:"Look under the anger",do:"Anger is the tip of the iceberg. Ask what's underneath: hurt? fear? an unmet need? Address the layer below, and the surface usually settles.",themes:["anger","conflict","relationship","parenting"]},
+  {id:"pp_strength_new",mod:"Strengths",name:"Aim a strength at it",do:"Recall a time you handled something hard well. Name the strength that did it — then use that exact strength on this situation in one new way.",themes:["selfworth","purpose","growth","new_leader","transition"]},
+  {id:"pp_unsent",mod:"Grief",name:"The unsent letter",do:"Write a letter you'll never send — to the person, the loss, or your past self. Say the unsaid, including the hard parts. Then choose what to do with it.",themes:["grief","guilt","anger","transition"]}
 ];
 function pickTechnique(themes, ctx){
   let best=null, bs=-1;
@@ -1056,7 +1113,9 @@ function psychLens(themes){
     procrastination:"Procrastination is rarely laziness — it's usually a feeling you're avoiding. Get curious about what the task makes you feel, then shrink the first step.",
     money:"Money stress is rarely only about numbers — it's about safety, control, and worth. Separate the one practical next step from the feeling it stirs up.",
     parenting:"With the people you're raising or caring for, who you're being lands harder than what you're saying. They absorb the lesson you live.",
-    transition:"Every new beginning starts with an ending. The disorientation you feel isn't failure — it's the neutral zone between who you were and who you're becoming."
+    transition:"Every new beginning starts with an ending. The disorientation you feel isn't failure — it's the neutral zone between who you were and who you're becoming.",
+    craving:"An urge feels permanent while it's peaking, but it's a wave — it rises, crests, and passes whether or not you feed it. You don't have to argue with it; you just have to outlast it (Mindfulness).",
+    lowmood:"Low mood shrinks the world — you stop doing the things that lift you, which lowers the mood further. The way out usually starts with action before motivation, not after it (Behavioral Activation)."
   };
   for(const t of themes){ if(bank[t]) return bank[t]; }
   return "Slow down enough to separate what happened from the meaning you're giving it — that gap is where your freedom to choose lives.";
@@ -1078,7 +1137,7 @@ const FEELINGS=[
   {label:"Overwhelmed",t:"anxiety"},{label:"Anxious",t:"anxiety"},{label:"Angry",t:"anger"},
   {label:"Hurt",t:"anger"},{label:"Resentful",t:"anger"},{label:"Guilty",t:"guilt"},
   {label:"Sad",t:"grief"},{label:"Lonely",t:"loneliness"},{label:"Stuck",t:"purpose"},
-  {label:"Numb",t:"motivation"},{label:"Scared",t:"anxiety"},{label:"Hopeful",t:""}
+  {label:"Numb",t:"motivation"},{label:"Scared",t:"anxiety"},{label:"Down",t:"lowmood"},{label:"Tempted",t:"craving"},{label:"Hopeful",t:""}
 ];
 function feelingsAck(ctx){
   const fs=(ctx.feelings||[]);
@@ -1094,7 +1153,7 @@ let safetyOverride=false;
 const CRISIS_HIGH=["suicide","suicidal","kill myself","killing myself","end my life","ending my life","want to die","wanna die","don't want to be here","dont want to be here","don't want to live","better off dead","no reason to live","nothing to live for","nothing matters anymore","hurt myself","harm myself","harming myself","hurting myself","self-harm","self harm","cut myself","cutting myself","overdose","take my life","end it all","can't go on","cant go on","can't keep going","cant keep going","no way out","want to disappear","everyone would be better off without me","everyone better off without me","burden to everyone","don't want to wake up","dont want to wake up","no point in living","tired of living","tired of being alive","given up on life","being abused","he hits me","she hits me","they hit me","afraid for my life","afraid for my safety"];
 // Tier 2: softer despair — shows support if paired with a heavy feeling or another signal
 const CRISIS_SOFT=["hopeless","no hope","what's the point","whats the point","pointless","empty inside","worthless","can't do this anymore","cant do this anymore","don't see a future","dont see a future","at my breaking point","can't take it anymore","cant take it anymore","falling apart","drowning"];
-const HEAVY_FEELINGS=["Sad","Numb","Lonely","Overwhelmed","Scared"];
+const HEAVY_FEELINGS=["Sad","Numb","Lonely","Overwhelmed","Scared","Down"];
 function detectCrisis(text, ctx){
   const t=" "+(text||"").toLowerCase().replace(/[^a-z' ]/g," ")+" ";
   if(CRISIS_HIGH.some(k=>t.includes(k))) return true;
@@ -1140,7 +1199,7 @@ const THEMES = {
   vision:{label:"Vision & direction",kw:["vision","strategy","direction","purpose","mission","where we're going","where we are going","long-term","long term","inspire","big picture","the why"]},
   attitude:{label:"Difficult attitude",kw:["attitude","toxic","negative","complain","resistant","defensive","ego","difficult person","bad apple","cynical","undermin","passive aggressive","passive-aggressive","gossip"]},
   growth:{label:"Developing someone",kw:["grow","develop","potential","coach","mentor","stretch","ready for more","career","high potential","help them","get better","level up"]},
-  performance:{label:"Performance",kw:["performance","results","targets","goals","metrics","standards","expectations","deliver","output","productiv"]},
+  performance:{label:"Performance",kw:["performance","results","targets","goals","metrics","standards","expectations","deliver","output","productiv","i failed","failed my","failed the","flunked","didn't pass","didnt pass","rejected","didn't get the job","didnt get the job","didn't make the","didnt make the"]},
   delegation:{label:"Delegation",kw:["delegat","let go of","hand off","handoff","do it myself","can't let go","control","trust them with","take it off my plate"]},
   myself:{label:"Leading yourself",kw:["i feel","i'm frustrated","im frustrated","my reaction","i lose","i get angry","i avoid","my fault","i struggle","i'm anxious","im anxious","doubt myself","imposter","i keep"]},
   relationship:{label:"A relationship",kw:["relationship","my partner","my wife","my husband","my spouse","my boyfriend","my girlfriend","my friend","my best friend","my mom","my dad","my mother","my father","my sister","my brother","my family","in-law","spouse","marriage","married","dating","breakup","break up","broke up","divorce"]},
@@ -1149,14 +1208,16 @@ const THEMES = {
   anxiety:{label:"Anxiety & overwhelm",kw:["anxious","anxiety","worried","worry","stressed","stress","overwhelmed","overwhelm","panic","can't stop thinking","cant stop thinking","on edge","dread","nervous","spiraling","racing thoughts"]},
   anger:{label:"Anger & resentment",kw:["angry","anger","furious","resent","resentment","resentful","bitter","pissed","rage","fed up","irritated","can't let go of"]},
   guilt:{label:"Guilt & shame",kw:["guilt","guilty","ashamed","shame","regret","i feel bad","beating myself","kicking myself","my fault that"]},
-  selfworth:{label:"Self-worth",kw:["not good enough","not enough","worthless","inadequate","impostor","imposter syndrome","insecure","self-esteem","self esteem","hate myself","inner critic","compare myself","comparing myself","i'm a failure","im a failure"]},
+  selfworth:{label:"Self-worth",kw:["not good enough","not enough","worthless","inadequate","impostor","imposter syndrome","insecure","self-esteem","self esteem","hate myself","inner critic","compare myself","comparing myself","i'm a failure","im a failure","not smart enough","not talented enough","not capable"]},
   habits:{label:"Habits & follow-through",kw:["habit","can't stick","cant stick","discipline","consistency","follow through","follow-through","keep failing to","build a routine","break the habit","willpower"]},
   procrastination:{label:"Procrastination",kw:["procrastinat","keep putting off","putting it off","avoid doing","can't get started","cant get started","keep delaying","not getting around to"]},
   purpose:{label:"Purpose & feeling stuck",kw:["purpose","meaning in","feel stuck","feeling stuck","feel lost","direction in life","what's the point","whats the point","unfulfilled","empty inside","going through the motions","midlife","what do i want","no direction"]},
   loneliness:{label:"Loneliness",kw:["lonely","loneliness","isolated","no friends","no one to","feel alone","so alone","disconnected","left out","nobody"]},
   parenting:{label:"Parenting & caregiving",kw:["my kid","my kids","my child","my son","my daughter","my teenager","parenting","as a parent","caregiver","caregiving","aging parent","taking care of my"]},
   money:{label:"Money stress",kw:["money","financial","finances","debt","bills","afford","can't afford","broke","paycheck","budget","cost of","behind on"]},
-  transition:{label:"A life transition",kw:["transition","new chapter","starting over","start over","relocat","moving to","retire","retirement","empty nest","graduating","graduated","new baby","life change","big change in my life","new city"]}
+  transition:{label:"A life transition",kw:["transition","new chapter","starting over","start over","relocat","moving to","retire","retirement","empty nest","graduating","graduated","new baby","life change","big change in my life","new city"]},
+  craving:{label:"Cravings & urges",kw:["craving","cravings","urge to","strong urge","the urge","tempted to","temptation","relapse","can't resist","cant resist","one more drink","want a drink","want to use","quit smoking","quit drinking","quit vaping","stop gambling","doomscroll","keep bingeing","binge eating","binge drinking","cutting back on","give in to","giving in to","white knuckl"]},
+  lowmood:{label:"Feeling low & flat",kw:["depressed","depression","feeling down","feel down","feeling low","feel low","feeling flat","feel flat","no energy","unhappy","miserable","joyless","no joy","can't enjoy","cant enjoy","don't enjoy anything","dont enjoy anything","nothing sounds fun","nothing is fun","numb lately","lost interest","no interest in"]}
 };
 
 function detectThemes(text, ctx){
@@ -1375,7 +1436,9 @@ function reflective(themes, ctx){
     purpose:"If nothing were at stake and no one would judge me, what would I actually want?",
     money:"What's the one practical next step here, separate from the fear around it?",
     transition:"What am I being asked to let go of — and what might be waiting on the other side?",
-    parenting:"Who do I want them to learn how to be, from watching how I handle this?"
+    parenting:"Who do I want them to learn how to be, from watching how I handle this?",
+    craving:"What is this urge actually asking for — relief, connection, escape — and is there a way to give myself that without the cost?",
+    lowmood:"What used to reliably lift me, even a little — and what's the smallest version of it I could do today?"
   };
   for(const t of themes){ if(bank[t]) return bank[t]; }
   return "How would the person I most admire handle this — and what's stopping me from doing the same?";
@@ -1442,14 +1505,14 @@ async function buildLive(text, ctx){
   const valuesLine = v
     ? `The person has defined their core values, ranked: ${v.ranked.slice(0,5).map(id=>VALUES[id].name).join(", ")}. Their North Star value is ${VALUES[v.northStar||v.ranked[0]].name}.`
     : `The person has not yet defined their values.`;
-  const sys = `You are Lodestar, a warm, world-class coach for leadership AND everyday life decisions — helping anyone, not only managers. You reason using leadership frameworks (${FRAMEWORKS.map(f=>f.name).join(", ")}) and evidence-based psychological approaches (ACT, CBT, Motivational Interviewing, DBT) adapted as self-reflection — NOT therapy, diagnosis, or treatment.
+  const sys = `You are Lodestar, a warm, world-class coach for leadership AND everyday life decisions — helping anyone, not only managers. You reason using leadership frameworks (${FRAMEWORKS.map(f=>f.name).join(", ")}) and evidence-based psychological approaches (ACT, CBT, Motivational Interviewing, DBT, and positive psychology — character strengths, gratitude & savoring, hope theory/WOOP, growth mindset & learned optimism, self-compassion, behavioral activation, urge surfing) adapted as self-reflection — NOT therapy, diagnosis, or treatment.
 Respond ONLY with strict JSON (no markdown) of this shape:
 {"read":[short situation tags],
- "lens":"1-2 sentences on what's psychologically really going on, informed by ACT/CBT/MI/DBT",
+ "lens":"1-2 sentences on what's psychologically really going on, informed by ACT/CBT/MI/DBT/positive psychology",
  "frameworks":[{"name","school","fit":0-100,"lens":"how this model sees it","moves":[3 short moves],"script":"one sample line"}],
  "recommended":{"title","why","steps":[{"h","p"} x4],"watchout","reflective"},
  "valuesCheck":{"honors":"how the path honors or tensions with their stated values","nudge":"a caring accountability nudge tied to their North Star value"},
- "technique":{"mod":"ACT|CBT|Motivational Interviewing|DBT","name":"short name","do":"one concrete practice they can do now"},
+ "technique":{"mod":"ACT|CBT|Motivational Interviewing|DBT|Mindfulness|Gratitude|Strengths|Optimism|WOOP|Grounding|Self-Compassion","name":"short name","do":"one concrete practice they can do now"},
  "plan":[3 stages of {"title","action"}: (1) prepare & see clearly, (2) the core move, (3) reflect & follow up]}
 Pick the 3 most relevant frameworks, strongest fit first. Be specific, warm, practical; no clichés. ${v?"In valuesCheck, hold them accountable to their stated values — name it gently but honestly when the comfortable path drifts from what matters most to them.":"If no values are defined, set valuesCheck to null."}
 Throughout, carry the Lodestar ethos in your tone: people remember how they were treated more than what was done for them; be bold, brave, and authentic; serve first and protect dignity while still telling the truth with care. Warmth and honesty together, never one without the other. Weigh well-being as a real factor — never recommend a path that wins the outcome but isn't sustainable for the person.
@@ -1689,7 +1752,9 @@ const STARTERS=[
     {label:"Anxious & overwhelmed", ex:"I feel anxious and overwhelmed and like I can't slow down the racing thoughts in my head."},
     {label:"Angry & resentful", ex:"I'm carrying a lot of anger and resentment lately and it's starting to affect how I treat people."},
     {label:"Guilt or regret", ex:"I keep replaying something I did and I can't seem to shake the guilt and regret."},
-    {label:"Hard on myself", ex:"I'm really hard on myself. My inner critic is relentless and I never feel good enough."}
+    {label:"Hard on myself", ex:"I'm really hard on myself. My inner critic is relentless and I never feel good enough."},
+    {label:"Fighting an urge or craving", ex:"I keep giving in to an urge or craving I really want to quit, and each time I do I feel worse about myself."},
+    {label:"Can't enjoy anything", ex:"Lately I feel flat and low — things I used to enjoy just don't do anything for me anymore."}
   ]},
   {cat:"Meaning, change & hard seasons", items:[
     {label:"Feeling stuck or lost", ex:"I feel stuck and a little lost, like I've lost my sense of direction or purpose."},
@@ -1973,7 +2038,36 @@ const PRACTICES=[
   {id:"give_away",cat:"Lift others",title:"Give it away",time:"varies",tag:"Generosity",desc:"Generosity isn't your surplus — it's who you become.",steps:["Pick one thing you can give today — time, help, money, attention","Give it without expecting anything back","Notice you don't have to wait for 'extra' to be generous"]},
   {id:"grow_fb",cat:"Lift others",title:"Build-up feedback",time:"5 min",tag:"Coaching",desc:"Feedback that builds instead of bruises — Gratitude, Recognition, Opportunities, Wondering.",steps:["Gratitude: thank them for something real","Recognition: name what they did well","Opportunities: offer one growth area, kindly","Wondering: ask a curious question, not a verdict"]},
   {id:"mode_check",cat:"Lift others",title:"Manage / Coach / Mentor check",time:"3 min",tag:"Leadership",desc:"Match how you show up to what they need.",steps:["Think of someone you're trying to help","Do they need you to manage the task, coach the skill, or mentor the person?","Notice your default mode","Try the mode they actually need"]},
-  {id:"four_circle",cat:"Lift others",title:"Four-circle check",time:"8 min",tag:"Decision",desc:"Find your sweet spot before a big choice.",steps:["Rate this path on 4 circles: passion, excellence, economics, well-being","Which circle is missing or weak?","Is the gap fixable, or a sign to rethink?","Name your next move"]}
+  {id:"four_circle",cat:"Lift others",title:"Four-circle check",time:"8 min",tag:"Decision",desc:"Find your sweet spot before a big choice.",steps:["Rate this path on 4 circles: passion, excellence, economics, well-being","Which circle is missing or weak?","Is the gap fixable, or a sign to rethink?","Name your next move"]},
+
+  {id:"breath_space",cat:"Steady yourself",title:"3-minute reset",time:"3 min",tag:"Mindfulness",desc:"The classic three-step breathing space — a hard stop for a busy mind.",steps:["Ask: what's here right now? Name the thoughts and feelings without fixing them","Narrow to just the breath for a minute","Widen back out to your whole body","Re-enter your day on purpose"]},
+  {id:"drop_anchor",cat:"Steady yourself",title:"Drop anchor",time:"2 min",tag:"ACT",desc:"For emotional storms — get your feet under you without waiting for the weather to pass.",steps:["Acknowledge what's showing up inside — name it","Press your feet into the floor and straighten up","Look around: name 3 things you can see and 2 you can hear","Ask: what matters right now? Do that"]},
+  {id:"urge_wave",cat:"Steady yourself",title:"Ride the wave",time:"5 min",tag:"Urges",desc:"Cravings and urges rise, peak, and pass — if you don't feed them.",steps:["Find the urge in your body and describe it with curiosity","Breathe into that spot instead of fighting it","Picture it as a wave: rising, cresting, falling","Time it — watch it pass without acting","Note what triggered it"]},
+  {id:"ground54321",cat:"Steady yourself",title:"5-4-3-2-1 grounding",time:"2 min",tag:"Grounding",desc:"A fast sensory reset when your head is spinning.",steps:["Name 5 things you can see","4 things you can feel","3 things you can hear","2 things you can smell","1 thing you can taste"]},
+  {id:"mountain_med",cat:"Steady yourself",title:"Mountain meditation",time:"5 min",tag:"Mindfulness",desc:"Emotions are weather. You're the mountain.",steps:["Sit tall and picture a mountain — solid, grounded, dignified","Let yourself be the mountain","Watch storms and seasons pass across it while it stays itself","Let today's difficulty be weather, not the mountain"]},
+  {id:"leaves_stream",cat:"Steady yourself",title:"Leaves on a stream",time:"5–10 min",tag:"ACT",desc:"Practice letting sticky thoughts float by instead of gripping them.",steps:["Close your eyes; picture a slow stream with leaves drifting past","Place each thought that shows up on a leaf","Let it float away — pleasant or painful, same treatment","When you get hooked, notice it and go back to placing leaves"]},
+
+  {id:"at_your_best",cat:"Know yourself",title:"You at your best",time:"15 min",tag:"Strengths",desc:"Your best moments are data. Mine one for the strengths that made it possible.",steps:["Recall a specific time you felt authentic, energized, proud","Write it as a short story — beginning, middle, end","Re-read it and underline every strength it reveals","Re-read the story daily for a week"]},
+  {id:"red_green",cat:"Know yourself",title:"Red & green log",time:"5 min/day",tag:"Strengths",desc:"Strengths energize; weaknesses drain. Find yours by watching your energy.",steps:["For a week, tag each activity green (energizing, time flies) or red (draining, dreaded)","At week's end, ask what the greens have in common","Those common threads are your strengths","Plan more green; shrink or reshape one red"]},
+  {id:"name_precise",cat:"Know yourself",title:"Name it precisely",time:"2 min",tag:"EQ",desc:"'Bad' is not a feeling. Precision itself is regulation.",steps:["Pause and ask what you're feeling","Push past the first word — is 'angry' actually hurt? Is 'fine' actually flat?","Rate the intensity 1–10","Ask what the feeling is pointing to"]},
+  {id:"explain_check",cat:"Know yourself",title:"Check your explanations",time:"5 min",tag:"Optimism",desc:"How you explain a setback decides what you do next.",steps:["Take a recent setback and write your explanation of it","Test it: am I calling this permanent when it's temporary? Everywhere when it's specific? All me when it's partly circumstance?","Re-write the explanation accurately","Notice what the accurate version frees you to do"]},
+  {id:"third_person",cat:"Know yourself",title:"Third-person replay",time:"5 min",tag:"CBT",desc:"Your own name creates the distance your best advice needs.",steps:["Replay the upsetting moment — but narrate it in third person, using your name","Ask: why did they feel that way?","Ask: what would I advise them to do?","Take your own advice"]},
+
+  {id:"three_good",cat:"Find the good",title:"Three good things",time:"5 min",tag:"Gratitude",desc:"The most-tested exercise in positive psychology. It retrains what your mind hunts for.",steps:["Tonight, write three things that went well today","For each, add your part in making it happen","Small and ordinary count — a good coffee counts","Do it nightly for a week (variation: the three funniest things)"]},
+  {id:"glad_check",cat:"Find the good",title:"G.L.A.D. check",time:"3 min",tag:"Gratitude",desc:"A pocket-size daily scan for the good you'd otherwise miss.",steps:["Name one thing you're Grateful for","One thing you Learned","One thing you Accomplished","One thing that Delighted you"]},
+  {id:"savor_one",cat:"Find the good",title:"Savor one moment",time:"3 min",tag:"Savoring",desc:"Good moments don't count until they're noticed.",steps:["Pick a daily cue — the first coffee, the walk, the shower","When it comes, slow down and single-task it","Notice it with every sense you can","Let yourself actually feel that it's good"]},
+  {id:"never_met",cat:"Find the good",title:"What if you'd never met?",time:"5 min",tag:"Gratitude",desc:"Mentally subtracting someone you love reignites what habit has dulled.",steps:["Pick someone important to you","Trace how you met — and all the ways it almost didn't happen","Imagine, honestly, your life without them in it","Come back — and write down (or tell them) what you appreciate"]},
+  {id:"bright_spot",cat:"Find the good",title:"Plan a bright spot",time:"5 min",tag:"Savoring",desc:"Anticipation is free happiness — put something on the horizon.",steps:["Choose something you'd genuinely enjoy","Put it on the calendar this week","Spend a minute a day looking forward to it in detail","Afterward, savor the memory too — three helpings from one event"]},
+
+  {id:"woop_goal",cat:"Be bold",title:"WOOP a goal",time:"10 min",tag:"Goals",desc:"The best-tested goal method there is: dream it, then plan for the obstacle.",steps:["Wish: name a meaningful, feasible goal","Outcome: picture the best result vividly","Obstacle: name the inner obstacle most likely to stop you","Plan: write 'If [obstacle], then I will [action]'"]},
+  {id:"fresh_start",cat:"Be bold",title:"Fresh start",time:"5 min",tag:"Goals",desc:"New weeks, months, and birthdays are psychological clean slates. Use one.",steps:["Pick an upcoming landmark date — Monday, the 1st, a birthday","Frame it as a clean break from the old attempt","Set the goal to begin that day","Prepare the environment the night before"]},
+  {id:"toward_goal",cat:"Be bold",title:"Flip it to 'toward'",time:"5 min",tag:"Goals",desc:"'Stop doing X' goals fail more often. Aim at what you want instead.",steps:["Write the thing you're trying to stop or avoid","Ask: what do I want instead?","Rewrite the goal as moving toward that — with its payoff","Set one approach step this week"]},
+  {id:"graceful_no",cat:"Be bold",title:"One graceful no",time:"varies",tag:"Boundaries",desc:"Every yes spends something. Practice declining what doesn't serve what matters.",steps:["List recent yeses that betrayed your priorities","Pick one pending request that deserves a no","Say it kindly and briefly — no apology spiral","Notice what the no bought you"]},
+
+  {id:"five_kind",cat:"Lift others",title:"Five kind acts",time:"1 week",tag:"Kindness",desc:"Deliberate kindness reliably lifts the giver — even more than the getter.",steps:["Plan five kind acts for this week — big or small","Vary them: a favor, a note, a coffee, a call","Do them without expecting return","At week's end, notice what it did to you"]},
+  {id:"catch_news",cat:"Lift others",title:"Catch their good news",time:"in the moment",tag:"Connection",desc:"How you respond to someone's good news shapes the relationship more than how you respond to their bad news.",steps:["Next time someone shares good news, stop what you're doing","Respond with real enthusiasm","Ask questions that let them relive it","Skip the 'yes, but…' — there's time for practicalities later"]},
+  {id:"thank_letter",cat:"Lift others",title:"The thank-you letter",time:"20 min",tag:"Gratitude",desc:"One of the strongest happiness boosts ever measured — for both of you.",steps:["Think of someone who changed your life and never got properly thanked","Write them a specific, concrete letter — what they did, what it meant","Deliver it: read it to them if you can, send it if you can't","Let the moment land"]},
+  {id:"spot_strength",cat:"Lift others",title:"Spot the strength",time:"3 min",tag:"Strengths",desc:"Even difficult people are often a strength turned up too loud.",steps:["Pick someone who's been hard to deal with","Ask: what strength might be underneath the behavior? (Demanding → driven; stubborn → committed)","Recall where that trait is genuinely valuable","Let the reframe soften your next encounter"]}
 ];
 function getPracticeLog(){ try{return JSON.parse(localStorage.getItem('lode_practices')||"{}");}catch{return {};} }
 function setPracticeLog(o){ localStorage.setItem('lode_practices',JSON.stringify(o)); }
